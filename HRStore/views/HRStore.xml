@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+    <menuitem id ="menu_library" name="HR Store"/>
+
+    <act_window  id="action_library_book"
+                 name="Product"
+                 res_model="hrstore.product"
+                 view_mode="tree,form"
+                 />
+
+    <menuitem id="menu_library_book"
+              name="Books"
+              parent="menu_library"
+              action="action_library_book"/>
+
+
+</odoo>
