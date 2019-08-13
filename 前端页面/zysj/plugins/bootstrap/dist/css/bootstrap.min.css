@@ -10,4 +10,10 @@
 .footer-text{
 	width: 150px;
 }
+.row-row {
+  display: -ms-flexbox;
+  display: flex;
+  
+	width: 500px;
+}
 /*# sourceMappingURL=bootstrap.min.css.map */

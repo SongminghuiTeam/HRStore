@@ -8378,4 +8378,11 @@ a.text-dark:focus, a.text-dark:hover {
 .footer-text{
   width: 150px;
 }
+.row-row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 40px;
+}
 /*# sourceMappingURL=bootstrap.css.map */

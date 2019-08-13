@@ -242,7 +242,7 @@ a:focus, a:hover {
 
 .form-control {
   border-radius: 2px;
-  height: 50px;
+  height: 100px;
   width: 800px;
   background-color: transparent;
   color: #666;
