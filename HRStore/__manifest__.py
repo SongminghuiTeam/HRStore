@@ -3,12 +3,14 @@
     'name': 'HR Store',
     'description': "Summer Work",
     'author': "Team One",
-    'version': '1.0.1',
-
+    'version': '1.0.2',
 
     'data': ['views/HRStore.xml',
-        'views/helloworld_template.xml',
-    ],
+             'views/login.xml',
+             'views/template.xml',
+             'views/home.xml',
+             'views/products.xml',
+             ],
 
-    'depends':['website'],
+    'depends': ['website'],
 }
