@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- SITE TITTLE -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HR商城</title>
+  
+  <!-- PLUGINS CSS STYLE -->
+  <link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="plugins/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- Owl Carousel -->
+  <link href="plugins/slick-carousel/slick/slick.css" rel="stylesheet">
+  <link href="plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet">
+  <!-- Fancy Box -->
+  <link href="plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet">
+  <link href="plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+  <link href="plugins/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet">
+  <!-- CUSTOM CSS -->
+  <link href="css/style.css" rel="stylesheet">
+ <!--  <link href="css/goods-info.css" rel="stylesheet"> -->
+
+  <!-- FAVICON -->
+  <link href="img/favicon.png" rel="shortcut icon">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+
+<body class="body-wrapper">
+
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <nav class="navbar navbar-expand-lg  navigation">
+          <a class="navbar-brand" href="index.html">
+            <img src="images/logo.jpg" height="100" width="220">
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto main-nav ">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">首页</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="category.html">培训产品</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="activityindex.html">活动策划</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="goodsindex.html">精美商品</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="layindex.html">法律服务</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">在线客服</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto mt-10">
+              <li class="nav-item">
+                <a  href="index.html"><img src="images/my.png" height="60px"; width="50px"></a>
+              </li>
+            </ul>
+            <!-----
+            <ul class="navbar-nav ml-auto mt-10">
+              <li class="nav-item">
+                <a class="nav-link login-button" href="index.html">登陆</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link add-button" href="#">注册</a>
+              </li>
+            </ul>
+            ---->
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!--=================================
+=            Single Blog            =
+==================================-->
+
+
+<section class="blog single-blog section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0" style="margin-right:35px;">
+				<!-- 改变图片宽度 col-lg-9 max-width -->
+				<article class="single-post">
+					<!-- <h3>Donec id dolor in erat imperdiet.</h3> -->
+					<img src="images/products/ch1.jpg" alt="article-01">
+				</article>
+				
+			</div>
+
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0"style="margin-right:70px;">
+				<div class="sidebar">
+					<!-- Category Widget -->
+					<div class="">
+						<!-- Widget Header -->
+						<h5 class="widget-header">商品名</h5>
+						<p>浏览量：<span class="goods-info" style="word-wrap:break-word;">20</span></p>
+            <div style="margin-bottom:20px;">
+            类别：<span class="goods-type">教育</span>
+            </div>
+						<div style="margin-bottom:30px;">
+						价格：<span class="goods-price">￥100.00</span>
+						</div>
+						<div class="goods-buy" style="margin:0 auto;text-align:center;margin-bottom:20px;">
+							<a class="nav-link add-button" href=""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;预购&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+						</div>
+						<div class="goods-add" style="margin:0 auto;text-align:center;">
+							<a class="nav-link add-button" href="#"> 加入购物车</a>
+						</div>
+					</div>
+	
+				</div>
+			</div>
+    
+			<div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
+				<div class="sidebar">
+					<!-- Category Widget -->
+					<div class="widget category">
+						<!-- Widget Header -->
+						<h5 class="widget-header">商家信息</h5>
+						<p>商家名称：<span id="bus-name" style="word-wrap:break-word;"></span></p>
+						<p>联系方式：<span id="bus-tel" style="word-wrap:break-word;"></span></p>
+					</div>
+	
+				</div>
+			</div>
+
+      <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+        <!-- Recently Favorited -->
+        <div class="widget dashboard-container my-adslist">
+          <h3 class="widget-header">商品详细信息</h3>
+          <div class="pro-detail">
+            <p><span id="pro-detail">详细信息</span></p>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+        <!-- Recently Favorited -->
+
+        <div class="widget dashboard-container my-adslist">
+          <h3 class="widget-header">评论</h3>
+          <div class="user-comment">
+            <h4><span id="username">用户名称</span></h4>
+            <p><span id="time">2019年8月13日</span></p>
+            <span id="comment">这个商品很不错？！</span>
+            <hr>
+          </div>
+          
+        </div>
+      </div>
+
+		</div>
+	</div>
+</section>
+
+<!--============================
+=            Footer            =
+=============================-->
+
+<footer class="footer section section-sm">
+  <!-- Container Start -->
+  <div class="container">
+    <div class="row offset-md-1 offset-lg-0 block about" >
+      <img src="images/logo.jpg" height="100" width="200">
+      <div class="footer-text">
+      </div>
+      <ul>
+        <li><a href="#">增值电信业务经营许可证：京B2-20080224</a></li>
+        <li><a href="#">值电信业务经营许可证（跨地区）： B2-20150210</a></li>
+        <li><a href="#">北京市网络食品销售第三方平台提供者备案：京网食A33010001</br>
+        </a></li>
+        <li><a href="#">信息网络传播视听许可证：1109364号</a></li>
+        <li><a href="#">出版物网络交易平台服务经营备案号：新出发京备字第002号</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- Container End -->
+</footer>
+<!-- Footer Bottom -->
+<footer class="footer-bottom">
+  <!-- Container Start -->
+  <div class="container">
+    <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
+  </div>
+  <!-- Container End -->
+  <!-- To Top -->
+  <div class="top-to">
+    <a id="top" class="" href=""><i class="fa fa-angle-up"></i></a>
+  </div>
+</footer>
+
+  <!-- JAVASCRIPTS -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+  <script src="plugins/tether/js/tether.min.js"></script>
+  <script src="plugins/raty/jquery.raty-fa.js"></script>
+  <script src="plugins/bootstrap/dist/js/popper.min.js"></script>
+  <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="plugins/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+  <script src="plugins/slick-carousel/slick/slick.min.js"></script>
+  <script src="plugins/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+  <script src="plugins/fancybox/jquery.fancybox.pack.js"></script>
+  <script src="plugins/smoothscroll/SmoothScroll.min.js"></script>
+ 
+  <script src="js/scripts.js"></script>
+
+</body>
+
+</html>
+
