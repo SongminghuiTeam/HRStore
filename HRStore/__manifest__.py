@@ -7,10 +7,10 @@
 
     'data': ['views/HRStore.xml',
              'views/login.xml',
-             'views/sign_up.xml',
              'views/template.xml',
              'views/home.xml',
              'views/products.xml',
+             'views/customer_service.xml',
              ],
 
     'depends': ['website'],

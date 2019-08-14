@@ -68,7 +68,7 @@
                                         </t>
 
                                         <li class="nav-item">
-                                            <a class="nav-link" href="dashboard.html">在线客服</a>
+                                            <a class="nav-link" href="/customer_service">在线客服</a>
                                         </li>
                                     </ul>
                                     <t t-if="user">
