@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="products" name="HRStore Products">
+        <head>
+            <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
+            <t t-call-assets="HRStore.my_custom_assets" tcss="false"/>
+        </head>
+
+        <body class="body-wrapper">
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav class="navbar navbar-expand-lg  navigation">
+                                <a class="navbar-brand" href="/home">
+                                    <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
+                                </a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav ml-auto main-nav ">
+                                        <li class="nav-item ">
+                                            <a class="nav-link" href="/home">首页</a>
+                                        </li>
+                                        <t t-if="type=='2'">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" href="/products?type=2">培训产品</a>
+                                            </li>
+                                        </t>
+                                        <t t-else="">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/products?type=2">培训产品</a>
+                                            </li>
+                                        </t>
+                                        <t t-if="type=='1'">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" href="/products?type=1">活动策划</a>
+                                            </li>
+                                        </t>
+                                        <t t-else="">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/products?type=1">活动策划</a>
+                                            </li>
+                                        </t>
+                                        <t t-if="type=='3'">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" href="/products?type=3">精美商品</a>
+                                            </li>
+                                        </t>
+                                        <t t-else="">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/products?type=3">精美商品</a>
+                                            </li>
+                                        </t>
+                                        <t t-if="type=='4'">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" href="/products?type=4">法律服务</a>
+                                            </li>
+                                        </t>
+                                        <t t-else="">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/products?type=4">法律服务</a>
+                                            </li>
+                                        </t>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="dashboard.html">在线客服</a>
+                                        </li>
+                                    </ul>
+                                    <t t-if="user">
+                                        <ul class="navbar-nav ml-auto mt-10">
+                                            <li class="nav-item">
+                                                <a href="/user_profile/#{user.user_id}">
+                                                    <img src="\HRStore\static\src\images\my.png" height="60px"
+                                                         width="50px"/>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </t>
+                                    <t t-else="">
+
+                                        <ul class="navbar-nav ml-auto mt-10">
+                                            <li class="nav-item">
+                                                <a class="nav-link login-button" href="/login">登陆</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link add-button" href="/sign_up">注册</a>
+                                            </li>
+                                        </ul>
+                                    </t>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="advance-search">
+                <form action="#">
+                    <div class="row">
+                        <!-- Store Search -->
+
+                        <div class="block d-flex ">
+                            <input type="text" class="input-search" id="search" placeholder="站内查找..."/>
+                            <!-- Search Button -->
+                            <button class="btn btn-main">查找</button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <section class="section-sm">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="search-result bg-gray">
+                                <h2>你 想 要 的 样 子
+                                </h2>
+                                <p align="center">我 们 都 有</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="category-sidebar">
+                                <div class="widget category-list">
+                                    <h4 class="widget-header">类别</h4>
+                                    <ul class="category-list">
+                                        <li>
+                                            <a href="category.html">培训产品
+                                                <span>93</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="activityindex.html">活动策划
+                                                <span>233</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="goodsindex.html">精美商品
+                                                <span>183</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="layindex.html">法律服务
+                                                <span>343</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="product-grid-list">
+                                <div class="row mt-30">
+
+
+                                    <t t-if="products">
+                                        <t t-foreach="products" t-as="product">
+
+                                            <div class="col-sm-12 col-lg-4">
+                                                <!-- product card -->
+                                                <div class="product-item bg-light">
+                                                    <div class="card">
+                                                        <div class="thumb-content">
+                                                            <!-- <div class="price">$200</div> -->
+                                                            <a href="">
+                                                                <span t-field="product.pro_image"
+                                                                      t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
+
+                                                            </a>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">
+                                                                <a href="">
+                                                                    <span t-esc="product.pro_name"></span>
+                                                                </a>
+                                                            </h4>
+                                                            <ul class="list-inline product-meta">
+                                                                <li class="list-inline-item">
+                                                                    <t t-if="product.pro_type=='1'">活动策划</t>
+                                                                    <t t-if="product.pro_type=='2'">培训产品</t>
+                                                                    <t t-if="product.pro_type=='3'">精美商品</t>
+                                                                    <t t-if="product.pro_type=='4'">法律服务</t>
+                                                                </li>
+                                                            </ul>
+                                                            <p class="card-text" t-esc="product.pro_view"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!---一个商品div-->
+
+                                            </div>
+
+                                        </t>
+                                    </t>
+
+
+                                </div>
+
+                            </div>
+                            <div class="pagination justify-content-center">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">上一页</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">1</a>
+                                        </li>
+                                        <li class="page-item active">
+                                            <a class="page-link" href="#">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">####</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--============================
+            =            Footer            =
+            =============================-->
+            <footer class="footer section section-sm">
+                <!-- Container Start -->
+                <div class="container">
+                    <div class="row offset-md-1 offset-lg-0 block about">
+                        <img src="images/logo.jpg" height="100" width="200"/>
+                        <div class="footer-text">
+                        </div>
+                        <ul>
+                            <li>
+                                <a href="#">增值电信业务经营许可证：京B2-20080224</a>
+                            </li>
+                            <li>
+                                <a href="#">值电信业务经营许可证（跨地区）： B2-20150210</a>
+                            </li>
+                            <li>
+                                <a href="#">北京市网络食品销售第三方平台提供者备案：京网食A33010001
+                                    <br/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">信息网络传播视听许可证：1109364号</a>
+                            </li>
+                            <li>
+                                <a href="#">出版物网络交易平台服务经营备案号：新出发京备字第002号</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Container End -->
+            </footer>
+            <!-- Footer Bottom -->
+            <footer class="footer-bottom">
+                <!-- Container Start -->
+                <div class="container">
+                    <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
+                </div>
+                <!-- Container End -->
+                <!-- To Top -->
+                <div class="top-to">
+                    <a id="top" class="" href="">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+            </footer>
+
+
+        </body>
+
+    </template>
+
+</odoo>

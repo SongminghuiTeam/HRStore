@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="login" name="Login">
+        <head>
+            <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
+            <t t-call-assets="HRStore.my_custom_assets" tcss="false"/>
+        </head>
+        <body class="body-wrapper">
+
+
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav class="navbar navbar-expand-lg  navigation">
+                                <a class="navbar-brand" href="/home">
+                                    <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
+                                </a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav ml-auto main-nav ">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="/home">首页</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=2">培训产品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=1">活动策划</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=3">精美商品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=4">法律服务</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="dashboard.html">在线客服</a>
+                                        </li>
+                                    </ul>
+
+
+                                    <ul class="navbar-nav ml-auto mt-10">
+
+                                        <li class="nav-item">
+                                            <a class="nav-link add-button" href="/sign_up">注册</a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hero-area bg-1 text-center overly">
+                <!-- Container Start -->
+                <div class="container">
+                    <center>
+                        <div class="row-row">
+                            <div class="col-md-12">
+                                <!-- Header Contetnt -->
+                                <div class="content-block">
+                                    <div class="advance-search">
+                                        <form action="/home" method="post">
+
+                                            <div class="row-row">
+                                                <input name="username" type="text" class="input-search" id="userid" placeholder="账号"
+                                                       size="15" style="width:400px;height:50px;"/>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <div class="row-row">
+                                                <!-- Store Search -->
+                                                <input name="password" type="password" class="input-search" id="password"
+                                                       placeholder="密码" size="15" style="width:400px;height:50px;"/>
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                            </div>
+                                            <br/>
+                                            <center>
+                                                <button class="btn btn-main">登陆</button>
+                                            </center>
+                                        </form>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                </div>
+
+                            </div>
+                        </div>
+                    </center>
+                </div>
+                <!-- Container End -->
+            </section>
+
+        </body>
+    </template>
+
+</odoo>
