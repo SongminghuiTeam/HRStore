@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-    <template id="home" name="HRStore Home">
+    <template id="product_detail" name="HRStore Home">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
             <t t-call-assets="HRStore.my_custom_assets" tcss="false"/>
@@ -76,116 +76,127 @@
             =            Hero Area            =
             ================================-->
 
-            <section class="hero-area bg-1 text-center overly">
-                <!-- Container Start -->
+            <section class="blog single-blog section">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
-                            <!-- Header Contetnt -->
-                            <div class="content-block">
-                                <h1>Buy &amp; Sell Near You</h1>
-                                <p>Join the millions who buy and sell from each other
-                                    <br/>
-                                    everyday in local communities around the world
-                                </p>
-                                <div class="short-popular-category-list text-center">
-                                    <h2>Popular Category</h2>
+                        <div class="col-sm-12 col-lg-4">
+                            <!-- product card -->
+                            <div class="product-item bg-light">
+                                <div class="card">
+                                    <div class="thumb-content">
+                                        <!-- <div class="price">$200</div> -->
+                                        <a href="">
+                                            <span t-field="product.pro_image"
+                                                  t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
 
+                                        </a>
+                                    </div>
                                 </div>
-
                             </div>
-                            <!-- Advance Search -->
-                            <div class="advance-search">
-                                <form action="/search" method="post">
-                                    <div class="row">
-                                        <!-- Store Search -->
 
-                                        <div class="block d-flex ">
+                        </div>
+
+
+                        <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0" style="margin-right:70px;">
+                            <div class="sidebar">
+                                <!-- Category Widget -->
+                                <div class="">
+                                    <!-- Widget Header -->
+                                    <h5 class="widget-header">
+                                        <span t-field="product.pro_name"></span>
+                                    </h5>
+                                    <p>浏览量：
+                                        <span class="goods-info" style="word-wrap:break-word;">
+                                            <span t-field="product.pro_view"></span>
+                                        </span>
+                                    </p>
+                                    <div style="margin-bottom:20px;">
+                                        类别：
+                                        <span class="goods-type">
+                                            <t t-if="product.pro_type=='1'">活动策划</t>
+                                            <t t-if="product.pro_type=='2'">培训产品</t>
+                                            <t t-if="product.pro_type=='3'">精美商品</t>
+                                            <t t-if="product.pro_type=='4'">法律服务</t>
+                                        </span>
+                                    </div>
+                                    <div style="margin-bottom:30px;">
+                                        价格：
+                                        <span class="goods-price">￥
+                                            <span t-field="product.pro_price"></span>
+                                        </span>
+                                    </div>
+                                    <div class="goods-buy" style="margin:0 auto;text-align:center;margin-bottom:20px;">
+                                        <form action="/pre_order">
                                             <input type="hidden" name="csrf_token"
                                                    t-att-value="request.csrf_token()"/>
-                                            <input type="text" name="pro_name" class="input-search" id="search"
-                                                   placeholder="站内查找..."/>
-                                            <!-- Search Button -->
-                                            <input type="submit" class="btn btn-main" t-att-value="查找"/>
-                                            <!--<button class="btn btn-main">查找</button>-->
-                                        </div>
-
+                                            <input type="hidden" name="product_id"
+                                                   t-att-value="product.id"/>
+                                            <button type="submit" class="btn add-button">预购</button>
+                                        </form>
                                     </div>
-                                </form>
+                                    <div class="goods-add" style="margin:0 auto;text-align:center;">
 
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Container End -->
-            </section>
-
-
-            <!--===========================================
-            =            Popular deals section            =
-            ============================================-->
-
-            <section class="popular-deals section bg-gray">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="section-title">
-                                <h2>商 品 精 选</h2>
-                                <p>你 想 要 的 样 子，我 们 都 有</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <t t-if="products">
-                            <t t-foreach="products" t-as="product">
-                                <!---这是一个div-->
-                                <div class="col-sm-12 col-lg-4">
-                                    <!-- product card -->
-                                    <form action="/product_detail" method="post">
-                                        <input type="hidden" name="csrf_token"
-                                               t-att-value="request.csrf_token()"/>
-                                        <input type="hidden" name="product_id"
-                                               t-att-value="product.id"/>
-
-                                        <div class="product-item bg-light">
-                                            <div class="card">
-                                                <div class="thumb-content">
-
-                                                    <span t-field="product.pro_image"
-                                                          t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
-
-
-                                                </div>
-                                                <div class="card-body">
-
-                                                    <button type="submit" class="btn btn-link">
-                                                        <h4 class="card-title">
-                                                            <span t-esc="product.pro_name"></span>
-                                                        </h4>
-                                                    </button>
-
-
-                                                    <ul class="list-inline product-meta">
-
-                                                        <li class="list-inline-item">
-                                                            <t t-if="product.pro_type=='1'">类型：活动策划</t>
-                                                            <t t-if="product.pro_type=='2'">类型：培训产品</t>
-                                                            <t t-if="product.pro_type=='3'">类型：精美商品</t>
-                                                            <t t-if="product.pro_type=='4'">类型：法律服务</t>
-                                                        </li>
-                                                    </ul>
-                                                    <p>访问量：<span class="card-text" t-esc="product.pro_view"></span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!---一个商品div-->
-                                    </form>
+                                        <form action="/add_cart">
+                                            <input type="hidden" name="csrf_token"
+                                                   t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="product_id"
+                                                   t-att-value="product.id"/>
+                                            <button type="submit" class="btn add-button">加入购物车</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </t>
-                        </t>
-                        <!---这个div到这里结束-->
 
+                            </div>
+                        </div>
+
+                        <div class="col-md-10 offset-md-1 col-lg-3 offset-lg-0">
+                            <div class="sidebar">
+                                <!-- Category Widget -->
+                                <div class="widget category">
+                                    <!-- Widget Header -->
+                                    <h5 class="widget-header">商家信息</h5>
+                                    <p>商家名称：
+                                        <span id="bus-name" style="word-wrap:break-word;"></span>
+                                    </p>
+                                    <p>联系方式：
+                                        <span id="bus-tel" style="word-wrap:break-word;"></span>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+                            <!-- Recently Favorited -->
+                            <div class="widget dashboard-container my-adslist">
+                                <h3 class="widget-header">商品详细信息</h3>
+                                <div class="pro-detail">
+                                    <p>
+                                        <span t-esc="product.pro_detail"></span>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+                            <!-- Recently Favorited -->
+
+                            <div class="widget dashboard-container my-adslist">
+                                <h3 class="widget-header">评论</h3>
+                                <div class="user-comment">
+                                    <h4>
+                                        <span id="username">用户名称</span>
+                                    </h4>
+                                    <p>
+                                        <span id="time">2019年8月13日</span>
+                                    </p>
+                                    <span id="comment">这个商品很不错？！</span>
+                                    <hr/>
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
                 </div>

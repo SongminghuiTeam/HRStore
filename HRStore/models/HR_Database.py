@@ -39,6 +39,8 @@ class HRShop(models.Model):
 class HRProduct(models.Model):
     _name = 'hrstore.product'
     _description = 'HRStore Product'
+    _order = 'pro_view desc'
+
 
     pro_name = fields.Char('产品名称')
     pro_image = fields.Binary(string='图片', attachment=True)

@@ -13,8 +13,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <nav class="navbar navbar-expand-lg  navigation">
-                                <a class="navbar-brand" href="/home?user=#{user}">
+                             <nav class="navbar navbar-expand-lg  navigation">
+                                <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
                                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -24,61 +24,36 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav ml-auto main-nav ">
-                                        <li class="nav-item ">
-                                            <a class="nav-link" href="/home?user=#{user}">首页</a>
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="/home">首页</a>
                                         </li>
-                                        <t t-if="type=='2'">
-                                            <li class="nav-item active">
-                                                <a class="nav-link" href="/products?type=2&amp;user=#{user}">培训产品</a>
-                                            </li>
-                                        </t>
-                                        <t t-else="">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/products?type=2&amp;user=#{user}">培训产品</a>
-                                            </li>
-                                        </t>
-                                        <t t-if="type=='1'">
-                                            <li class="nav-item active">
-                                                <a class="nav-link" href="/products?type=1&amp;user=#{user}">活动策划</a>
-                                            </li>
-                                        </t>
-                                        <t t-else="">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/products?type=1&amp;user=#{user}">活动策划</a>
-                                            </li>
-                                        </t>
-                                        <t t-if="type=='3'">
-                                            <li class="nav-item active">
-                                                <a class="nav-link" href="/products?type=3&amp;user=#{user}">精美商品</a>
-                                            </li>
-                                        </t>
-                                        <t t-else="">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/products?type=3&amp;user=#{user}">精美商品</a>
-                                            </li>
-                                        </t>
-                                        <t t-if="type=='4'">
-                                            <li class="nav-item active">
-                                                <a class="nav-link" href="/products?type=4&amp;user=#{user}">法律服务</a>
-                                            </li>
-                                        </t>
-                                        <t t-else="">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/products?type=4&amp;user=#{user}">法律服务</a>
-                                            </li>
-                                        </t>
-
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/customer_service&amp;user=#{user}">在线客服</a>
+                                            <a class="nav-link" href="/products?type=2">培训产品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=1">活动策划</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=3">精美商品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=4">法律服务</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/customer_service">在线客服</a>
                                         </li>
                                     </ul>
-                                    <t t-if="user">
+                                    <t t-if="request.session.user_id">
                                         <ul class="navbar-nav ml-auto mt-10">
                                             <li class="nav-item">
-                                                <a href="/user_profile/#{user}">
-                                                    <img src="\HRStore\static\src\images\my.png" height="60px"
-                                                         width="50px"/>
-                                                </a>
+                                                <form action="/user_profile" method="post">
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="user_id"
+                                                           t-att-value="request.session.user_id"/>
+                                                    <input type="image"
+                                                           src="\HRStore\static\src\images\my.png" height="60px"/>
+                                                </form>
                                             </li>
                                         </ul>
                                     </t>
@@ -86,10 +61,10 @@
 
                                         <ul class="navbar-nav ml-auto mt-10">
                                             <li class="nav-item">
-                                                <a class="nav-link login-button" href="/login?user=#{user}">登陆</a>
+                                                <a class="nav-link login-button" href="/login">登陆</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link add-button" href="/sign_up?user=#{user}">注册</a>
+                                                <a class="nav-link add-button" href="/sign_up">注册</a>
                                             </li>
                                         </ul>
                                     </t>
@@ -128,7 +103,7 @@
                 <!-- Container Start -->
                 <div class="container">
                     <div class="row offset-md-1 offset-lg-0 block about">
-                        <img src="images/logo.jpg" height="100" width="200"/>
+                        <img src="\HRStore\static\src\images\logo.jpg" height="100" width="200"/>
                         <div class="footer-text">
                         </div>
                         <ul>

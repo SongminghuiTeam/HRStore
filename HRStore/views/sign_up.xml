@@ -129,6 +129,50 @@
                 </div>
                 <!-- Container End -->
             </section>
+            <footer class="footer section section-sm">
+                <!-- Container Start -->
+                <div class="container">
+                    <div class="row offset-md-1 offset-lg-0 block about">
+                        <img src="\HRStore\static\src\images\logo.jpg" height="100" width="200"/>
+                        <div class="footer-text">
+                        </div>
+                        <ul>
+                            <li>
+                                <a href="#">增值电信业务经营许可证：京B2-20080224</a>
+                            </li>
+                            <li>
+                                <a href="#">值电信业务经营许可证（跨地区）： B2-20150210</a>
+                            </li>
+                            <li>
+                                <a href="#">北京市网络食品销售第三方平台提供者备案：京网食A33010001
+                                    <br/>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">信息网络传播视听许可证：1109364号</a>
+                            </li>
+                            <li>
+                                <a href="#">出版物网络交易平台服务经营备案号：新出发京备字第002号</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Container End -->
+            </footer>
+            <!-- Footer Bottom -->
+            <footer class="footer-bottom">
+                <!-- Container Start -->
+                <div class="container">
+                    <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
+                </div>
+                <!-- Container End -->
+                <!-- To Top -->
+                <div class="top-to">
+                    <a id="top" class="" href="">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+            </footer>
         </body>
 
 
