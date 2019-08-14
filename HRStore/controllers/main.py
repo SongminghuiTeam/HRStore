@@ -11,6 +11,7 @@ class Hello(http.Controller):
     def register(self, **post):
         user_id = post.get('user_id')
         password = post.get('password')
+        password_confirm = post.get('password_confirm')
         user_type = post.get('user_type')
         username = post.get('username')
         telephone = post.get('telephone')
@@ -22,15 +23,20 @@ class Hello(http.Controller):
                 'message': "该账号已存在"
             })
         else:
-            request.env['hrstore.user'].sudo().create(
-                {'user_id': user_id, 'password': password, 'user_type': user_type})
-            if user_type == '1':
-                request.env['hrstore.commonuser'].sudo().create(
-                    {'username': username, 'telephone': telephone, 'user_id': user_id})
+            if password != password_confirm:
+                return request.render('HRStore.sign_up', {
+                    'message': "密码不匹配"
+                })
             else:
-                request.env['hrstore.shop'].sudo().create(
-                    {'username': username, 'telephone': telephone, 'user_id': user_id})
-            return request.render('HRStore.login')
+                request.env['hrstore.user'].sudo().create(
+                    {'user_id': user_id, 'password': password, 'user_type': user_type})
+                if user_type == '1':
+                    request.env['hrstore.commonuser'].sudo().create(
+                        {'username': username, 'telephone': telephone, 'user_id': user_id})
+                else:
+                    request.env['hrstore.shop'].sudo().create(
+                        {'shopname': username, 'telephone': telephone, 'user_id': user_id})
+                return request.render('HRStore.login')
 
     # 访问登录页面
     @http.route('/login', auth="public")
@@ -86,12 +92,13 @@ class Hello(http.Controller):
         product2_num = request.env['hrstore.product'].search_count([('pro_type', '=', "2"), ('state', '=', "1")])
         product3_num = request.env['hrstore.product'].search_count([('pro_type', '=', "3"), ('state', '=', "1")])
         product4_num = request.env['hrstore.product'].search_count([('pro_type', '=', "4"), ('state', '=', "1")])
+        request.session['product1_num'] = product1_num
+        request.session['product2_num'] = product2_num
+        request.session['product3_num'] = product3_num
+        request.session['product4_num'] = product4_num
+
         return request.render('HRStore.products', {
             'products': all_products,
-            'product1_num': product1_num,
-            'product2_num': product2_num,
-            'product3_num': product3_num,
-            'product4_num': product4_num,
             'type': type,
 
         })
@@ -117,7 +124,7 @@ class Hello(http.Controller):
     @http.route('/search', type='http', method='POST', website=True, auth="public")
     def search(self, **post):
         pro_name = post.get('pro_name')
-        all_products = request.env['hrstore.product'].search([('state', '=', "1"), ('pro_name', '=', pro_name)])
+        all_products = request.env['hrstore.product'].search([('state', '=', "1"), ('pro_name', 'ilike', pro_name)])
         return request.render('HRStore.home', {
             'products': all_products
         })
@@ -128,8 +135,12 @@ class Hello(http.Controller):
         pro_name = post.get('pro_name')
         type = post.get('type')
         all_products = request.env['hrstore.product'].search(
-            [('state', '=', "1"), ('pro_name', '=', pro_name), ('pro_type', '=', type)])
-        return request.render('HRStore.home', {
+            [('state', '=', "1"), ('pro_name', 'ilike', pro_name), ('pro_type', '=', type)])
+
+
+        return request.render('HRStore.products', {
+
+            'type': type,
             'products': all_products
         })
 
@@ -137,10 +148,75 @@ class Hello(http.Controller):
     @http.route('/product_detail', type='http', method='POST', website=True, auth="public")
     def product_detail(self, **post):
         pro_id = post.get('product_id')
+        # 获取产品的详细信息
+        all_products = request.env['hrstore.product'].search(
+            [('state', '=', "1"), ('id', '=', pro_id)])
+
+        # 获取产品的评论
+        orders = request.env['hrstore.order'].search(
+            [('pro_id', '=', pro_id)])
+        all_comments = []
+        for order in orders:
+            comments = request.env['hrstore.comment'].search(
+                [('order_id', '=', order.id)])
+            for comment in comments:
+                all_comments.append(comment)
+
+        print(all_comments)
+        for comment in all_comments:
+            print(comment)
+        if len(all_products) != 0:
+            product = all_products[0]
+            # 获取商家的信息
+            user = request.env['hrstore.shop'].search(
+                [('id', '=', product.user_id.id)])
+            return request.render('HRStore.product_detail', {
+                'product': product,
+                'comments': all_comments,
+                'shop_user': user
+            })
+
+    # 预购功能
+    @http.route('/pre_order', type='http', method='POST', website=True, auth="public")
+    def pre_order(self, **post):
+        user_id = post.get('user_id')
+        pro_id = post.get('product_id')
         all_products = request.env['hrstore.product'].search(
             [('state', '=', "1"), ('id', '=', pro_id)])
         if len(all_products) != 0:
             product = all_products[0]
-            return request.render('HRStore.product_detail', {
-                'product': product
-            })
+        order_price = product.pro_price
+        if user_id:
+            message = "预购成功,订单待处理......"
+            user = request.env['hrstore.user'].search([('user_id', '=', user_id)])
+            request.env['hrstore.order'].sudo().create(
+                {'state': '0', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
+        else:
+            message = "请先登录"
+
+        return request.render('HRStore.product_detail', {
+            'product': product,
+            'message': message
+        })
+
+    # 加入购物车功能
+    @http.route('/add_cart', type='http', method='POST', website=True, auth="public")
+    def add_cart(self, **post):
+        user_id = post.get('user_id')
+        pro_id = post.get('product_id')
+        all_products = request.env['hrstore.product'].search(
+            [('state', '=', "1"), ('id', '=', pro_id)])
+        if len(all_products) != 0:
+            product = all_products[0]
+        if user_id:
+            message = "成功加入购物车"
+            user = request.env['hrstore.user'].search([('user_id', '=', user_id)])
+            request.env['hrstore.cart'].sudo().create(
+                {'user_id': user.id, 'pro_id': pro_id})
+        else:
+            message = "请先登录"
+
+        return request.render('HRStore.product_detail', {
+            'product': product,
+            'message': message
+        })

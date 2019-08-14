@@ -108,7 +108,7 @@
                         <!-- Store Search -->
                         <input type="hidden" name="csrf_token"
                                t-att-value="request.csrf_token()"/>
-                        <input type="hidden" name="type"
+                        <input type="hidden" name="type" t-att-value="type"
                                />
                         <div class="block d-flex ">
                             <input type="text" name="pro_name" class="input-search" id="search" placeholder="站内查找..."/>
@@ -139,29 +139,29 @@
                                     <ul class="category-list">
                                         <li>
                                             <a href="/products?type=2">培训产品
-                                                <t t-if="product1_num">
-                                                    <span t-esc="product2_num"></span>
+                                                <t t-if="request.session.product2_num">
+                                                    <span t-esc="request.session.product2_num"></span>
                                                 </t>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/products?type=1">活动策划
-                                                <t t-if="product1_num">
-                                                    <span t-esc="product1_num"></span>
+                                                <t t-if="request.session.product1_num">
+                                                    <span t-esc="request.session.product1_num"></span>
                                                 </t>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/products?type=3">精美商品
-                                                <t t-if="product1_num">
-                                                    <span t-esc="product3_num"></span>
+                                                <t t-if="request.session.product3_num">
+                                                    <span t-esc="request.session.product3_num"></span>
                                                 </t>
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/products?type=4">法律服务
-                                                <t t-if="product1_num">
-                                                    <span t-esc="product4_num"></span>
+                                                <t t-if="request.session.product4_num">
+                                                    <span t-esc="request.session.product4_num"></span>
                                                 </t>
                                             </a>
                                         </li>

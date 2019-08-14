@@ -106,6 +106,14 @@
                                             <br/>
                                             <div class="row-row">
                                                 <!-- Store Search -->
+                                                <input type="password" name="password_confirm"
+                                                       class="form-control input-search"
+                                                       id="password"
+                                                       placeholder="确认密码" size="15" style="width:400px;height:50px;"/>
+                                            </div>
+                                            <br/>
+                                            <div class="row-row">
+                                                <!-- Store Search -->
                                                 <input type="text" name="telephone" class="form-control input-search"
                                                        id="telephoto"
                                                        placeholder="联系方式" size="15" style="width:400px;height:50px;"/>

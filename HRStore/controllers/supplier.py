@@ -1,5 +1,4 @@
 from odoo import http
-from odoo.local_addons.HRStore.models.HR_Database import HRProduct
 from odoo.http import request
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.models.ir_http import sitemap_qs2dom

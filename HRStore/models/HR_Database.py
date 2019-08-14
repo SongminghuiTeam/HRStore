@@ -50,7 +50,7 @@ class HRProduct(models.Model):
     state = fields.Selection(string='产品状态', selection=[('0', '待审核'), ('1', '已发布')], default='0')
     pro_view = fields.Integer(default=0, string='访问量')
     user_id = fields.Many2one(
-        'hrstore.user',
+        'hrstore.shop',
         string='供应商',
         ondelete='set null',
     )
@@ -98,7 +98,7 @@ class HRComment(models.Model):
     _description = 'HRStore Comment'
 
     content = fields.Text('内容')
-    time = fields.Datetime('评论时间')
+    username = fields.Char('用户昵称')
 
     user_id = fields.Many2one(
         'hrstore.user',
@@ -106,8 +106,8 @@ class HRComment(models.Model):
         ondelete='set null',
     )
 
-    pro_id = fields.Many2one(
-        'hrstore.product',
+    order_id = fields.Many2one(
+        'hrstore.order',
         string='产品ID',
         ondelete='set null',
     )

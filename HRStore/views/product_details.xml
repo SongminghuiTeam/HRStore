@@ -126,21 +126,31 @@
                                         </span>
                                     </div>
                                     <div class="goods-buy" style="margin:0 auto;text-align:center;margin-bottom:20px;">
-                                        <form action="/pre_order">
+                                        <t t-if="message">
+                                            <div class="alert alert-warning">
+                                                <span t-esc="message"></span>
+                                            </div>
+                                        </t>
+                                        <form action="/pre_order" method="post">
                                             <input type="hidden" name="csrf_token"
                                                    t-att-value="request.csrf_token()"/>
                                             <input type="hidden" name="product_id"
                                                    t-att-value="product.id"/>
+                                            <input type="hidden" name="user_id"
+                                                   t-att-value="request.session.user_id"/>
                                             <button type="submit" class="btn add-button">预购</button>
                                         </form>
+
                                     </div>
                                     <div class="goods-add" style="margin:0 auto;text-align:center;">
 
-                                        <form action="/add_cart">
+                                        <form action="/add_cart" method="post">
                                             <input type="hidden" name="csrf_token"
                                                    t-att-value="request.csrf_token()"/>
                                             <input type="hidden" name="product_id"
                                                    t-att-value="product.id"/>
+                                            <input type="hidden" name="user_id"
+                                                   t-att-value="request.session.user_id"/>
                                             <button type="submit" class="btn add-button">加入购物车</button>
                                         </form>
                                     </div>
@@ -156,10 +166,16 @@
                                     <!-- Widget Header -->
                                     <h5 class="widget-header">商家信息</h5>
                                     <p>商家名称：
-                                        <span id="bus-name" style="word-wrap:break-word;"></span>
+                                        <t t-if="shop_user">
+                                            <span id="bus-name" style="word-wrap:break-word;"
+                                                  t-esc="shop_user.shopname"></span>
+                                        </t>
                                     </p>
                                     <p>联系方式：
-                                        <span id="bus-tel" style="word-wrap:break-word;"></span>
+                                        <t t-if="shop_user">
+                                            <span id="bus-name" style="word-wrap:break-word;"
+                                                  t-esc="shop_user.telephone"></span>
+                                        </t>
                                     </p>
                                 </div>
 
@@ -184,17 +200,20 @@
 
                             <div class="widget dashboard-container my-adslist">
                                 <h3 class="widget-header">评论</h3>
-                                <div class="user-comment">
-                                    <h4>
-                                        <span id="username">用户名称</span>
-                                    </h4>
-                                    <p>
-                                        <span id="time">2019年8月13日</span>
-                                    </p>
-                                    <span id="comment">这个商品很不错？！</span>
-                                    <hr/>
-                                </div>
-
+                                <t t-if="comments">
+                                    <t t-foreach="comments" t-as="comment">
+                                        <div class="user-comment">
+                                            <h4>
+                                                <span id="username" t-esc="comment.username">用户名称</span>
+                                            </h4>
+                                            <p>
+                                                <span id="time" t-esc="comment.create_date">2019年8月13日</span>
+                                            </p>
+                                            <span id="comment" t-esc="comment.content">这个商品很不错？！</span>
+                                            <hr/>
+                                        </div>
+                                    </t>
+                                </t>
                             </div>
                         </div>
 
