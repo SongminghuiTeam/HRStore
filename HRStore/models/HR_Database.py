@@ -70,12 +70,17 @@ class HROrder(models.Model):
     order_price = fields.Float('价格', (10, 2))
 
     user_id = fields.Many2one(
-        'hrstore.user',
+        'hrstore.commonuser',
         string='用户ID',
         ondelete='set null',
     )
 
-    pro_id = fields.Char('产品ID')
+    #pro_id = fields.Char('产品ID')
+    pro_id = fields.Many2one(
+        'hrstore.product',
+        string='产品ID',
+        ondelete='set null',
+    )
 
 
 class HRCart(models.Model):
@@ -101,7 +106,7 @@ class HRComment(models.Model):
     username = fields.Char('用户昵称')
 
     user_id = fields.Many2one(
-        'hrstore.user',
+        'hrstore.commonuser',
         string='用户ID',
         ondelete='set null',
     )
