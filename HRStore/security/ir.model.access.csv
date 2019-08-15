@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acl_hrstore_userdft,hrstore.user_default,model_hrstore_user,,1,0,0,0
+acl_hrstore_user,hrstore.user_default,model_hrstore_user,group_hrstore,1,1,1,1
+acl_hrstore_productdft,hrstore.product_defaulte,model_hrstore_product,,1,0,0,0
+acl_hrstore_product,hrstore.product_defaulte,model_hrstore_product,group_hrstore,1,1,1,1
+

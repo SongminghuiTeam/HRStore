@@ -198,7 +198,7 @@
                 <!-- Container Start -->
                 <div class="container">
                     <div class="row offset-md-1 offset-lg-0 block about">
-                        <img src="\HRStore\static\src\images\logo.jpg" height="100" width="200"/>
+                        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="200"/>
                         <div class="footer-text">
                         </div>
                         <ul>

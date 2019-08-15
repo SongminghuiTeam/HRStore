@@ -4,8 +4,11 @@
     'description': "Summer Work",
     'author': "Team One",
     'version': '2.0.2',
-
-    'data': ['views/HRStore.xml',
+    'category': 'Uncategorized',
+    'data': [
+            'security/groups.xml',
+            'security/ir.model.access.csv',
+            'views/admin.xml',
              'views/login.xml',
              'views/sign_up.xml',
              'views/template.xml',
@@ -17,5 +20,5 @@
 
              ],
 
-    'depends': ['website'],
+    'depends': ['base','website'],
 }
