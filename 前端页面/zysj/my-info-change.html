@@ -127,28 +127,32 @@
 				<div class="widget personal-info">
 					<h3 class="widget-header user">编辑个人信息</h3>
 					<form action="#">
-						<!-- Name -->
-						<div class="form-group">
-						    <label for="name">姓名</label>
-						    <input type="text" class="form-control" id="name">
-						</div>
 						<!-- File chooser -->
 						<div class="form-group choose-file">
 							<i class="fa fa-user text-center"></i>
-						    <input type="file" class="form-control-file d-inline" id="input-file">
+						    
+							
+							<label for="file" class="btn btn-transparent btn-sm">选择头像</label>
+							<input id="file" type="file" style="display:none">
 						 </div>
+						<!-- Name -->
+						<div class="form-group">
+						    <label for="name">姓名</label>
+						    <input type="text" class="form-control input-search" id="name" size="15" style="width:400px;height:50px;">
+						</div>
+						
 						<!-- tel -->
 						<div class="form-group">
 						    <label for="tel">电话号码</label>
-						    <input type="text" class="form-control" id="tel">
+						    <input type="text" class="form-control input-search" id="tel" size="15" style="width:400px;height:50px;">
 						</div>
 						<!-- address -->
 						<div class="form-group">
 						    <label for="address">地址</label>
-						    <input type="text" class="form-control" id="address">
+						    <input type="text" class="form-control input-search" id="address" size="15" style="width:600px;height:100px;">
 						</div>
 						<!-- Submit button -->
-						<button class="btn btn-transparent">保存</button>
+						<button class="btn btn-transparent btn-sm">保存</button>
 					</form>
 				</div>
 				<!-- Change Password -->
@@ -158,17 +162,17 @@
 						<!-- Current Password -->
 						<div class="form-group">
 						    <label for="current-password">旧密码</label>
-						    <input type="password" class="form-control" id="current-password">
+						    <input type="password" class="form-control input-search" id="current-password" size="15" style="width:400px;height:50px;">
 						</div>
 						<!-- New Password -->
 						<div class="form-group">
 						    <label for="new-password">新密码</label>
-						    <input type="password" class="form-control" id="new-password">
+						    <input type="password" class="form-control input-search" id="new-password" size="15" style="width:400px;height:50px;">
 						</div>
 						<!-- Confirm New Password -->
 						<div class="form-group">
 						    <label for="confirm-password">确认新密码</label>
-						    <input type="password" class="form-control" id="confirm-password">
+						    <input type="password" class="form-control input-search" id="confirm-password" size="15" style="width:400px;height:50px;">
 						</div>
 						<!-- Submit Button -->
 						<button class="btn btn-transparent">保存</button>
