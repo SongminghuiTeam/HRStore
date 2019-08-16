@@ -27,6 +27,7 @@ class HRCommonUser(models.Model):
 class HRShop(models.Model):
     _name = 'hrstore.shop'
     _description = 'HRStore Shop'
+    _rec_name = 'shopname'
 
     user_image = fields.Binary(string='头像', attachment=True)
     shopname = fields.Char('名称')

@@ -114,10 +114,9 @@ class Hello(http.Controller):
             if user.user_type == 1:
                 # 改成转跳到普通用户的
                 return request.render('HRStore.customer_service')
-            elif user.user_type == '2':
-                supplier = request.env['hrstore.shop'].search([('shopname', '=', username)])
-                request.session['telephone'] = supplier.telephone
-                return request.render('HRStore.supplier_addProduct')
+            elif user.user_type == 2:
+                # 改成转跳到供应商的
+                return request.render('HRStore.customer_service')
 
         return request.render('HRStore.customer_service')
 
@@ -189,7 +188,7 @@ class Hello(http.Controller):
         order_price = product.pro_price
         if user_id:
             message = "预购成功,订单待处理......"
-            user = request.env['hrstore.user'].search([('user_id', '=', user_id)])
+            user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
             request.env['hrstore.order'].sudo().create(
                 {'state': '0', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
         else:

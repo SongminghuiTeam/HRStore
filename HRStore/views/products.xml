@@ -109,7 +109,7 @@
                         <input type="hidden" name="csrf_token"
                                t-att-value="request.csrf_token()"/>
                         <input type="hidden" name="type" t-att-value="type"
-                               />
+                        />
                         <div class="block d-flex ">
                             <input type="text" name="pro_name" class="input-search" id="search" placeholder="站内查找..."/>
                             <!-- Search Button -->
@@ -179,34 +179,49 @@
 
                                             <div class="col-sm-12 col-lg-4">
                                                 <!-- product card -->
-                                                <div class="product-item bg-light">
-                                                    <div class="card">
-                                                        <div class="thumb-content">
-                                                            <!-- <div class="price">$200</div> -->
+                                                <form action="/product_detail" method="post">
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="product_id"
+                                                           t-att-value="product.id"/>
+
+                                                    <div class="product-item bg-light">
+                                                        <div class="card">
+                                                            <div class="thumb-content">
 
                                                                 <span t-field="product.pro_image"
                                                                       t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
 
 
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <h4 class="card-title">
-                                                                <a href="">
-                                                                    <span t-esc="product.pro_name"></span>
-                                                                </a>
-                                                            </h4>
-                                                            <ul class="list-inline product-meta">
-                                                                <li class="list-inline-item">
-                                                                    <t t-if="product.pro_type=='1'">活动策划</t>
-                                                                    <t t-if="product.pro_type=='2'">培训产品</t>
-                                                                    <t t-if="product.pro_type=='3'">精美商品</t>
-                                                                    <t t-if="product.pro_type=='4'">法律服务</t>
-                                                                </li>
-                                                            </ul>
-                                                            <p class="card-text" t-esc="product.pro_view"></p>
+                                                            </div>
+                                                            <div class="card-body">
+
+                                                                <button type="submit" class="btn btn-link">
+                                                                    <h4 class="card-title">
+                                                                        <span t-esc="product.pro_name"></span>
+                                                                    </h4>
+                                                                </button>
+
+
+                                                                <ul class="list-inline product-meta">
+
+                                                                    <li class="list-inline-item">
+                                                                        <t t-if="product.pro_type=='1'">类型：活动策划</t>
+                                                                        <t t-if="product.pro_type=='2'">类型：培训产品</t>
+                                                                        <t t-if="product.pro_type=='3'">类型：精美商品</t>
+                                                                        <t t-if="product.pro_type=='4'">类型：法律服务</t>
+                                                                    </li>
+                                                                </ul>
+                                                                <p>访问量：
+                                                                    <span class="card-text"
+                                                                          t-esc="product.pro_view"></span>
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    <!---一个商品div-->
+                                                </form>
+
                                                 <!---一个商品div-->
 
                                             </div>

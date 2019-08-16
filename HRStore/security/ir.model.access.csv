@@ -1,6 +1,16 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-acl_hrstore_userdft,hrstore.user_default,model_hrstore_user,,1,0,0,0
+acl_hrstore_userdft,hrstore.user_default,model_hrstore_user,,1,1,1,1
 acl_hrstore_user,hrstore.user_default,model_hrstore_user,group_hrstore,1,1,1,1
-acl_hrstore_productdft,hrstore.product_defaulte,model_hrstore_product,,1,0,0,0
-acl_hrstore_product,hrstore.product_defaulte,model_hrstore_product,group_hrstore,1,1,1,1
+acl_hrstore_productdft,hrstore.product_default,model_hrstore_product,,1,1,1,1
+acl_hrstore_product,hrstore.product_default,model_hrstore_product,group_hrstore,1,1,1,1
+acl_hrstore_commonuserdft,hrstore.commonuser_default,model_hrstore_commonuser,,1,1,1,1
+acl_hrstore_commonuser,hrstore.commonuser_default,model_hrstore_commonuser,group_hrstore,1,1,1,1
+acl_hrstore_shopdft,hrstore.shop_default,model_hrstore_shop,,1,1,1,1
+acl_hrstore_shop,hrstore.shop_default,model_hrstore_shop,group_hrstore,1,1,1,1
+acl_hrstore_orderdft,hrstore.order_default,model_hrstore_order,,1,1,1,1
+acl_hrstore_order,hrstore.order_default,model_hrstore_order,group_hrstore,1,1,1,1
+acl_hrstore_cartdft,hrstore.cart_default,model_hrstore_order,,1,1,1,1
+acl_hrstore_cart,hrstore.cart_default,model_hrstore_order,group_hrstore,1,1,1,1
+acl_hrstore_commentdft,hrstore.comment_default,model_hrstore_comment,,1,1,1,1
+acl_hrstore_comment,hrstore.comment_default,model_hrstore_comment,group_hrstore,1,1,1,1
 
