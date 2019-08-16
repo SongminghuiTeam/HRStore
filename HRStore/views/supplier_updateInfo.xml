@@ -20,25 +20,25 @@
 					            </button>
 					            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 						            <ul class="navbar-nav ml-auto main-nav ">
-							            <li class="nav-item active">
-								            <a class="nav-link" href="index.html">首页</a>
-							            </li>
-							            <li class="nav-item">
-								            <a class="nav-link" href="category.html">培训产品</a>
-							            </li>
-	            						<li class="nav-item">
-						            		<a class="nav-link" href="activityindex.html">活动策划</a>
-            							</li>
-			            				<li class="nav-item">
-						            		<a class="nav-link" href="goodsindex.html">精美商品</a>
-							            </li>
-	            						<li class="nav-item">
-				            				<a class="nav-link" href="layindex.html">法律服务</a>
-							            </li>
-            							<li class="nav-item">
-				            				<a class="nav-link" href="dashboard.html">在线客服</a>
-							            </li>
-						            </ul>
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="/home">首页</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=2">培训产品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=1">活动策划</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=3">精美商品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=4">法律服务</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/customer_service">在线客服</a>
+                                        </li>
+                                    </ul>
 						            <ul class="navbar-nav ml-auto mt-10">
                                         <li class="nav-item">
             								<a href="index.html" /><img src="images/my.png" height="60px" width="50px" />
@@ -73,10 +73,10 @@
             					<div class="widget user-dashboard-menu">
 			            			<ul>
 						            	<li><a href="/supplier_addProduct"> 发布商品</a></li>
-				            			<li><a href="#"> 待审核</a></li>
-                          				<li><a href="ghs-published.html"> 已发布</a></li>
-              			            	<li><a href="ghs-order.html"> 订单</a></li>
-              				            <li><a href="">退出登录</a></li>
+                                    	<li><a href="/supplier_changeStatus"> 待审核</a></li>
+										<li><a href="ghs-published.html"> 已发布</a></li>
+                                    	<li><a href="ghs-order.html"> 订单</a></li>
+                                    	<li><a href="/login">退出登录</a></li>
 						            </ul>
 					            </div>
 				            </div>

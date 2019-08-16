@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<odoo>
+     <template id="supplier_changeStatus" name="supplier_changeStatus">
+        <head>
+            <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
+            <t t-call-assets="HRStore.my_custom_assets" tcss="false"/>
+        </head>
+
+     <body class="body-wrapper">
+
+        <section>
+	        <div class="container">
+		        <div class="row">
+			        <div class="col-md-12">
+				        <nav class="navbar navbar-expand-lg  navigation">
+					        <a class="navbar-brand" href="index.html">
+						        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220" />
+					        </a>
+
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					            <span class="navbar-toggler-icon"></span>
+					        </button>
+
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+						        <ul class="navbar-nav ml-auto main-nav ">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="/home">首页</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/products?type=2">培训产品</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/products?type=1">活动策划</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/products?type=3">精美商品</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/products?type=4">法律服务</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/customer_service">在线客服</a>
+                                    </li>
+                                </ul>
+						        <ul class="navbar-nav ml-auto mt-10">
+							        <li class="nav-item">
+								        <a  href="index.html"><img src="/HRStore/static/src/images/my.png" height="60px" width="50px" /></a>
+							        </li>
+						        </ul>
+					        </div>
+				        </nav>
+			        </div>
+		        </div>
+	        </div>
+        </section>
+        <!--==================================
+        =          供货商查看待审核          =
+        ===================================-->
+        <section class="dashboard section">
+	        <!-- Container Start -->
+	        <div class="container">
+		        <!-- Row Start -->
+		        <div class="row">
+			        <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
+				        <div class="sidebar">
+					        <!-- User Widget -->
+					        <div class="widget user-dashboard-profile">
+						        <!-- User Image -->
+						        <div class="profile-thumb">
+							        <img src="/HRStore/static/src/images/user/user-thumb.jpg" alt="" class="rounded-circle" />
+						        </div>
+						        <!-- User Name -->
+						        <h5 class="text-center"><span id="username" t-esc="request.session.user_id"></span></h5>
+				    		    <p><span id="u-tel" style="word-wrap:break-word;" t-esc="request.session.telephone"></span></p>
+		    				    <a href="/supplier_updateInfo" class="btn btn-main-sm">编辑</a>
+					        </div>
+					        <!-- Dashboard Links -->
+					        <div class="widget user-dashboard-menu">
+						        <ul>
+							        <li><a href="/supplier_addProduct"> 发布商品</a></li>
+                                    <li class="active" ><a href="/supplier_changeStatus"> 待审核</a></li>
+                                    <li><a href="ghs-published.html"> 已发布</a></li>
+                                    <li><a href="ghs-order.html"> 订单</a></li>
+                                    <li><a href="/login">退出登录</a></li>
+						        </ul>
+					        </div>
+				        </div>
+                    </div>
+                    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+                    <!-- Recently Favorited -->
+                        <div class="widget dashboard-container my-adslist">
+                            <h3 class="widget-header">待审核商品</h3>
+                            <table class="table table-responsive product-dashboard-table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">商品图片</th>
+                                        <th class="text-center">商品</th>
+                                        <th class="text-center">提交日期</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="products" t-as="p">
+                                        <td class="product-thumb">
+                                          <img width="80px" height="auto" src="/HRStore/static/src/images/products/products-1.jpg" alt="image description" /></td>
+                                            <td class="product-details">
+                                                <h3 class="title" t-esc="p.pro_name" />
+                                                <span class="add-id" id="business"><strong>商家:</strong><p t-esc="request.session.user_id"/></span>
+                                                <span id="price"><strong>价格: </strong> <p t-esc="p.pro_price"/></span>
+                                                <span id="price"><strong>类别: </strong>
+                                                    <t t-if="p.pro_type == '1'">
+                                                        <p>活动策划</p>
+                                                    </t>
+                                                    <t t-if="p.pro_type == '2'">
+                                                        <p>培训产品</p>
+                                                    </t>
+                                                    <t t-if="p.pro_type == '3'">
+                                                        <p>精美商品</p>
+                                                    </t>
+                                                    <t t-if="p.pro_type == '4'">
+                                                        <p>法律服务</p>
+                                                    </t>
+                                                </span>
+                                            </td>
+                                            <td class="product-category"><span id="date" class="categories" t-esc="p.create_date"></span></td>
+                                            <td class="product-category">
+                                                <form action="/changeProductStatus">
+                                                    <input name="pro_id" type="hidden" t-att-value="p.id"/>
+                                                    <button class="btn btn-outline-success">通过</button>
+                                                </form>
+                                            </td>
+                                            <td class="product-category">
+                                                <form action="/deleteProduct">
+                                                    <input name="pro_id" type="hidden" t-att-value="p.id"/>
+                                                    <button class="btn btn-outline-danger">删除</button>
+                                                </form>
+                                            </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row End -->
+	        </div>
+	    <!-- Container End -->
+        </section>
+        <!--============================
+        =            Footer            =
+        =============================-->
+
+        <!--============================
+            =            Footer            =
+            =============================-->
+            <footer class="footer section section-sm">
+                <!-- Container Start -->
+                <div class="container">
+                    <div class="row offset-md-1 offset-lg-0 block about">
+                        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="200" />
+                        <div class="footer-text">
+                        </div>
+                        <ul>
+                            <li>
+                                <a href="#">增值电信业务经营许可证：京B2-20080224</a>
+                            </li>
+                            <li>
+                                <a href="#">值电信业务经营许可证（跨地区）： B2-20150210</a>
+                            </li>
+                            <li>
+                                <a href="#">北京市网络食品销售第三方平台提供者备案：京网食A33010001</a>
+                                <br/>
+                            </li>
+                            <li>
+                                <a href="#">信息网络传播视听许可证：1109364号</a>
+                            </li>
+                            <li>
+                                <a href="#">出版物网络交易平台服务经营备案号：新出发京备字第002号</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Container End -->
+            </footer>
+
+         <!-- Footer Bottom -->
+        <footer class="footer-bottom">
+            <!-- Container Start -->
+            <div class="container">
+                <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
+            </div>
+            <!-- Container End -->
+            <!-- To Top -->
+            <div class="top-to">
+                <a id="top" class="" href=""><i class="fa fa-angle-up"></i></a>
+            </div>
+        </footer>
+     </body>
+    </template>
+</odoo>

@@ -114,9 +114,10 @@ class Hello(http.Controller):
             if user.user_type == 1:
                 # 改成转跳到普通用户的
                 return request.render('HRStore.customer_service')
-            elif user.user_type == 2:
-                # 改成转跳到供应商的
-                return request.render('HRStore.customer_service')
+            elif user.user_type == '2':
+                supplier = request.env['hrstore.shop'].search([('shopname', '=', username)])
+                request.session['telephone'] = supplier.telephone
+                return request.render('HRStore.supplier_addProduct')
 
         return request.render('HRStore.customer_service')
 

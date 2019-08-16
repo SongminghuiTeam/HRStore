@@ -15,7 +15,7 @@ class HRStore(http.Controller):
         price = post.get('pro_price')
         detail = post.get('pro_detail')
         type = post.get('pro_type')
-        state = 0
+        state = '0'
         view = 0
         image = post.get('pro_image')
 
@@ -98,3 +98,50 @@ class HRStore(http.Controller):
                 'supplier': supplier_new
             })
 
+    @http.route('/supplier_changeStatus', method="post")
+    def changeStatus(self):
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+        userID = supplier.id
+
+        products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '0')])
+
+        return request.render('HRStore.supplier_changeStatus', {
+            'products': products
+        })
+
+    @http.route('/changeProductStatus', method="post")
+    def changeProductStatus(self, **post):
+        pro_id = post.get('pro_id')
+        print(pro_id)
+
+        pro = request.env['hrstore.product'].search([('id', '=', pro_id)])
+        info = {'state': '1'}
+        pro.write(info)
+
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+        userID = supplier.id
+
+        products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '0')])
+
+        return request.render('HRStore.supplier_changeStatus', {
+            'products': products
+        })
+
+    @http.route('/deleteProduct', method="post")
+    def deleteProduct(self, **post):
+        pro_id = post.get('pro_id')
+        print(pro_id)
+
+        request.env['hrstore.product'].search([('id', '=', pro_id)]).unlink()
+
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+        userID = supplier.id
+
+        products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '0')])
+
+        return request.render('HRStore.supplier_changeStatus', {
+            'products': products
+        })
