@@ -76,33 +76,37 @@
 							        <img src="/HRStore/static/src/images/user/user-thumb.jpg" alt="" class="rounded-circle" />
 						        </div>
 						        <!-- User Name -->
-						        <h5 class="text-center"><span id="username">昵称</span></h5>
-				    		    <p><span id="u-tel" style="word-wrap:break-word;">电话号码</span></p>
-					    	    <p><span id="u-address" style="word-wrap:break-word;">地址</span></p>
-		    				    <a href="ghs-info-change.html" class="btn btn-main-sm">编辑</a>
+						        <h5 class="text-center"><span id="username" t-esc="request.session.user_id"></span></h5>
+				    		    <p><span id="u-tel" style="word-wrap:break-word;" t-esc="request.session.telephone"></span></p>
+		    				    <a href="/supplier_updateInfo" class="btn btn-main-sm">编辑</a>
                                 </div>
 	        				    <!-- Dashboard Links -->
                                 <div class="widget user-dashboard-menu">
                                     <ul>
-			             				<li class="active" ><a href="ghs-index.html"> 发布商品</a></li>
-				            			<li><a href="ghs-pre.html"> 待审核</a></li>
-					            		<li><a href="ghs-published.html"> 已发布</a></li>
-						            	<li><a href="ghs-order.html"> 订单</a></li>
-							            <li><a href="">退出登录</a></li>
+			             				<li class="active" ><a href="/supplier_addProduct"> 发布商品</a></li>
+				            			<li><a href="#"> 待审核</a></li>
+                          				<li><a href="ghs-published.html"> 已发布</a></li>
+              			            	<li><a href="ghs-order.html"> 订单</a></li>
+              				            <li><a href="">退出登录</a></li>
 						            </ul>
 					            </div>
         				    </div>
 			            </div>
 			            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+							<t t-if="message">
+								<div class="alert alert-warning">
+									<span t-esc="message"></span>
+								</div>
+							</t>
 				            <!-- Edit Personal Info -->
             				<div class="widget personal-info">
 	            				<h3 class="widget-header user">编辑产品信息</h3>
-					            <form action="supplier_addProduct" method="post">
+					            <form action="supplier_add" method="post">
 						        <!-- pro-name -->
         						<div class="form-group">
         						    <label for="pro-name">产品名称</label>
 		        				    <input name="pro_name" type="text" class="form-control" id="pro-name" />
-									<input type="hidden" name="userID" value="test" />
+									<!--<input type="hidden" name="userID" />-->
 									<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
 				        		</div>
 						        <!-- File chooser -->
