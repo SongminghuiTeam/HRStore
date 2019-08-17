@@ -163,4 +163,111 @@ class HRStore(http.Controller):
         pro_id = post.get('pro_id')
         print(pro_id)
 
-        return request.render('HRStore.supplier_updatePublishedProduct')
+        product = request.env['hrstore.product'].search([('id', '=', pro_id)])
+
+        print(product.pro_detail)
+
+        return request.render('HRStore.supplier_updatePublishedProduct',{
+            'product': product
+        })
+
+    @http.route('/updateProduct', method="post")
+    def update(self, **post):
+        pro_id = post.get('pro_id')
+        print('xx')
+        print(pro_id)
+
+        name = post.get('pro_name')
+        price = post.get('pro_price')
+        detail = post.get('pro_detail')
+        type = post.get('pro_type')
+
+
+
+        product = request.env['hrstore.product'].search([('id', '=', pro_id)])
+
+        info = {'pro_name': name, 'pro_price': price, 'pro_detail': detail, 'pro_type': type}
+        product.write(info)
+
+        new_product = request.env['hrstore.product'].search([('id', '=', pro_id)])
+
+        return request.render('HRStore.supplier_updatePublishedProduct', {
+            'product': new_product,
+            'message': '产品信息更新成功'
+        })
+
+    @http.route('/supplier_orderlist', method="post")
+    def orderlist(self):
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+        userID = supplier.id
+
+        products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '1')])
+
+        orderinfos = []
+        for product in products:
+            proID = product.id
+            orders = request.env['hrstore.order'].search([('pro_id', '=', proID)])
+
+            for order in orders:
+                pro_ID = order.pro_id.id
+                print(proID)
+                product_search = request.env['hrstore.product'].search([('id', '=', pro_ID)])
+
+                consumerID = request.env['hrstore.commonuser'].search([('id', '=', order.user_id.id)])
+
+                orderinfo = []
+
+                orderinfo.append(consumerID.username)
+                orderinfo.append(product_search.pro_name)
+                orderinfo.append(product_search.pro_price)
+                orderinfo.append(product_search.pro_type)
+                orderinfo.append(order.create_date)
+                orderinfo.append(order.state)
+                orderinfo.append(order.id)
+
+                orderinfos.append(orderinfo)
+
+        return request.render('HRStore.supplier_orderlist', {
+            'orders': orderinfos
+        })
+
+    @http.route('/deleteOrder', method="post")
+    def deleteRoute(self, **post):
+        orderID = post.get('order_id')
+
+        request.env['hrstore.order'].search([('id', '=', orderID)]).unlink()
+
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+        userID = supplier.id
+
+        products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '1')])
+
+        orderinfos = []
+        for product in products:
+            proID = product.id
+            orders = request.env['hrstore.order'].search([('pro_id', '=', proID)])
+
+            for order in orders:
+                pro_ID = order.pro_id.id
+                print(proID)
+                product_search = request.env['hrstore.product'].search([('id', '=', pro_ID)])
+
+                consumerID = request.env['hrstore.commonuser'].search([('id', '=', order.user_id.id)])
+
+                orderinfo = []
+
+                orderinfo.append(consumerID.username)
+                orderinfo.append(product_search.pro_name)
+                orderinfo.append(product_search.pro_price)
+                orderinfo.append(product_search.pro_type)
+                orderinfo.append(order.create_date)
+                orderinfo.append(order.state)
+                orderinfo.append(order.id)
+
+                orderinfos.append(orderinfo)
+
+        return request.render('HRStore.supplier_orderlist', {
+            'orders': orderinfos
+        })

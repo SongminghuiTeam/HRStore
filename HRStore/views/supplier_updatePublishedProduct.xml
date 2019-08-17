@@ -78,21 +78,28 @@
                                     <li><a href="/supplier_addProduct"> 发布商品</a></li>
                                     <li><a href="/supplier_changeStatus"> 待审核</a></li>
                                     <li class="active"><a href="/supplier_publishedProduct"> 已发布</a></li>
-                                    <li><a href="ghs-order.html"> 订单</a></li>
+                                    <li><a href="/supplier_orderlist"> 订单</a></li>
                                     <li><a href="/login">退出登录</a></li>
                                 </ul>
 					        </div>
                         </div>
 			        </div>
 			        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+						<t t-if="message">
+							<div class="alert alert-warning">
+								<span t-esc="message"></span>
+							</div>
+						</t>
     				<!-- Edit Personal Info -->
 	    			<div class="widget personal-info">
 		    			<h3 class="widget-header user">修改产品信息</h3>
-			    		<form action="#">
+			    		<form action="updateProduct">
 				    		<!-- pro-name -->
 					    	<div class="form-group">
 						        <label for="pro-name">产品名称</label>
-						        <input type="text" class="form-control" id="pro-name" />
+						        <input name="pro_name" type="text" class="form-control" id="pro-name" t-att-value="product.pro_name"/>
+								<input type="hidden" name="pro_id" t-att-value="product.id" />
+								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
 						    </div>
     						<!-- File chooser -->
 	    					<div class="form-group choose-file">
@@ -102,17 +109,48 @@
 					    	<!-- price -->
 						    <div class="form-group">
 						        <label for="price">价格</label>
-    						    <input type="text" class="form-control" id="price" />
+    						    <input name="pro_price" type="text" class="form-control" id="price" t-att-value="product.pro_price" />
 	    					</div>
 		    				<!-- type -->
 			    			<div class="form-group">
 				    		    <label for="type">商品类型</label>
-					    	    <input type="text" class="form-control" id="type" />
+					    	    <t t-if="product.pro_type == '1'">
+									<select name="pro_type" class="custom-select">
+										<option value='1'>活动策划</option>
+										<option value='2'>培训产品</option>
+										<option value='3'>精美商品</option>
+										<option value='4'>法律服务</option>
+									</select>
+								</t>
+								<t t-if="product.pro_type == '2'">
+									<select name="pro_type" class="custom-select">
+										<option value='2'>培训产品</option>
+										<option value='1'>活动策划</option>
+										<option value='3'>精美商品</option>
+										<option value='4'>法律服务</option>
+									</select>
+								</t>
+								<t t-if="product.pro_type== '3'">
+									<select name="pro_type" class="custom-select">
+										<option value='3'>精美商品</option>
+										<option value='1'>活动策划</option>
+										<option value='2'>培训产品</option>
+										<option value='4'>法律服务</option>
+									</select>
+								</t>
+								<t t-if="product.pro_type == '4'">
+									<select name="pro_type" class="custom-select">
+										<option value='4'>法律服务</option>
+										<option value='1'>活动策划</option>
+										<option value='2'>培训产品</option>
+										<option value='3'>精美商品</option>
+									</select>
+								</t>
 						    </div>
     						<!-- detail -->
 	    					<div class="form-group mb-30">
                       			<label for="detail">商品详情</label>
-                      			<textarea class="form-control" id="detail" rows="8"></textarea>
+                      			<input name="pro_detail" type="text" class="form-control" id="detail" t-att-value="product.pro_detail"></input>
               	    		</div>
 					    	<!-- Submit button -->
 						    <button class="btn btn-transparent">修改</button>

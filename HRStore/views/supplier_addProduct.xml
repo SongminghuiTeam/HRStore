@@ -86,7 +86,7 @@
 			             				<li class="active"><a href="/supplier_addProduct"> 发布商品</a></li>
                                     	<li><a href="/supplier_changeStatus"> 待审核</a></li>
 										<li><a href="/supplier_publishedProduct"> 已发布</a></li>
-                                    	<li><a href="ghs-order.html"> 订单</a></li>
+                                    	<li><a href="/supplier_orderlist"> 订单</a></li>
                                     	<li><a href="/login">退出登录</a></li>
 						            </ul>
 					            </div>
