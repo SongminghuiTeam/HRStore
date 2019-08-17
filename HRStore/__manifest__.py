@@ -17,7 +17,10 @@
              'views/customer_service.xml',
              'views/product_details.xml',
              'views/supplier_addProduct.xml',
-
+             'views/customer_info.xml',
+             'views/customer_modifyInfo.xml',
+             'views/customer_order.xml',
+             'views/customer_comment.xml'
              ],
 
     'depends': ['base','website'],

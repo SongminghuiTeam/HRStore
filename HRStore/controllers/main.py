@@ -106,14 +106,32 @@ class Hello(http.Controller):
     # 进入我的
     @http.route('/user_profile', auth="public", type='http', website=True)
     def user_profile(self, **post):
+        print("进入我的")
         username = post.get('user_id')
         print(username)
         userslist = request.env['hrstore.user'].search([('user_id', '=', username)])
         if len(userslist) != 0:
             user = userslist[0]
-            if user.user_type == 1:
+            if user.user_type == "1":
                 # 改成转跳到普通用户的
-                return request.render('HRStore.customer_service')
+                commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', username)])  # 用户详细信息
+                cart_records = request.env['hrstore.cart'].sudo().search([('user_id', '=', username)])  # 购物车信息
+                cart_products = []
+                for cart_record in cart_records:
+                    product_info = request.env['hrstore.product'].sudo().search([('state', '=', "1"), ('id', '=', cart_record.pro_id)])
+                    shop_info = request.env['hrstore.shop'].sudo().search([('id', '=', product_info.user_id.id)]) 
+                    cart_product = []
+                    cart_product.append(product_info)
+                    cart_product.append(cart_record.cart_num)
+                    cart_product.append(shop_info.shopname)
+                    cart_product.append(cart_record.id)
+                    #print(cart_record.id)
+                    cart_products.append(cart_product)
+                return request.render('HRStore.customer_info', {
+                    'user_info': user,
+                    'commonuser_info': commonuser,
+                    'cart_products': cart_products
+                })
             elif user.user_type == '2':
                 supplier = request.env['hrstore.shop'].search([('shopname', '=', username)])
                 request.session['telephone'] = supplier.telephone

@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <template id="customer_modifyInfo" name="HRStore Products">
+        <head>
+            <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
+            <t t-call-assets="HRStore.my_custom_assets" tcss="false"/>
+        </head>
+        <body class="body-wrapper">
+
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav class="navbar navbar-expand-lg  navigation">
+                                <a class="navbar-brand" href="/home">
+                                    <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
+                                </a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav ml-auto main-nav ">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="/home">首页</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=2">培训产品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=1">活动策划</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=3">精美商品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=4">法律服务</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/customer_service">在线客服</a>
+                                        </li>
+                                    </ul>
+                                    <t t-if="request.session.user_id">
+                                        <ul class="navbar-nav ml-auto mt-10">
+                                            <li class="nav-item">
+                                                <form action="/user_profile" method="post">
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="user_id"
+                                                           t-att-value="request.session.user_id"/>
+                                                    <input type="image"
+                                                           src="\HRStore\static\src\images\my.png" height="60px"/>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </t>
+                                    <t t-else="">
+                                        <ul class="navbar-nav ml-auto mt-10">
+                                            <li class="nav-item">
+                                                <a class="nav-link login-button" href="/login">登陆</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link add-button" href="/sign_up">注册</a>
+                                            </li>
+                                        </ul>
+                                    </t>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--==================================
+            =            User Profile            =
+            ===================================-->
+
+            <section class="user-profile section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
+                            <div class="sidebar">
+                                <!-- User Widget -->
+                                <div class="widget user-dashboard-profile">
+                                    <!-- User Image -->
+                                    <div class="profile-thumb">
+                                        <span t-field="commonuser_info.user_image"
+                                              t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
+                                    </div>
+                                    <!-- User Name -->
+                                    <h5 class="text-center">
+                                        <span t-esc="commonuser_info.username"></span>
+                                    </h5>
+                                    <p>
+                                        <span t-esc="commonuser_info.telephone"></span>
+                                    </p>
+                                    <p>
+                                        <span t-esc="commonuser_info.address"></span>
+                                    </p>
+                                </div>
+                                <!-- Dashboard Links -->
+                                <div class="widget user-dashboard-menu">
+                                    <ul>
+                                        <li>
+                                            <a href="my-info.html">
+                                                <i class="fa fa-user"></i>
+                                                购物车
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="my-order.html">
+                                                <i class="fa fa-bookmark-o"></i>
+                                                订单
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/logout">
+                                                <i class="fa fa-cog"></i>
+                                                退出登录
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+                            <t t-if="message">
+                                <div class="alert alert-warning">
+                                    <span t-esc="message"></span>
+                                </div>
+                            </t>
+                            <!-- Edit Personal Info -->
+                            <div class="widget personal-info">
+                                <h3 class="widget-header user">编辑个人信息</h3>
+                                <form action="commonuser_modifyDetailed" method="post">
+                                    <!-- File chooser -->
+                                    <div class="form-group choose-file">
+                                        <i class="fa fa-user text-center"></i>
+                                        <img itemprop="image" style="margin-top: -53px; margin-left:19px; width:80px;"
+                                             class="img img-responsive"/>
+                                        <input id="uploadImage" name="user_image" type="file" class="file"
+                                               multiple="true" data-show-upload="true" data-show-caption="true"
+                                               data-show-preview="true" onchange="PreviewImage();"/>
+                                        <!--<label for="file" class="btn btn-transparent btn-sm">选择头像</label>
+                                        <input name="user_image" id="file" type="file" style="display:none"/>-->
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    </div>
+                                    <!-- Name -->
+                                    <div class="form-group">
+                                        <label for="name">姓名</label>
+                                        <input name="username" t-att-value="commonuser_info.username" type="text"
+                                               class="form-control input-search" size="15"
+                                               style="width:400px;height:50px;"/>
+                                    </div>
+
+                                    <!-- tel -->
+                                    <div class="form-group">
+                                        <label for="tel">电话号码</label>
+                                        <input name="telephone" t-att-value="commonuser_info.telephone" type="text"
+                                               class="form-control input-search" id="tel" size="15"
+                                               style="width:400px;height:50px;"/>
+                                    </div>
+                                    <!-- address -->
+                                    <div class="form-group">
+                                        <label for="address">地址</label>
+                                        <input name="address" t-att-value="commonuser_info.address" type="text"
+                                               class="form-control input-search" id="address" size="15"
+                                               style="width:600px;height:100px;"/>
+                                    </div>
+                                    <!-- Submit button -->
+                                    <button class="btn btn-transparent btn-sm">保存</button>
+                                </form>
+                            </div>
+                            <!-- Change Password -->
+                            <div class="widget change-password">
+                                <h3 class="widget-header user">修改密码</h3>
+                                <form action="costomer_modifypwd" method="post">
+                                    <!-- Current Password -->
+                                    <div class="form-group">
+                                        <label for="current-password">旧密码</label>
+                                        <input name="old_pwd" type="password" class="form-control input-search"
+                                               id="current-password"
+                                               size="15" style="width:400px;height:50px;"/>
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    </div>
+                                    <!-- New Password -->
+                                    <div class="form-group">
+                                        <label for="new-password">新密码</label>
+                                        <input name="new_pwd" type="password" class="form-control input-search"
+                                               id="new-password"
+                                               size="15" style="width:400px;height:50px;"/>
+                                    </div>
+                                    <!-- Confirm New Password -->
+                                    <div class="form-group">
+                                        <label for="confirm-password">确认新密码</label>
+                                        <input name="ensure_pwd" type="password" class="form-control input-search"
+                                               id="confirm-password"
+                                               size="15" style="width:400px;height:50px;"/>
+                                    </div>
+                                    <!-- Submit Button -->
+                                    <button class="btn btn-transparent">保存</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--============================
+            =            Footer            =
+            =============================-->
+            <footer class="footer section section-sm">
+                <!-- Container Start -->
+                <div class="container">
+                    <div class="row offset-md-1 offset-lg-0 block about">
+                        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="200"/>
+                        <div class="footer-text">
+                        </div>
+                        <ul>
+                            <li>
+                                <a href="#">增值电信业务经营许可证：京B2-20080224</a>
+                            </li>
+                            <li>
+                                <a href="#">值电信业务经营许可证（跨地区）： B2-20150210</a>
+                            </li>
+                            <li>
+                                <a href="#">北京市网络食品销售第三方平台提供者备案：京网食A33010001</a>
+                            </li>
+                            <li>
+                                <a href="#">信息网络传播视听许可证：1109364号</a>
+                            </li>
+                            <li>
+                                <a href="#">出版物网络交易平台服务经营备案号：新出发京备字第002号</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Container End -->
+            </footer>
+            <!-- Footer Bottom -->
+            <footer class="footer-bottom">
+                <!-- Container Start -->
+                <div class="container">
+                    <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
+                </div>
+                <!-- Container End -->
+                <!-- To Top -->
+                <div class="top-to">
+                    <a id="top" class="" href="">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+            </footer>
+        </body>
+
+    </template>
+
+</odoo>
