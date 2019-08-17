@@ -92,11 +92,7 @@ class HRCart(models.Model):
 
     user_id = fields.Char('账号', required=True)
 
-    pro_id = fields.One2many(
-        'hrstore.product',
-        'id',
-        string='产品ID'
-    )
+    pro_id = fields.Integer('产品id')
 
 
 class HRComment(models.Model):
