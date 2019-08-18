@@ -138,7 +138,14 @@
                                                    t-att-value="product.id"/>
                                             <input type="hidden" name="user_id"
                                                    t-att-value="request.session.user_id"/>
-                                            <button type="submit" class="btn add-button">预购</button>
+                                            <input type="hidden" name="pro_type"
+                                                   t-att-value="product.pro_type"/>
+                                            <t t-if="product.pro_type=='3'">
+                                                <button type="submit" class="btn add-button">购买</button>
+                                            </t>
+                                            <t t-else="">
+                                                <button type="submit" class="btn add-button">预购</button>
+                                            </t>
                                         </form>
 
                                     </div>

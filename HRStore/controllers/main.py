@@ -118,14 +118,15 @@ class Hello(http.Controller):
                 cart_records = request.env['hrstore.cart'].sudo().search([('user_id', '=', username)])  # 购物车信息
                 cart_products = []
                 for cart_record in cart_records:
-                    product_info = request.env['hrstore.product'].sudo().search([('state', '=', "1"), ('id', '=', cart_record.pro_id)])
-                    shop_info = request.env['hrstore.shop'].sudo().search([('id', '=', product_info.user_id.id)]) 
+                    product_info = request.env['hrstore.product'].sudo().search(
+                        [('state', '=', "1"), ('id', '=', cart_record.pro_id)])
+                    shop_info = request.env['hrstore.shop'].sudo().search([('id', '=', product_info.user_id.id)])
                     cart_product = []
                     cart_product.append(product_info)
                     cart_product.append(cart_record.cart_num)
                     cart_product.append(shop_info.shopname)
                     cart_product.append(cart_record.id)
-                    #print(cart_record.id)
+                    # print(cart_record.id)
                     cart_products.append(cart_product)
                 return request.render('HRStore.customer_info', {
                     'user_info': user,
@@ -157,7 +158,6 @@ class Hello(http.Controller):
         type = post.get('type')
         all_products = request.env['hrstore.product'].search(
             [('state', '=', "1"), ('pro_name', 'ilike', pro_name), ('pro_type', '=', type)])
-
 
         return request.render('HRStore.products', {
 
@@ -202,6 +202,7 @@ class Hello(http.Controller):
     def pre_order(self, **post):
         user_id = post.get('user_id')
         pro_id = post.get('product_id')
+        pro_type = post.get('pro_type')
         all_products = request.env['hrstore.product'].search(
             [('state', '=', "1"), ('id', '=', pro_id)])
         if len(all_products) != 0:
@@ -210,11 +211,17 @@ class Hello(http.Controller):
         if user_id:
             user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
             user2 = request.env['hrstore.user'].search([('user_id', '=', user_id)])
-            if user2.user_type=='2':
+            if user2.user_type == '2':
                 message = "请使用普通用户账号登录"
             else:
-                message = "预购成功,订单待处理......"
-                request.env['hrstore.order'].sudo().create(
+                if pro_type=='3':
+                    message = "购买成功！"
+                    request.env['hrstore.order'].sudo().create(
+                        {'state': '1', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
+                else:
+
+                    message = "预购成功,订单待处理......"
+                    request.env['hrstore.order'].sudo().create(
                     {'state': '0', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
         else:
             message = "请先登录"
@@ -240,11 +247,11 @@ class Hello(http.Controller):
             else:
                 message = "成功加入购物车"
                 # 查找该用户的cart中是否已经存在该商品
-                cart_records = request.env['hrstore.cart'].search([('user_id', '=', user_id),('pro_id', '=', pro_id)])
+                cart_records = request.env['hrstore.cart'].search([('user_id', '=', user_id), ('pro_id', '=', pro_id)])
                 if len(cart_records) != 0:
                     cart_record = cart_records[0]
-                    num = cart_record.cart_num+1
-                    info={'cart_num': num}
+                    num = cart_record.cart_num + 1
+                    info = {'cart_num': num}
                     cart_record.write(info)
                 else:
                     request.env['hrstore.cart'].sudo().create(

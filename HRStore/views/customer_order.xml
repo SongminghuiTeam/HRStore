@@ -133,9 +133,10 @@
                                 <table class="table table-responsive product-dashboard-table">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">商品图片</th>
-                                            <th class="text-center">商品</th>
-                                            <th class="text-center">数量</th>
+                                            <th>商品图片</th>
+                                            <th></th>
+                                            <th>商品</th>
+                                            <th>数量</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -147,25 +148,25 @@
 
                                                     <td class="product-thumb">
                                                         <span t-field="one_order[0].pro_image"
-                                                              t-options="{'widget': 'image'}" width="80px"
-                                                              height="auto"/>
+                                                              t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
                                                     </td>
-                                                    <td class="product-details">
+                                                    <td><span></span></td>
+                                                    <td>
                                                         <h3 class="title">
                                                             <span t-esc="one_order[0].pro_name"
                                                                   class="title"></span>
                                                         </h3>
                                                         <span class="add-id" id="business">
-                                                            <strong>商家:</strong>
-                                                            <span t-esc="one_order[1].shopname"></span>
+                                                            <span>商家:</span>
+                                                            <label t-esc="one_order[1].shopname"></label>
                                                         </span>
+                                                        <br/>
                                                         <span id="price">
-                                                            <strong>价格:
-                                                                <span t-esc="one_order[0].pro_price"></span>
-                                                            </strong>
+                                                            <span>价格: </span>
+                                                                <label t-esc="one_order[0].pro_price"></label>
                                                         </span>
                                                     </td>
-                                                    <td class="product-category">
+                                                    <td>
                                                         <span id="num" class="categories" t-esc="one_order[4]"></span>
                                                     </td>
                                                     <td>

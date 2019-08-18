@@ -164,9 +164,10 @@
                                 <table class="table table-responsive product-dashboard-table">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">商品图片</th>
-                                            <th class="text-center">商品</th>
-                                            <th class="text-center">数量</th>
+                                            <th>商品图片</th>
+                                            <th></th>
+                                            <th>商品</th>
+                                            <th>数量</th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -183,28 +184,31 @@
                                                         <!--<img width="80px" height="auto" t-field="cart_product[0].pro_image"
                                                              alt="image description" />-->
                                                         <span t-field="cart_product[0].pro_image"
-                                                              t-options="{'widget': 'image'}" width="80px"
-                                                              height="auto"/>
+                                                              t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
                                                     </td>
-                                                    <td class="product-details">
+                                                    <td>
+                                                        <span></span>
+                                                    </td>
+                                                    <td>
                                                         <!--<h3 class="title">Macbook Pro 15inch（商品名称）</h3>-->
                                                         <h3 class="title">
                                                             <span t-esc="cart_product[0].pro_name"
                                                                   class="title"></span>
                                                         </h3>
                                                         <span class="add-id" id="business">
-                                                            <strong>商家:
-                                                                <span t-esc="cart_product[2]"></span>
-                                                            </strong>
+                                                            <span>商家:</span>
+                                                            <label t-esc="cart_product[2]"></label>
+
                                                         </span>
+                                                        <br/>
                                                         <span id="price">
-                                                            <strong>价格:
-                                                                <span t-esc="cart_product[0].pro_price"></span>
-                                                            </strong>
+                                                            <span>价格:</span>
+                                                            <label t-esc="cart_product[0].pro_price"></label>
+
                                                         </span>
                                                     </td>
                                                     <form action="/cart_product_purchase" method="post">
-                                                        <td class="product-category">
+                                                        <td>
                                                             <span class="jian" id="jian" style="cursor:pointer;">-
                                                             </span>
                                                             <input name="pro_num" type="text"
@@ -212,12 +216,8 @@
                                                                    style="width:50px;text-align:center;height:22px;"/>
                                                             <span class="jia" id="jia" style="cursor:pointer;">+</span>
                                                         </td>
-                                                        <td>
+                                                        <td text="center">
                                                             <center>
-
-                                                                <!--<a class="submit" href="">
-                                                                    购买
-                                                                </a>-->
                                                                 <input type="hidden" name="csrf_token"
                                                                        t-att-value="request.csrf_token()"/>
                                                                 <input name="user_id" type="hidden"
@@ -226,22 +226,20 @@
                                                                        t-att-value="cart_product[0].id"/>
                                                                 <input name="cart_id" type="hidden"
                                                                        t-att-value="cart_product[3]"/>
-                                                                <button class="btn btn-link" style="width:30px">购买
+                                                                <button class="btn btn-outline-success btn-sm">购买
                                                                 </button>
 
                                                             </center>
                                                         </td>
                                                     </form>
-                                                    <td class="action" data-title="Action">
+                                                    <td>
                                                         <form action="/cart_product_delete" method="post">
                                                             <!--<a class="delete" href="/cart_product_delete">-->
                                                             <input type="hidden" name="csrf_token"
                                                                    t-att-value="request.csrf_token()"/>
                                                             <input name="cart_id" type="hidden"
                                                                    t-att-value="cart_product[3]"/>
-                                                            <!--<i class="fa fa-trash"></i>
-                                                        </a>-->
-                                                            <button class="btn btn-default btn-circle btn-danger">
+                                                            <button class="btn btn-default btn-circle btn-outline-danger">
                                                                 <i class="fa fa-trash"></i>
                                                             </button>
                                                         </form>

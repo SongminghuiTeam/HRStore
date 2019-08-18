@@ -278,4 +278,5 @@ class Customer(http.Controller):
     @http.route('/logout', type='http', method='POST', website=True, auth="public")
     def logout(self, **post):
         print("退出")
+        request.session['user_id']=False
         return request.render('HRStore.login')
