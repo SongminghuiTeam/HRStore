@@ -41,6 +41,7 @@ class Hello(http.Controller):
     # 访问登录页面
     @http.route('/login', auth="public")
     def login(self):
+		request.session['user_id']=False
         return request.render('HRStore.login')
 
     # 访问注册页面
