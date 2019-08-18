@@ -178,11 +178,12 @@
                                                                        t-att-value="user_info.user_id"/>
                                                                 <input name="order_id" type="hidden"
                                                                        t-att-value="one_order[2].id"/>
-                                                                <!--<a class="submit" href="/comment">
-                                                                    评价
-                                                                </a>-->
-                                                                <button class="btn btn-link" style="width:30px">评价
-                                                                </button>
+
+                                                                 <t t-if="one_order[3]=='已完成'">
+                                                                    <button class="btn btn-link" style="width:30px">评价</button>
+                                                                </t>
+
+
                                                             </form>
                                                         </center>
                                                     </td>

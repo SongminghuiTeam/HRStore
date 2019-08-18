@@ -86,7 +86,8 @@
                                 </div>
                             </t>
                             <div class="block comment">
-                                <h4>评论</h4>
+                                <strong>评论内容：</strong>
+                                <br/>
                                 <form action="/add_comment" method="post">
                                     <input type="hidden" name="csrf_token"
                                            t-att-value="request.csrf_token()"/>
@@ -95,11 +96,10 @@
                                     <input name="order_id" type="hidden"
                                            t-att-value="order_id"/>
                                     <div class="form-group mb-30">
-                                        <label for="message">内容</label>
-                                        <textarea name="content" class="form-control" id="message" rows="16"></textarea>
+                                        <textarea name="content" class="form-control" id="message" rows="32" style="width:600px;height:100px;"></textarea>
                                     </div>
                                     <center>
-                                        <button class="btn btn-transparent">提交</button>
+                                        <button class="btn btn-transparent">发表</button>
                                     </center>
                                 </form>
                             </div>
