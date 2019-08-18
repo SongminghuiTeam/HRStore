@@ -133,9 +133,11 @@ class Hello(http.Controller):
                     'cart_products': cart_products
                 })
             elif user.user_type == '2':
-                supplier = request.env['hrstore.shop'].search([('shopname', '=', username)])
-                request.session['telephone'] = supplier.telephone
-                return request.render('HRStore.supplier_addProduct')
+                supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+                print(supplier)
+                return request.render('HRStore.supplier_addProduct', {
+                    'supplier': supplier
+                })
 
         return request.render('HRStore.customer_service')
 

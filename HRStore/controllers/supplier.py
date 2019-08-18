@@ -4,10 +4,18 @@ from odoo.http import request
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.models.ir_http import sitemap_qs2dom
 
+from odoo import tools
+import base64
+
 class HRStore(http.Controller):
     @http.route('/supplier_addProduct', auth="public")
     def addProduct(self, **post):
-        return request.render('HRStore.supplier_addProduct')
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+
+        return request.render('HRStore.supplier_addProduct', {
+            'supplier': supplier
+        })
 
     @http.route('/supplier_add', method="post")
     def supplier_addProduct(self, **post):
@@ -17,9 +25,9 @@ class HRStore(http.Controller):
         type = post.get('pro_type')
         state = '0'
         view = 0
-        image_route = post.get('image_route')
+        image_route = post.get('pro_image')
 
-        print(image_route)
+        pro_image = tools.image_resize_image_big(base64.b64encode(open(image_route, 'rb').read()))
 
         username = request.session['user_id']
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
@@ -30,9 +38,12 @@ class HRStore(http.Controller):
         request.env['hrstore.product'].sudo().create({'pro_name': name, 'pro_price': price, 'pro_detail': detail,
                                                       'pro_type': type, 'state': state, 'pro_view': view,
                                                       'user_id': userID,
-                                                      'image_route': image_route})
+                                                      'pro_image': pro_image})
 
-        return request.render('HRStore.supplier_addProduct', {'message': "产品添加成功"})
+        return request.render('HRStore.supplier_addProduct', {
+            'message': "产品添加成功",
+            'supplier': supplier
+        })
 
     @http.route('/supplier_updateInfo', auth="public")
     def updateProduct(self):
@@ -86,12 +97,22 @@ class HRStore(http.Controller):
         shopname = post.get('shopname')
         telephone = post.get('telephone')
         address = post.get('address')
+        image_route = post.get('user_image')
 
         username = request.session['user_id']
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
 
-        info = {'shopname': shopname, 'telephone': telephone, 'address': address}
-        supplier.write(info)
+        if image_route:
+            user_image = tools.image_resize_image_big(base64.b64encode(open(image_route, 'rb').read()))
+            info = {'shopname': shopname, 'telephone': telephone, 'address': address, 'user_image': user_image}
+            supplier.write(info)
+        else:
+            info = {'shopname': shopname, 'telephone': telephone, 'address': address}
+            supplier.write(info)
+
+        request.session['telephone'] = supplier.telephone
+        request.session['address'] = supplier.address
+        request.session['user_image'] = supplier.user_image
 
         supplier_new = request.env['hrstore.shop'].search([('user_id', '=', username)])
         print(supplier_new.address)
@@ -108,9 +129,11 @@ class HRStore(http.Controller):
         userID = supplier.id
 
         products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '0')])
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
 
         return request.render('HRStore.supplier_changeStatus', {
-            'products': products
+            'products': products,
+            'supplier': supplier
         })
 
     @http.route('/deleteProduct', method="post")
@@ -127,7 +150,8 @@ class HRStore(http.Controller):
         products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '0')])
 
         return request.render('HRStore.supplier_changeStatus', {
-            'products': products
+            'products': products,
+            'supplier': supplier
         })
 
     @http.route('/supplier_publishedProduct', method="post")
@@ -141,7 +165,8 @@ class HRStore(http.Controller):
         products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '1')])
 
         return request.render('HRStore.supplier_publishedProduct', {
-            'published_products': products
+            'published_products': products,
+            'supplier': supplier
         })
 
     @http.route('/deletePublishedProduct', method="post")
@@ -158,7 +183,8 @@ class HRStore(http.Controller):
         products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '1')])
 
         return request.render('HRStore.supplier_publishedProduct', {
-            'published_products': products
+            'published_products': products,
+            'supplier': supplier
         })
 
     @http.route('/updatePublishedProduct', method="post")
@@ -168,10 +194,14 @@ class HRStore(http.Controller):
 
         product = request.env['hrstore.product'].search([('id', '=', pro_id)])
 
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+
         print(product.pro_detail)
 
         return request.render('HRStore.supplier_updatePublishedProduct',{
-            'product': product
+            'product': product,
+            'supplier': supplier
         })
 
     @http.route('/updateProduct', method="post")
@@ -194,9 +224,13 @@ class HRStore(http.Controller):
 
         new_product = request.env['hrstore.product'].search([('id', '=', pro_id)])
 
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+
         return request.render('HRStore.supplier_updatePublishedProduct', {
             'product': new_product,
-            'message': '产品信息更新成功'
+            'message': '产品信息更新成功',
+            'supplier': supplier
         })
 
     @http.route('/supplier_orderlist', method="post")
@@ -233,7 +267,8 @@ class HRStore(http.Controller):
                 orderinfos.append(orderinfo)
 
         return request.render('HRStore.supplier_orderlist', {
-            'orders': orderinfos
+            'orders': orderinfos,
+            'supplier': supplier
         })
 
     @http.route('/ChangeOrder', method="post")
@@ -276,5 +311,6 @@ class HRStore(http.Controller):
                 orderinfos.append(orderinfo)
 
         return request.render('HRStore.supplier_orderlist', {
-            'orders': orderinfos
+            'orders': orderinfos,
+            'supplier': supplier
         })

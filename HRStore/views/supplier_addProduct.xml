@@ -9,140 +9,180 @@
 
         <body class="body-wrapper">
             <section>
-	        <div class="container">
-        		<div class="row">
-			        <div class="col-md-12">
-				        <nav class="navbar navbar-expand-lg  navigation">
-					        <a class="navbar-brand" href="index.html">
-						        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220" />
-					        </a>
-					        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					            <span class="navbar-toggler-icon"></span>
-					        </button>
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-						        <ul class="navbar-nav ml-auto main-nav ">
-									<li class="nav-item active">
-										<a class="nav-link" href="/home">首页</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="/products?type=2">培训产品</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="/products?type=1">活动策划</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="/products?type=3">精美商品</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="/products?type=4">法律服务</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="/customer_service">在线客服</a>
-									</li>
-								</ul>
-						        <ul class="navbar-nav ml-auto mt-10">
-							        <li class="nav-item">
-								        <a  href="index.html"><img src="/HRStore/static/src/images/my.png" height="60px" width="50px" /></a>
-							        </li>
-						        </ul>
-						        <!--<ul class="navbar-nav ml-auto mt-10">
-							        <li class="nav-item">
-								        <a class="nav-link login-button" href="index.html">登陆</a>
-							        </li>
-							        <li class="nav-item">
-								        <a class="nav-link add-button" href="#">注册</a>
-							        </li>
-						        </ul>-->
-					        </div>
-				        </nav>
-			        </div>
-		        </div>
-	        </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav class="navbar navbar-expand-lg  navigation">
+                                <a class="navbar-brand" href="/home">
+                                    <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
+                                </a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav ml-auto main-nav ">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="/home">首页</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=2">培训产品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=1">活动策划</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=3">精美商品</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/products?type=4">法律服务</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/customer_service">在线客服</a>
+                                        </li>
+                                    </ul>
+                                    <t t-if="request.session.user_id">
+                                        <ul class="navbar-nav ml-auto mt-10">
+                                            <li class="nav-item">
+                                                <form action="/user_profile" method="post">
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="user_id"
+                                                           t-att-value="request.session.user_id"/>
+                                                    <input type="image"
+                                                           src="\HRStore\static\src\images\my.png" height="60px"/>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </t>
+                                    <t t-else="">
+
+                                        <ul class="navbar-nav ml-auto mt-10">
+                                            <li class="nav-item">
+                                                <a class="nav-link login-button" href="/login">登陆</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link add-button" href="/sign_up">注册</a>
+                                            </li>
+                                        </ul>
+                                    </t>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </section>
             <!--==================================
             =            User Profile            =
             ===================================-->
             <section class="dashboard section">
-	            <!-- Container Start -->
-            	<div class="container">
-		        <!-- Row Start -->
-		            <div class="row">
-			            <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
-				            <div class="sidebar">
-					        <!-- User Widget -->
-					            <div class="widget user-dashboard-profile">
-						        <!-- User Image -->
-						        <div class="profile-thumb">
-							        <img src="/HRStore/static/src/images/user/user-thumb.jpg" alt="" class="rounded-circle" />
-						        </div>
-						        <!-- User Name -->
-						        <h5 class="text-center"><span id="username" t-esc="request.session.user_id"></span></h5>
-				    		    <p><span id="u-tel" style="word-wrap:break-word;" t-esc="request.session.telephone"></span></p>
-		    				    <a href="/supplier_updateInfo" class="btn btn-main-sm">编辑</a>
+                <!-- Container Start -->
+                <div class="container">
+                    <!-- Row Start -->
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
+                            <div class="sidebar">
+                                <!-- User Widget -->
+                                <div class="widget user-dashboard-profile">
+                                    <!-- User Image -->
+                                    <t t-if="supplier">
+                                        <div class="profile-thumb">
+                                            <span t-field="supplier.user_image"
+                                                  t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
+                                        </div>
+                                        <!-- User Name -->
+                                        <h5 class="text-center">
+                                            <span id="username" t-esc="supplier.user_id"></span>
+                                        </h5>
+                                        <p>
+                                            <span id="u-tel" style="word-wrap:break-word;"
+                                                  t-esc="supplier.telephone"></span>
+                                        </p>
+                                        <p>
+                                            <span id="u-tel" style="word-wrap:break-word;"
+                                                  t-esc="supplier.address"></span>
+                                        </p>
+                                    </t>
+                                    <a href="/supplier_updateInfo" class="btn btn-main-sm">编辑</a>
                                 </div>
-	        				    <!-- Dashboard Links -->
+                                <!-- Dashboard Links -->
                                 <div class="widget user-dashboard-menu">
                                     <ul>
-			             				<li class="active"><a href="/supplier_addProduct"> 发布商品</a></li>
-                                    	<li><a href="/supplier_changeStatus"> 待审核</a></li>
-										<li><a href="/supplier_publishedProduct"> 已发布</a></li>
-                                    	<li><a href="/supplier_orderlist"> 订单</a></li>
-                                    	<li><a href="/login">退出登录</a></li>
-						            </ul>
-					            </div>
-        				    </div>
-			            </div>
-			            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
-							<t t-if="message">
-								<div class="alert alert-warning">
-									<span t-esc="message"></span>
-								</div>
-							</t>
-				            <!-- Edit Personal Info -->
-            				<div class="widget personal-info">
-	            				<h3 class="widget-header user">编辑产品信息</h3>
-					            <form action="supplier_add" method="post">
-						        <!-- pro-name -->
-        						<div class="form-group">
-        						    <label for="pro-name">产品名称</label>
-		        				    <input name="pro_name" type="text" class="form-control" id="pro-name" />
-									<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-				        		</div>
-						        <!-- File chooser -->
-        						<div class="form-group choose-file">
-		        					<i class="fa fa-user text-center"></i>
-				        		    <input name="pro_image" type="file" class="form-control-file d-inline" id="input-file" />
+                                        <li class="active">
+                                            <a href="/supplier_addProduct">发布商品</a>
+                                        </li>
+                                        <li>
+                                            <a href="/supplier_changeStatus">待审核</a>
+                                        </li>
+                                        <li>
+                                            <a href="/supplier_publishedProduct">已发布</a>
+                                        </li>
+                                        <li>
+                                            <a href="/supplier_orderlist">订单</a>
+                                        </li>
+                                        <li>
+                                            <a href="/login">退出登录</a>
+                                        </li>
+                                    </ul>
                                 </div>
-						        <!-- price -->
-						        <div class="form-group">
-        						    <label for="price">价格</label>
-		        				    <input name="pro_price" type="text" class="form-control" id="price" />
-				        		</div>
-						        <!-- type -->
-        						<div class="form-group">
-		        				    <label for="type">商品类型</label>
-				        		    <!--<input name="pro_type" type="text" class="form-control" id="type" />-->
-									<select name="pro_type" class="custom-select">
-										<option value='1'>活动策划</option>
-										<option value='2'>培训产品</option>
-										<option value='3'>精美商品</option>
-										<option value='4'>法律服务</option>
-									</select>
-						        </div>
-        						<!-- detail -->
-		        				<div class="form-group mb-30">
-                          			<label for="detail">商品详情</label>
-                  		        	<textarea name="pro_detail" class="form-control" id="detail" rows="8"></textarea>
-              			        </div>
-						        <!-- Submit button -->
-        						<button class="btn btn-transparent">发布</button>
-					            </form>
-				            </div>
+                            </div>
                         </div>
-		            </div>
-		            <!-- Row End -->
-	            </div>
-	            <!-- Container End -->
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+                            <t t-if="message">
+                                <div class="alert alert-warning">
+                                    <span t-esc="message"></span>
+                                </div>
+                            </t>
+                            <!-- Edit Personal Info -->
+                            <div class="widget personal-info">
+                                <h3 class="widget-header user">编辑产品信息</h3>
+                                <form action="supplier_add" method="post">
+                                    <!-- pro-name -->
+                                    <div class="form-group">
+                                        <label for="pro-name">产品名称</label>
+                                        <input name="pro_name" type="text" class="form-control input-search"
+                                               id="pro-name" size="15" style="width:400px;height:50px;"/>
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    </div>
+                                    <!-- File chooser -->
+                                    <div class="form-group choose-file">
+                                        <i class="fa fa-user text-center"></i>
+                                        <label for="input-file" class="btn btn-transparent btn-sm">选择产品</label>
+                                        <input name="pro_image" type="file" id="input-file" style="display:none"/>
+                                    </div>
+                                    <!-- price -->
+                                    <div class="form-group">
+                                        <label for="price">价格</label>
+                                        <input name="pro_price" type="text" class="form-control" id="price" size="15"
+                                               style="width:400px;height:50px;"/>
+                                    </div>
+                                    <!-- type -->
+                                    <div class="form-group">
+                                        <label for="pro-type">商品类型</label>
+                                        <select name="pro_type" class="form-control" style="width:400px;height:50px;"
+                                                id="pro-type">
+                                            <option value='1'>活动策划</option>
+                                            <option value='2'>培训产品</option>
+                                            <option value='3'>精美商品</option>
+                                            <option value='4'>法律服务</option>
+                                        </select>
+                                    </div>
+                                    <!-- detail -->
+                                    <div class="form-group mb-30">
+                                        <label for="detail">商品详情</label>
+                                        <textarea name="pro_detail" class="form-control" id="detail" rows="8"
+                                                  style="width:600px;height:100px;"></textarea>
+                                    </div>
+                                    <!-- Submit button -->
+                                    <button class="btn btn-transparent">发布</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row End -->
+                </div>
+                <!-- Container End -->
             </section>
             <!--============================
             =            Footer            =
@@ -151,7 +191,7 @@
                 <!-- Container Start -->
                 <div class="container">
                     <div class="row offset-md-1 offset-lg-0 block about">
-                        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="200" />
+                        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="200"/>
                         <div class="footer-text">
                         </div>
                         <ul>
@@ -180,15 +220,17 @@
             <!-- Footer Bottom -->
             <footer class="footer-bottom">
                 <!-- Container Start -->
-	            <div class="container">
-		            <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
-	            </div>
-        	<!-- Container End -->
-	        <!-- To Top -->
+                <div class="container">
+                    <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
+                </div>
+                <!-- Container End -->
+                <!-- To Top -->
 
                 <div class="top-to">
-		            <a id="top" class="" href=""><i class="fa fa-angle-up"></i></a>
-	            </div>
+                    <a id="top" class="" href="">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
             </footer>
 
         </body>
