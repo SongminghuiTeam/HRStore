@@ -17,17 +17,20 @@ class HRStore(http.Controller):
         type = post.get('pro_type')
         state = '0'
         view = 0
-        image = post.get('pro_image')
+        image_route = post.get('image_route')
+
+        print(image_route)
 
         username = request.session['user_id']
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
+        print('userID:')
         print(userID)
 
         request.env['hrstore.product'].sudo().create({'pro_name': name, 'pro_price': price, 'pro_detail': detail,
                                                       'pro_type': type, 'state': state, 'pro_view': view,
                                                       'user_id': userID,
-                                                      'pro_image': image})
+                                                      'image_route': image_route})
 
         return request.render('HRStore.supplier_addProduct', {'message': "产品添加成功"})
 
@@ -222,6 +225,7 @@ class HRStore(http.Controller):
                 orderinfo.append(product_search.pro_name)
                 orderinfo.append(product_search.pro_price)
                 orderinfo.append(product_search.pro_type)
+                orderinfo.append(product_search.id)
                 orderinfo.append(order.create_date)
                 orderinfo.append(order.state)
                 orderinfo.append(order.id)
@@ -232,11 +236,13 @@ class HRStore(http.Controller):
             'orders': orderinfos
         })
 
-    @http.route('/deleteOrder', method="post")
+    @http.route('/ChangeOrder', method="post")
     def deleteRoute(self, **post):
         orderID = post.get('order_id')
 
-        request.env['hrstore.order'].search([('id', '=', orderID)]).unlink()
+        target = request.env['hrstore.order'].search([('id', '=', orderID)])
+        info = {'state': '1'}
+        target.write(info)
 
         username = request.session['user_id']
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
@@ -262,6 +268,7 @@ class HRStore(http.Controller):
                 orderinfo.append(product_search.pro_name)
                 orderinfo.append(product_search.pro_price)
                 orderinfo.append(product_search.pro_type)
+                orderinfo.append(product_search.id)
                 orderinfo.append(order.create_date)
                 orderinfo.append(order.state)
                 orderinfo.append(order.id)

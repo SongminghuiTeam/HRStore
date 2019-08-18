@@ -118,23 +118,28 @@
                                             <p>法律服务</p>
                                         </t>
                                     </span>
-                                    <a href="goods-info.html">查看商品详细信息</a>
+                                    <form action="product_detail">
+                                        <input name="product_id" type="hidden" t-att-value="order[4]"/>
+                                        <button class="btn btn-outline-info">查看商品详细信息</button>
+                                    </form>
                                 </td>
-                                <td class="product-category"><span id="date" class="categories" t-esc="order[4]"></span></td>
+                                <td class="product-category"><span id="date" class="categories" t-esc="order[5]"></span></td>
                                 <td class="product-category">
-                                    <t t-if="order[5] == '0'">
+                                    <t t-if="order[6] == '0'">
                                         <span id="status">待处理</span>
                                     </t>
-                                    <t t-if="order[5] == '1'">
+                                    <t t-if="order[6] == '1'">
                                         <span id="status">已完成</span>
                                     </t>
                                 </td>
-                                <td class="product-category">
-                                    <form action="/deleteOrder">
-                                        <input name="order_id" type="hidden" t-att-value="order[6]"/>
-                                        <button class="btn btn-outline-danger">删除</button>
+                                <t t-if="order[6] == '0'">
+                                    <td class="product-category">
+                                    <form action="/ChangeOrder">
+                                        <input name="order_id" type="hidden" t-att-value="order[7]"/>
+                                        <button class="btn btn-outline-success">修改状态</button>
                                     </form>
-                                </td>
+                                    </td>
+                                </t>
                             </tr>
                         </tbody>
                         </table>
