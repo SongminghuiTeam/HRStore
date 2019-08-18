@@ -428,13 +428,7 @@ button {
  * Button Styles
  *
  */
-.btn {
-  font-size: 15px;
-  letter-spacing: 1px;
-  display: inline-block;
-  padding: 15px 30px;
-  border-radius: 4px;
-}
+
 
 .btn-main, .btn-main-sm {
   background: #5672f9;

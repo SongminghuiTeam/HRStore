@@ -1,5 +1,4 @@
 from odoo import http
-from odoo.local_addons.HRStore.models.HR_Database import HRProduct, HRUser, HROrder
 from odoo.http import request
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.models.ir_http import sitemap_qs2dom
@@ -214,13 +213,22 @@ class HRStore(http.Controller):
         price = post.get('pro_price')
         detail = post.get('pro_detail')
         type = post.get('pro_type')
+        image_route = post.get('pro_image')
 
-
+        print(image_route)
+        print(name)
 
         product = request.env['hrstore.product'].search([('id', '=', pro_id)])
 
-        info = {'pro_name': name, 'pro_price': price, 'pro_detail': detail, 'pro_type': type}
-        product.write(info)
+        if image_route:
+            pro_image = tools.image_resize_image_big(base64.b64encode(open(image_route, 'rb').read()))
+            info = {'pro_name': name, 'pro_price': price, 'pro_detail': detail, 'pro_type': type,
+                    'pro_image': pro_image}
+
+            product.write(info)
+        else:
+            info = {'pro_name': name, 'pro_price': price, 'pro_detail': detail, 'pro_type': type}
+            product.write(info)
 
         new_product = request.env['hrstore.product'].search([('id', '=', pro_id)])
 

@@ -93,7 +93,7 @@
                                         </div>
                                         <!-- User Name -->
                                         <h5 class="text-center">
-                                            <span id="username" t-esc="supplier.user_id"></span>
+                                            <span id="username" t-esc="supplier.shopname"></span>
                                         </h5>
                                         <p>
                                             <span id="u-tel" style="word-wrap:break-word;"
@@ -131,25 +131,26 @@
 				    		<!-- pro-name -->
 					    	<div class="form-group">
 						        <label for="pro-name">产品名称</label>
-						        <input name="pro_name" type="text" class="form-control" id="pro-name" t-att-value="product.pro_name"/>
+						        <input name="pro_name" type="text" class="form-control" id="pro-name" t-att-value="product.pro_name" size="15" style="width:400px;height:50px;"/>
 								<input type="hidden" name="pro_id" t-att-value="product.id" />
 								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
 						    </div>
     						<!-- File chooser -->
 	    					<div class="form-group choose-file">
-		    					<i class="fa fa-user text-center"></i>
-			    			    <input type="file" class="form-control-file d-inline" id="input-file" />
+                                <i class="fa fa-user text-center"></i>
+		    					<label for="input-file" class="btn btn-transparent btn-sm">选择产品</label>
+                                <input name="pro_image" type="file" id="input-file" style="display:none"/>
 				    		 </div>
 					    	<!-- price -->
 						    <div class="form-group">
 						        <label for="price">价格</label>
-    						    <input name="pro_price" type="text" class="form-control" id="price" t-att-value="product.pro_price" />
+    						    <input name="pro_price" type="text" class="form-control" id="price" t-att-value="product.pro_price" size="15" style="width:400px;height:50px;"/>
 	    					</div>
 		    				<!-- type -->
 			    			<div class="form-group">
 				    		    <label for="type">商品类型</label>
 					    	    <t t-if="product.pro_type == '1'">
-									<select name="pro_type" class="custom-select">
+									<select name="pro_type" class="form-control" style="width:400px;height:50px;" id="type">
 										<option value='1'>活动策划</option>
 										<option value='2'>培训产品</option>
 										<option value='3'>精美商品</option>
@@ -157,7 +158,7 @@
 									</select>
 								</t>
 								<t t-if="product.pro_type == '2'">
-									<select name="pro_type" class="custom-select">
+									<select name="pro_type" class="form-control" style="width:400px;height:50px;" id="type">
 										<option value='2'>培训产品</option>
 										<option value='1'>活动策划</option>
 										<option value='3'>精美商品</option>
@@ -165,7 +166,7 @@
 									</select>
 								</t>
 								<t t-if="product.pro_type== '3'">
-									<select name="pro_type" class="custom-select">
+									<select name="pro_type" class="form-control" style="width:400px;height:50px;" id="type">
 										<option value='3'>精美商品</option>
 										<option value='1'>活动策划</option>
 										<option value='2'>培训产品</option>
@@ -173,7 +174,7 @@
 									</select>
 								</t>
 								<t t-if="product.pro_type == '4'">
-									<select name="pro_type" class="custom-select">
+									<select name="pro_type" class="form-control" style="width:400px;height:50px;" id="type">
 										<option value='4'>法律服务</option>
 										<option value='1'>活动策划</option>
 										<option value='2'>培训产品</option>
@@ -184,7 +185,7 @@
     						<!-- detail -->
 	    					<div class="form-group mb-30">
                       			<label for="detail">商品详情</label>
-                      			<input name="pro_detail" type="text" class="form-control" id="detail" t-att-value="product.pro_detail"></input>
+                      			<input name="pro_detail" type="text" class="form-control" id="detail" t-att-value="product.pro_detail" style="width:600px;height:100px;"></input>
               	    		</div>
 					    	<!-- Submit button -->
 						    <button class="btn btn-transparent">修改</button>

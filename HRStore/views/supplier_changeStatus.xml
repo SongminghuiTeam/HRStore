@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <odoo>
-     <template id="supplier_changeStatus" name="supplier_changeStatus">
+    <template id="supplier_changeStatus" name="supplier_changeStatus">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
             <t t-call-assets="HRStore.my_custom_assets" tcss="false"/>
         </head>
 
-     <body class="body-wrapper">
+        <body class="body-wrapper">
 
-        <section>
-	        <div class="container">
-		        <div class="row">
-			        <div class="col-md-12">
-				        <nav class="navbar navbar-expand-lg  navigation">
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav class="navbar navbar-expand-lg  navigation">
                                 <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
@@ -69,31 +69,31 @@
                                     </t>
                                 </div>
                             </nav>
-			        </div>
-		        </div>
-	        </div>
-        </section>
-        <!--==================================
-        =          供货商查看待审核          =
-        ===================================-->
-        <section class="dashboard section">
-	        <!-- Container Start -->
-	        <div class="container">
-		        <!-- Row Start -->
-		        <div class="row">
-			        <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
-				        <div class="sidebar">
-					        <!-- User Widget -->
-					        <div class="widget user-dashboard-profile">
-						        <!-- User Image -->
-						        <t t-if="supplier">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--==================================
+            =          供货商查看待审核          =
+            ===================================-->
+            <section class="dashboard section">
+                <!-- Container Start -->
+                <div class="container">
+                    <!-- Row Start -->
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
+                            <div class="sidebar">
+                                <!-- User Widget -->
+                                <div class="widget user-dashboard-profile">
+                                    <!-- User Image -->
+                                    <t t-if="supplier">
                                         <div class="profile-thumb">
                                             <span t-field="supplier.user_image"
                                                   t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
                                         </div>
                                         <!-- User Name -->
                                         <h5 class="text-center">
-                                            <span id="username" t-esc="supplier.user_id"></span>
+                                            <span id="username" t-esc="supplier.shopname"></span>
                                         </h5>
                                         <p>
                                             <span id="u-tel" style="word-wrap:break-word;"
@@ -105,88 +105,114 @@
                                         </p>
                                     </t>
                                     <a href="/supplier_updateInfo" class="btn btn-main-sm">编辑</a>
-					        </div>
-					        <!-- Dashboard Links -->
-					        <div class="widget user-dashboard-menu">
-						        <ul>
-							        <li><a href="/supplier_addProduct"> 发布商品</a></li>
-                                    <li class="active" ><a href="/supplier_changeStatus"> 待审核</a></li>
-                                    <li><a href="/supplier_publishedProduct"> 已发布</a></li>
-                                    <li><a href="/supplier_orderlist"> 订单</a></li>
-                                    <li><a href="/login">退出登录</a></li>
-						        </ul>
-					        </div>
-				        </div>
-                    </div>
-                    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
-                    <!-- Recently Favorited -->
-                        <div class="widget dashboard-container my-adslist">
-                            <h3 class="widget-header">待审核商品</h3>
-                            <table class="table table-responsive product-dashboard-table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">商品图片</th>
-                                        <th class="text-center">商品</th>
-                                        <th class="text-center">提交日期</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr t-foreach="products" t-as="p">
-                                        <td class="product-thumb">
-                                          <!--<img width="80px" height="auto" t-att-src="p.image_route" alt="image description" class="oe_avatar" />-->
-                                            <span t-field="p.pro_image"
-                                                                      t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
-                                        </td>
-                                            <td class="product-details">
-                                                <h3 class="title" t-esc="p.pro_name" />
-                                                <span class="add-id" id="business"><strong>商家:</strong><p t-esc="request.session.user_id"/></span>
-                                                <span id="price"><strong>价格: </strong> <p t-esc="p.pro_price"/></span>
-                                                <span id="price"><strong>类别: </strong>
+                                </div>
+                                <!-- Dashboard Links -->
+                                <div class="widget user-dashboard-menu">
+                                    <ul>
+                                        <li>
+                                            <a href="/supplier_addProduct">发布商品</a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="/supplier_changeStatus">待审核</a>
+                                        </li>
+                                        <li>
+                                            <a href="/supplier_publishedProduct">已发布</a>
+                                        </li>
+                                        <li>
+                                            <a href="/supplier_orderlist">订单</a>
+                                        </li>
+                                        <li>
+                                            <a href="/login">退出登录</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+                            <!-- Recently Favorited -->
+                            <div class="widget dashboard-container my-adslist">
+                                <h3 class="widget-header">待审核商品</h3>
+                                <table class="table table-responsive product-dashboard-table">
+                                    <thead>
+                                        <tr>
+                                            <th>商品图片</th>
+                                            <th></th>
+                                            <th>商品</th>
+                                            <th>提交日期</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="products" t-as="p">
+                                            <td class="product-thumb">
+                                                <!--<img width="80px" height="auto" t-att-src="p.image_route" alt="image description" class="oe_avatar" />-->
+                                                <span t-field="p.pro_image"
+                                                      t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
+                                            </td>
+                                            <td>
+                                                <span/>
+                                            </td>
+                                            <td>
+                                                <h5 class="title" t-esc="p.pro_name"/>
+
+                                                <span class="add-id" id="business">
+                                                    <span>商家:</span>
+                                                    <label t-esc="request.session.user_id"/>
+                                                </span>
+                                                <br/>
+                                                <span id="price">
+                                                    <span>价格:</span>
+                                                    <label t-esc="p.pro_price"/>
+                                                </span>
+                                                <br/>
+                                                <span id="price">
+                                                    <span>类别:</span>
                                                     <t t-if="p.pro_type == '1'">
-                                                        <p>活动策划</p>
+                                                        <label>活动策划</label>
                                                     </t>
                                                     <t t-if="p.pro_type == '2'">
-                                                        <p>培训产品</p>
+                                                        <label>培训产品</label>
                                                     </t>
                                                     <t t-if="p.pro_type == '3'">
-                                                        <p>精美商品</p>
+                                                        <label>精美商品</label>
                                                     </t>
                                                     <t t-if="p.pro_type == '4'">
-                                                        <p>法律服务</p>
+                                                        <label>法律服务</label>
                                                     </t>
                                                 </span>
                                             </td>
-                                            <td class="product-category"><span id="date" class="categories" t-esc="p.create_date"></span></td>
-                                            <td class="product-category">
+                                            <td>
+                                                <span id="date" class="categories" t-esc="p.create_date"></span>
+                                            </td>
+                                            <td>
                                                 <form action="/deleteProduct">
                                                     <input name="pro_id" type="hidden" t-att-value="p.id"/>
-                                                    <button class="btn btn-outline-danger">删除</button>
+                                                    <button class="btn btn-outline-danger btn-sm">删除</button>
                                                 </form>
                                             </td>
-                                    </tr>
+                                        </tr>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
+                    <!-- Row End -->
                 </div>
-                <!-- Row End -->
-	        </div>
-	    <!-- Container End -->
-        </section>
-        <!--============================
-        =            Footer            =
-        =============================-->
-
-        <!--============================
+                <!-- Container End -->
+            </section>
+            <!--============================
             =            Footer            =
             =============================-->
+
+            <!--============================
+                =            Footer            =
+                =============================-->
             <footer class="footer section section-sm">
                 <!-- Container Start -->
                 <div class="container">
                     <div class="row offset-md-1 offset-lg-0 block about">
-                        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="200" />
+                        <img src="/HRStore/static/src/images/logo.jpg" height="100" width="200"/>
                         <div class="footer-text">
                         </div>
                         <ul>
@@ -212,18 +238,20 @@
                 <!-- Container End -->
             </footer>
 
-         <!-- Footer Bottom -->
-        <footer class="footer-bottom">
-            <!-- Container Start -->
-            <div class="container">
-                <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
-            </div>
-            <!-- Container End -->
-            <!-- To Top -->
-            <div class="top-to">
-                <a id="top" class="" href=""><i class="fa fa-angle-up"></i></a>
-            </div>
-        </footer>
-     </body>
+            <!-- Footer Bottom -->
+            <footer class="footer-bottom">
+                <!-- Container Start -->
+                <div class="container">
+                    <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
+                </div>
+                <!-- Container End -->
+                <!-- To Top -->
+                <div class="top-to">
+                    <a id="top" class="" href="">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
+            </footer>
+        </body>
     </template>
 </odoo>

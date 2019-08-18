@@ -91,7 +91,7 @@
                                         </div>
                                         <!-- User Name -->
                                         <h5 class="text-center">
-                                            <span id="username" t-esc="supplier.user_id"></span>
+                                            <span id="username" t-esc="supplier.shopname"></span>
                                         </h5>
                                         <p>
                                             <span id="u-tel" style="word-wrap:break-word;"
@@ -128,23 +128,24 @@
 						            <!-- Name -->
             						<div class="form-group">
 			            			    <label for="shopname">商户名</label>
-						                <input name="shopname" type="text" class="form-control" t-att-value="supplier.shopname" />
+						                <input name="shopname" type="text" class="form-control" t-att-value="supplier.shopname" size="15" style="width:400px;height:50px;"/>
 										<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
 						            </div>
 						            <!-- File chooser -->
 						            <div class="form-group choose-file">
 							            <i class="fa fa-user text-center"></i>
-						                <input name="user_image" type="file" class="form-control-file d-inline" id="input-file" />
+                                        <label for="input-file" class="btn btn-transparent btn-sm">选择头像</label>
+                                        <input name="user_image" type="file" id="input-file" style="display:none"/>
 						            </div>
 						            <!-- tel -->
             						<div class="form-group">
 			            			    <label for="tel">电话号码</label>
-						                <input name="telephone" type="text" class="form-control" t-att-value="supplier.telephone" />
+						                <input name="telephone" type="text" class="form-control" t-att-value="supplier.telephone" size="15" style="width:400px;height:50px;" />
 						            </div>
             						<!-- address -->
 			            			<div class="form-group">
 						                <label for="address">地址</label>
-						                <input name="address" type="text" class="form-control" t-att-value="supplier.address" />
+						                <input name="address" type="text" class="form-control" t-att-value="supplier.address" size="15" style="width:600px;height:100px;"/>
 						            </div>
 						            <!-- Submit button -->
 						            <button class="btn btn-transparent">保存</button>
@@ -157,18 +158,18 @@
 						            <!-- Current Password -->
 						            <div class="form-group">
 						                <label for="current-password">旧密码</label>
-						                <input name="old_pwd" type="password" class="form-control" id="current-password" />
+						                <input name="old_pwd" type="password" class="form-control" id="current-password" size="15" style="width:400px;height:50px;"/>
 									    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
 						            </div>
 						            <!-- New Password -->
 						            <div class="form-group">
 						                <label for="new-password">新密码</label>
-						                <input name="new_pwd" type="password" class="form-control" id="new-password" />
+						                <input name="new_pwd" type="password" class="form-control" id="new-password" size="15" style="width:400px;height:50px;"/>
                                     </div>
 						            <!-- Confirm New Password -->
 						            <div class="form-group">
 						                <label for="confirm-password">确认新密码</label>
-						                <input name="ensure_pwd" type="password" class="form-control" id="confirm-password" />
+						                <input name="ensure_pwd" type="password" class="form-control" id="confirm-password" size="15" style="width:400px;height:50px;" />
 						            </div>
 						            <!-- Submit Button -->
 						            <button class="btn btn-transparent">保存</button>

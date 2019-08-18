@@ -93,7 +93,7 @@
                                         </div>
                                         <!-- User Name -->
                                         <h5 class="text-center">
-                                            <span id="username" t-esc="supplier.user_id"></span>
+                                            <span id="username" t-esc="supplier.shopname"></span>
                                         </h5>
                                         <p>
                                             <span id="u-tel" style="word-wrap:break-word;"
