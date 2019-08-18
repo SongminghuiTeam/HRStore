@@ -9,8 +9,8 @@ acl_hrstore_shopdft,hrstore.shop_default,model_hrstore_shop,,1,1,1,1
 acl_hrstore_shop,hrstore.shop_default,model_hrstore_shop,group_hrstore,1,1,1,1
 acl_hrstore_orderdft,hrstore.order_default,model_hrstore_order,,1,1,1,1
 acl_hrstore_order,hrstore.order_default,model_hrstore_order,group_hrstore,1,1,1,1
-acl_hrstore_cartdft,hrstore.cart_default,model_hrstore_order,,1,1,1,1
-acl_hrstore_cart,hrstore.cart_default,model_hrstore_order,group_hrstore,1,1,1,1
+acl_hrstore_cartdft,hrstore.cart_default,model_hrstore_cart,,1,1,1,1
+acl_hrstore_cart,hrstore.cart_default,model_hrstore_cart,group_hrstore,1,1,1,1
 acl_hrstore_commentdft,hrstore.comment_default,model_hrstore_comment,,1,1,1,1
 acl_hrstore_comment,hrstore.comment_default,model_hrstore_comment,group_hrstore,1,1,1,1
 
