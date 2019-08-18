@@ -137,13 +137,8 @@
                                     <!-- File chooser -->
                                     <div class="form-group choose-file">
                                         <i class="fa fa-user text-center"></i>
-                                        <img itemprop="image" style="margin-top: -53px; margin-left:19px; width:80px;"
-                                             class="img img-responsive"/>
-                                        <input id="uploadImage" name="user_image" type="file" class="file"
-                                               multiple="true" data-show-upload="true" data-show-caption="true"
-                                               data-show-preview="true" onchange="PreviewImage();"/>
-                                        <!--<label for="file" class="btn btn-transparent btn-sm">选择头像</label>
-                                        <input name="user_image" id="file" type="file" style="display:none"/>-->
+                                        <label for="file" class="btn btn-transparent btn-sm">选择头像</label>
+                                        <input name="user_image" id="file" type="file" style="display:none"/>
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                     </div>
                                     <!-- Name -->

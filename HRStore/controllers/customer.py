@@ -24,17 +24,22 @@ class Customer(http.Controller):
     # 修改个人信息
     @http.route('/commonuser_modifyDetailed', type='http', method='POST', website=True, auth="public")
     def modifyDetailed(self, **post):
-        user_image = post.get('user_image')
-        image = request.registry['ir.attachment']
-        name = post.get('user_image').filename
         username = post.get('username')
         telephone = post.get('telephone')
         address = post.get('address')
         user_id = request.session['user_id']
         commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])
 
-        info = {'user_image': user_image, 'username': username, 'telephone': telephone, 'address': address}
-        commonuser.write(info)
+        image_route = post.get('user_image')
+
+
+        if image_route:
+            user_image = tools.image_resize_image_big(base64.b64encode(open(image_route, 'rb').read()))
+            info = {'user_image': user_image, 'username': username, 'telephone': telephone, 'address': address}
+            commonuser.write(info)
+        else:
+            info = {'username': username, 'telephone': telephone, 'address': address}
+            commonuser.write(info)
 
         commonuser_new = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])
         user = request.env['hrstore.user'].sudo().search([('user_id', '=', user_id)])
