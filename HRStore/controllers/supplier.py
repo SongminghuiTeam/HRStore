@@ -6,6 +6,8 @@ from odoo.addons.website.models.ir_http import sitemap_qs2dom
 from odoo import tools
 import base64
 
+
+# 何钰霖 计科162 161002219
 class HRStore(http.Controller):
     @http.route('/supplier_addProduct', auth="public")
     def addProduct(self, **post):
@@ -87,9 +89,9 @@ class HRStore(http.Controller):
         info = {'password': new_pwd}
         user.write(info)
         return request.render('HRStore.supplier_updateInfo', {
-                'message': "密码更新成功",
-                'supplier': supplier
-            })
+            'message': "密码更新成功",
+            'supplier': supplier
+        })
 
     @http.route('/supplier_updateDetailed', method="post")
     def updateDetailed(self, **post):
@@ -117,9 +119,9 @@ class HRStore(http.Controller):
         print(supplier_new.address)
 
         return request.render('HRStore.supplier_updateInfo', {
-                'message': "个人信息修改成功",
-                'supplier': supplier_new
-            })
+            'message': "个人信息修改成功",
+            'supplier': supplier_new
+        })
 
     @http.route('/supplier_changeStatus', method="post")
     def changeStatus(self):
@@ -198,7 +200,7 @@ class HRStore(http.Controller):
 
         print(product.pro_detail)
 
-        return request.render('HRStore.supplier_updatePublishedProduct',{
+        return request.render('HRStore.supplier_updatePublishedProduct', {
             'product': product,
             'supplier': supplier
         })

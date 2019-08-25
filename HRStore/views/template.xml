@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
+    <!--宋明惠计科162  161002226-->
     <template id="my_custom_assets" name="My Custom Assets">
         <!-- 所有css和js的引入文件
         <link href="/HRStore/static/src/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"/> -->

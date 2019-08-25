@@ -5,8 +5,10 @@ from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.models.ir_http import sitemap_qs2dom
 
 
+# 梁晓珂 计科162  161002221 和 宋明惠 计科162  161002226
 class Hello(http.Controller):
     # 注册页面
+    # 梁晓珂 计科162  161002221
     @http.route('/register', type='http', method='POST', website=True, auth="public")
     def register(self, **post):
         user_id = post.get('user_id')
@@ -39,22 +41,25 @@ class Hello(http.Controller):
                 return request.render('HRStore.login')
 
     # 访问登录页面
+    # 宋明惠
     @http.route('/login', auth="public")
     def login(self):
-		request.session['user_id']=False
         return request.render('HRStore.login')
 
     # 访问注册页面
+    # 宋明惠
     @http.route('/sign_up', auth="public")
     def sign_up(self):
         return request.render('HRStore.sign_up')
 
     # 访问客服页面
+    # 宋明惠
     @http.route('/customer_service', auth="public")
     def customer_service(self):
         return request.render('HRStore.customer_service')
 
     # 通过链接直接访问首页
+    # 宋明惠
     @http.route('/home', type='http', method='POST', website=True, auth="public")
     def home(self, **post):
         all_products = request.env['hrstore.product'].search([('state', '=', "1")])
@@ -64,6 +69,7 @@ class Hello(http.Controller):
         })
 
     # 通过登录页面的登录按钮访问
+    # 宋明惠
     @http.route('/login_home', type='http', method='POST', website=True, auth="public")
     def login_home(self, **post):
         username = post.get('username')
@@ -83,7 +89,7 @@ class Hello(http.Controller):
 
             'message': "用户名或密码错误！"
         })
-
+    # 宋明惠
     @http.route('/products', auth="public", type='http', website=True)
     def get_products(self, **post):
 
@@ -105,6 +111,7 @@ class Hello(http.Controller):
         })
 
     # 进入我的
+    # 宋明惠
     @http.route('/user_profile', auth="public", type='http', website=True)
     def user_profile(self, **post):
         print("进入我的")
@@ -141,9 +148,10 @@ class Hello(http.Controller):
                     'supplier': supplier
                 })
 
-        return request.render('HRStore.customer_service')
+        return request.render('HRStore.login')
 
     # 首页查找
+    # 梁晓珂
     @http.route('/search', type='http', method='POST', website=True, auth="public")
     def search(self, **post):
         pro_name = post.get('pro_name')
@@ -153,6 +161,7 @@ class Hello(http.Controller):
         })
 
     # 产品页查找
+    # 梁晓珂
     @http.route('/search_product', type='http', method='POST', website=True, auth="public")
     def search_product(self, **post):
         pro_name = post.get('pro_name')
@@ -167,6 +176,7 @@ class Hello(http.Controller):
         })
 
     # 显示产品的详细信息
+    # 宋明惠
     @http.route('/product_detail', type='http', method='POST', website=True, auth="public")
     def product_detail(self, **post):
         pro_id = post.get('product_id')
@@ -199,6 +209,7 @@ class Hello(http.Controller):
             })
 
     # 预购功能
+    # 梁晓珂
     @http.route('/pre_order', type='http', method='POST', website=True, auth="public")
     def pre_order(self, **post):
         user_id = post.get('user_id')
@@ -215,7 +226,7 @@ class Hello(http.Controller):
             if user2.user_type == '2':
                 message = "请使用普通用户账号登录"
             else:
-                if pro_type=='3':
+                if pro_type == '3':
                     message = "购买成功！"
                     request.env['hrstore.order'].sudo().create(
                         {'state': '1', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
@@ -223,7 +234,7 @@ class Hello(http.Controller):
 
                     message = "预购成功,订单待处理......"
                     request.env['hrstore.order'].sudo().create(
-                    {'state': '0', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
+                        {'state': '0', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
         else:
             message = "请先登录"
 
@@ -233,6 +244,7 @@ class Hello(http.Controller):
         })
 
     # 加入购物车功能
+    # 梁晓珂
     @http.route('/add_cart', type='http', method='POST', website=True, auth="public")
     def add_cart(self, **post):
         user_id = post.get('user_id')

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
+    <!-- 梁晓珂 计科162 161002221-->
     <record id='hrstore_user_action' model='ir.actions.act_window'>
         <field name="name">HR Store</field>
         <field name="res_model">hrstore.user</field>

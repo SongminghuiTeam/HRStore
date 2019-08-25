@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-
+<!--页面  李甜甜 计科162 161002229   实现 陈婉菁 计科162 161002218-->
     <template id="customer_info" name="customer_info">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>

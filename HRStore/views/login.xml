@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-
+<!--页面  田紫微 计科162  161002420 实现 宋明惠 计科162 161002226-->
     <template id="login" name="Login">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>

@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
+    <!--页面  李甜甜 计科162 161002229   实现 何钰霖 计科162 161002219-->
     <template id="supplier_orderlist" name="supplier_orderlist">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
