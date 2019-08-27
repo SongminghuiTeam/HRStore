@@ -9,7 +9,7 @@ import datetime
 # 梁晓珂 计科162  161002221 和 宋明惠 计科162  161002226
 class Hello(http.Controller):
     # 注册页面
-    # 梁晓珂 计科162  161002221
+    # 梁晓珂 计科162  161002221type='http', method='POST', website=True, auth="public"
     @http.route('/register', type='http', method='POST', website=True, auth="public")
     def register(self, **post):
         user_id = post.get('user_id')

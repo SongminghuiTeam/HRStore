@@ -250,7 +250,7 @@
                             <!-- Edit Personal Info -->
                             <div class="widget personal-info">
                                 <h3 class="widget-header user">修改产品信息</h3>
-                                <form action="updateProduct">
+                                <form action="updateProduct" method="post">
                                     <!-- pro-name -->
                                     <div class="form-group">
                                         <label for="pro-name">产品名称</label>
@@ -323,6 +323,8 @@
                                     <!-- Submit button -->
                                     <input type="hidden" name="user_id"
                                            t-att-value="user_id"/>
+                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
                                     <button class="btn btn-transparent">修改</button>
                                 </form>
                             </div>
@@ -378,7 +380,6 @@
                     </a>
                 </div>
             </footer>
-
         </body>
     </template>
 </odoo>

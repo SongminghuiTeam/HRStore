@@ -9,7 +9,7 @@ import datetime
 
 # 何钰霖 计科162 161002219
 class HRStore(http.Controller):
-    @http.route('/supplier_addProduct', auth="public")
+    @http.route('/supplier_addProduct', type='http', method='POST', website=True, auth="public")
     def addProduct(self, **post):
         username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
@@ -46,7 +46,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/supplier_updateInfo', auth="public")
+    @http.route('/supplier_updateInfo', type='http', method='POST', website=True, auth="public")
     def updateProduct(self, **post):
         username = post.get('user_id')
         print(username)
@@ -60,7 +60,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/supplier_updatepwd', auth="public")
+    @http.route('/supplier_updatepwd', type='http', method='POST', website=True, auth="public")
     def updatePWD(self, **post):
         old_pwd = post.get('old_pwd')
         new_pwd = post.get('new_pwd')
@@ -95,7 +95,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/supplier_updateDetailed', method="post")
+    @http.route('/supplier_updateDetailed',type='http', method='POST', website=True, auth="public")
     def updateDetailed(self, **post):
         shopname = post.get('shopname')
         telephone = post.get('telephone')
@@ -126,7 +126,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/supplier_changeStatus', method="post")
+    @http.route('/supplier_changeStatus', type='http', method='POST', website=True, auth="public")
     def changeStatus(self, **post):
         username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
@@ -152,7 +152,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/deleteProduct', method="post")
+    @http.route('/deleteProduct',type='http', method='POST', website=True, auth="public")
     def deleteProduct(self, **post):
         pro_id = post.get('pro_id')
         print(pro_id)
@@ -183,7 +183,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/supplier_publishedProduct', method="post")
+    @http.route('/supplier_publishedProduct', type='http', method='POST', website=True, auth="public")
     def publisedProduct(self, **post):
         username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
@@ -209,7 +209,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/deletePublishedProduct', method="post")
+    @http.route('/deletePublishedProduct', type='http', method='POST', website=True, auth="public")
     def deletePublishedProduct(self, **post):
         pro_id = post.get('pro_id')
         print(pro_id)
@@ -229,7 +229,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/updatePublishedProduct', method="post")
+    @http.route('/updatePublishedProduct', type='http', method='POST', website=True, auth="public")
     def updatePublishedProduct(self, **post):
         pro_id = post.get('pro_id')
         print(pro_id)
@@ -247,7 +247,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/updateProduct', method="post")
+    @http.route('/updateProduct', type='http', method='POST', website=True, auth="public")
     def update(self, **post):
         pro_id = post.get('pro_id')
         print('xx')
@@ -286,7 +286,7 @@ class HRStore(http.Controller):
             'user_id': username
         })
 
-    @http.route('/supplier_orderlist', method="post")
+    @http.route('/supplier_orderlist', type='http', method='POST', website=True, auth="public")
     def orderlist(self, **post):
         username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])

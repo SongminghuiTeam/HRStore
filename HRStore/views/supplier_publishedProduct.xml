@@ -296,10 +296,12 @@
                                                 <span id="date" class="categories" t-esc="pp[0]"/>
                                             </td>
                                             <td>
-                                                <form action="/updatePublishedProduct">
+                                                <form action="/updatePublishedProduct" method="post">
                                                     <input name="pro_id" type="hidden" t-att-value="pp[1].id"/>
                                                     <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
                                                     <button class="btn btn-outline-info btn-sm">修改</button>
                                                 </form>
                                             </td>

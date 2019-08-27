@@ -289,6 +289,8 @@
                                     <!-- Submit button -->
                                     <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
+                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
                                     <button class="btn btn-transparent">发布</button>
                                 </form>
                             </div>

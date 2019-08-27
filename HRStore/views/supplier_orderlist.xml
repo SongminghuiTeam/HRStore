@@ -262,7 +262,7 @@
                                             </td>
                                             <td>
                                                 <span id="name">
-                                                    <form action="product_detail">
+                                                    <form action="product_detail" method="post">
                                                         <input name="product_id" type="hidden" t-att-value="order[4]"/>
                                                         <input type="hidden" name="user_id"
                                                                t-att-value="user_id"/>
