@@ -160,7 +160,7 @@
                                                 <br/>
                                                 <span id="price">
                                                     <span>价格:</span>
-                                                    <label t-esc="order[2]"/>
+                                                    <label t-esc="order[8]"/>
                                                 </span>
                                                 <br/>
                                                 <span id="price">
@@ -190,17 +190,38 @@
                                                     <span id="status">待处理</span>
                                                 </t>
                                                 <t t-if="order[6] == '1'">
+                                                    <span id="status">待付款</span>
+                                                </t>
+                                                <t t-if="order[6] == '2'">
                                                     <span id="status">已完成</span>
                                                 </t>
                                             </td>
+                                            <t t-if="order[6] == '1'">
+                                                <td>
+                                                    <form action="/ChangeOrderPrice" method="post">
+                                                        <input type="hidden" name="csrf_token"
+                                                               t-att-value="request.csrf_token()"/>
+                                                        <input name="order_id" type="hidden"
+                                                               t-att-value="order[7]"/>
+                                                        <input name="order_price" type="text"
+                                                               t-att-value="order[8]" class="form-control input-search"
+                                                               style="width:100px;height:30px;"/>
+                                                        <button class="btn btn-outline-success btn-sm">修改价格</button>
+                                                    </form>
+                                                </td>
+                                            </t>
                                             <t t-if="order[6] == '0'">
                                                 <td>
-                                                    <form action="/ChangeOrder">
-                                                        <input name="order_id" type="hidden" t-att-value="order[7]"/>
+                                                    <form action="/ChangeOrder" method="post">
+                                                        <input type="hidden" name="csrf_token"
+                                                               t-att-value="request.csrf_token()"/>
+                                                        <input name="order_id" type="hidden"
+                                                               t-att-value="order[7]"/>
                                                         <button class="btn btn-outline-success btn-sm">通过</button>
                                                     </form>
                                                 </td>
                                             </t>
+
                                         </tr>
                                     </tbody>
                                 </table>

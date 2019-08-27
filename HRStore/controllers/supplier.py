@@ -273,6 +273,7 @@ class HRStore(http.Controller):
                 orderinfo.append(order.create_date)
                 orderinfo.append(order.state)
                 orderinfo.append(order.id)
+                orderinfo.append(order.order_price)
 
                 orderinfos.append(orderinfo)
 
@@ -281,8 +282,9 @@ class HRStore(http.Controller):
             'supplier': supplier
         })
 
-    @http.route('/ChangeOrder', method="post")
-    def deleteRoute(self, **post):
+    @http.route('/ChangeOrder', type='http', method='POST', website=True, auth="public")
+    def changeOrder(self, **post):
+        print("进入修改状态页面")
         orderID = post.get('order_id')
 
         target = request.env['hrstore.order'].search([('id', '=', orderID)])
@@ -317,6 +319,54 @@ class HRStore(http.Controller):
                 orderinfo.append(order.create_date)
                 orderinfo.append(order.state)
                 orderinfo.append(order.id)
+                orderinfo.append(order.order_price)
+
+                orderinfos.append(orderinfo)
+
+        return request.render('HRStore.supplier_orderlist', {
+            'orders': orderinfos,
+            'supplier': supplier
+        })
+
+    @http.route('/ChangeOrderPrice', type='http', method='POST', website=True, auth="public")
+    def deleteRoute(self, **post):
+        print("进入修改价格页面")
+        orderID = post.get('order_id')
+        price = post.get('order_price')
+
+        target = request.env['hrstore.order'].search([('id', '=', orderID)])
+        info = {'order_price': price}
+        target.write(info)
+
+        username = request.session['user_id']
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+        userID = supplier.id
+
+        products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '1')])
+
+        orderinfos = []
+        for product in products:
+            proID = product.id
+            orders = request.env['hrstore.order'].search([('pro_id', '=', proID)])
+
+            for order in orders:
+                pro_ID = order.pro_id.id
+                print(proID)
+                product_search = request.env['hrstore.product'].search([('id', '=', pro_ID)])
+
+                consumerID = request.env['hrstore.commonuser'].search([('id', '=', order.user_id.id)])
+
+                orderinfo = []
+
+                orderinfo.append(consumerID.username)
+                orderinfo.append(product_search.pro_name)
+                orderinfo.append(product_search.pro_price)
+                orderinfo.append(product_search.pro_type)
+                orderinfo.append(product_search.id)
+                orderinfo.append(order.create_date)
+                orderinfo.append(order.state)
+                orderinfo.append(order.id)
+                orderinfo.append(order.order_price)
 
                 orderinfos.append(orderinfo)
 
