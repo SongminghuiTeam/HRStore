@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <odoo>
     <!--页面  李甜甜 计科162 161002229   实现 何钰霖 计科162 161002219-->
-     <template id="supplier_updatePublishedProduct" name="supplier_updatePublishedProduct">
+    <template id="supplier_updatePublishedProduct" name="supplier_updatePublishedProduct">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
             <t t-call-assets="HRStore.my_custom_assets" tcss="false"/>
         </head>
 
-         <body class="body-wrapper">
+        <body class="body-wrapper">
 
-        <section>
-	        <div class="container">
-		        <div class="row">
-			        <div class="col-md-12">
-				        <nav class="navbar navbar-expand-lg  navigation">
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                             <nav class="navbar navbar-expand-lg  navigation">
                                 <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
@@ -25,32 +25,99 @@
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav ml-auto main-nav ">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="/home">首页</a>
+                                            <form action="/home" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link"
+                                                        type="submit">首页
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=2">培训产品</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="2"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">培训产品
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=1">活动策划</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="1"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">活动策划
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=3">精美商品</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="3"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">精美商品
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=4">法律服务</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="4"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">法律服务
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/customer_service">在线客服</a>
+                                            <form action="/forum" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">论坛
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li class="nav-item">
+                                            <form action="/customer_service" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">在线客服
+                                                </button>
+                                            </form>
                                         </li>
                                     </ul>
-                                    <t t-if="request.session.user_id">
+                                    <t t-if="user_id">
                                         <ul class="navbar-nav ml-auto mt-10">
                                             <li class="nav-item">
                                                 <form action="/user_profile" method="post">
                                                     <input type="hidden" name="csrf_token"
                                                            t-att-value="request.csrf_token()"/>
                                                     <input type="hidden" name="user_id"
-                                                           t-att-value="request.session.user_id"/>
+                                                           t-att-value="user_id"/>
                                                     <input type="image"
                                                            src="\HRStore\static\src\images\my.png" height="60px"/>
                                                 </form>
@@ -70,24 +137,24 @@
                                     </t>
                                 </div>
                             </nav>
-			        </div>
-		        </div>
-	        </div>
-        </section>
-        <!--==================================
-        =            修改商品信息           =
-        ===================================-->
-        <section class="dashboard section">
-	        <!-- Container Start -->
-	        <div class="container">
-		        <!-- Row Start -->
-    		    <div class="row">
-	    		    <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
-		    		    <div class="sidebar">
-			    		    <!-- User Widget -->
-				    	    <div class="widget user-dashboard-profile">
-					    	    <!-- User Image -->
-						        <t t-if="supplier">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--==================================
+            =            修改商品信息           =
+            ===================================-->
+            <section class="dashboard section">
+                <!-- Container Start -->
+                <div class="container">
+                    <!-- Row Start -->
+                    <div class="row">
+                        <div class="col-md-10 offset-md-1 col-lg-4 offset-lg-0">
+                            <div class="sidebar">
+                                <!-- User Widget -->
+                                <div class="widget user-dashboard-profile">
+                                    <!-- User Image -->
+                                    <t t-if="supplier">
                                         <div class="profile-thumb">
                                             <span t-field="supplier.user_image"
                                                   t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
@@ -106,106 +173,173 @@
                                         </p>
                                     </t>
                                     <a href="/supplier_updateInfo" class="btn btn-main-sm">编辑</a>
-			        		</div>
-					        <!-- Dashboard Links -->
-    					    <div class="widget user-dashboard-menu">
-	    					    <ul>
-                                    <li><a href="/supplier_addProduct"> 发布商品</a></li>
-                                    <li><a href="/supplier_changeStatus"> 待审核</a></li>
-                                    <li class="active"><a href="/supplier_publishedProduct"> 已发布</a></li>
-                                    <li><a href="/supplier_orderlist"> 订单</a></li>
-                                    <li><a href="/login">退出登录</a></li>
-                                </ul>
-					        </div>
+                                </div>
+                                <!-- Dashboard Links -->
+                                <div class="widget user-dashboard-menu">
+                                    <ul>
+                                        <li>
+                                             <form action="/supplier_addProduct" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link" style="color:black;"
+                                                        type="submit"><i class="fa fa-user"></i>
+                                                    发布商品
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form action="/supplier_changeStatus" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link" style="color:black;"
+                                                        type="submit"><i class="fa fa-user"></i>
+                                                    待审核
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li class="active">
+                                            <form action="/supplier_publishedProduct" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link"
+                                                        type="submit"><i class="fa fa-user"></i>
+                                                    已发布
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form action="/supplier_orderlist" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link" style="color:black;"
+                                                        type="submit"><i class="fa fa-user"></i>
+                                                    订单
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form action="/logout" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link" style="color:black;"
+                                                        type="submit"><i class="fa fa-cog"></i>
+                                                退出登录
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-			        </div>
-			        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
-						<t t-if="message">
-							<div class="alert alert-warning">
-								<span t-esc="message"></span>
-							</div>
-						</t>
-    				<!-- Edit Personal Info -->
-	    			<div class="widget personal-info">
-		    			<h3 class="widget-header user">修改产品信息</h3>
-			    		<form action="updateProduct">
-				    		<!-- pro-name -->
-					    	<div class="form-group">
-						        <label for="pro-name">产品名称</label>
-						        <input name="pro_name" type="text" class="form-control" id="pro-name" t-att-value="product.pro_name" size="15" style="width:400px;height:50px;"/>
-								<input type="hidden" name="pro_id" t-att-value="product.id" />
-								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-						    </div>
-    						<!-- File chooser -->
-	    					<div class="form-group choose-file">
-                                <i class="fa fa-user text-center"></i>
-		    					<label for="input-file" class="btn btn-transparent btn-sm">选择产品</label>
-                                <input name="pro_image" type="file" id="input-file" style="display:none"/>
-				    		 </div>
-					    	<!-- price -->
-						    <div class="form-group">
-						        <label for="price">价格</label>
-    						    <input name="pro_price" type="text" class="form-control" id="price" t-att-value="product.pro_price" size="15" style="width:400px;height:50px;"/>
-	    					</div>
-		    				<!-- type -->
-			    			<div class="form-group">
-				    		    <label for="type">商品类型</label>
-					    	    <t t-if="product.pro_type == '1'">
-									<select name="pro_type" class="form-control" style="width:400px;height:50px;" id="type">
-										<option value='1'>活动策划</option>
-										<option value='2'>培训产品</option>
-										<option value='3'>精美商品</option>
-										<option value='4'>法律服务</option>
-									</select>
-								</t>
-								<t t-if="product.pro_type == '2'">
-									<select name="pro_type" class="form-control" style="width:400px;height:50px;" id="type">
-										<option value='2'>培训产品</option>
-										<option value='1'>活动策划</option>
-										<option value='3'>精美商品</option>
-										<option value='4'>法律服务</option>
-									</select>
-								</t>
-								<t t-if="product.pro_type== '3'">
-									<select name="pro_type" class="form-control" style="width:400px;height:50px;" id="type">
-										<option value='3'>精美商品</option>
-										<option value='1'>活动策划</option>
-										<option value='2'>培训产品</option>
-										<option value='4'>法律服务</option>
-									</select>
-								</t>
-								<t t-if="product.pro_type == '4'">
-									<select name="pro_type" class="form-control" style="width:400px;height:50px;" id="type">
-										<option value='4'>法律服务</option>
-										<option value='1'>活动策划</option>
-										<option value='2'>培训产品</option>
-										<option value='3'>精美商品</option>
-									</select>
-								</t>
-						    </div>
-    						<!-- detail -->
-	    					<div class="form-group mb-30">
-                      			<label for="detail">商品详情</label>
-                      			<input name="pro_detail" type="text" class="form-control" id="detail" t-att-value="product.pro_detail" style="width:600px;height:100px;"></input>
-              	    		</div>
-					    	<!-- Submit button -->
-						    <button class="btn btn-transparent">修改</button>
-					    </form>
-				    </div>
+                        <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-0">
+                            <t t-if="message">
+                                <div class="alert alert-warning">
+                                    <span t-esc="message"></span>
+                                </div>
+                            </t>
+                            <!-- Edit Personal Info -->
+                            <div class="widget personal-info">
+                                <h3 class="widget-header user">修改产品信息</h3>
+                                <form action="updateProduct">
+                                    <!-- pro-name -->
+                                    <div class="form-group">
+                                        <label for="pro-name">产品名称</label>
+                                        <input name="pro_name" type="text" class="form-control" id="pro-name"
+                                               t-att-value="product.pro_name" size="15"
+                                               style="width:400px;height:50px;"/>
+                                        <input type="hidden" name="pro_id" t-att-value="product.id"/>
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    </div>
+                                    <!-- File chooser -->
+                                    <div class="form-group choose-file">
+                                        <i class="fa fa-user text-center"></i>
+                                        <label for="input-file" class="btn btn-transparent btn-sm">选择产品</label>
+                                        <input name="pro_image" type="file" id="input-file" style="display:none"/>
+                                    </div>
+                                    <!-- price -->
+                                    <div class="form-group">
+                                        <label for="price">价格</label>
+                                        <input name="pro_price" type="text" class="form-control" id="price"
+                                               t-att-value="product.pro_price" size="15"
+                                               style="width:400px;height:50px;"/>
+                                    </div>
+                                    <!-- type -->
+                                    <div class="form-group">
+                                        <label for="type">商品类型</label>
+                                        <t t-if="product.pro_type == '1'">
+                                            <select name="pro_type" class="form-control"
+                                                    style="width:400px;height:50px;" id="type">
+                                                <option value='1'>活动策划</option>
+                                                <option value='2'>培训产品</option>
+                                                <option value='3'>精美商品</option>
+                                                <option value='4'>法律服务</option>
+                                            </select>
+                                        </t>
+                                        <t t-if="product.pro_type == '2'">
+                                            <select name="pro_type" class="form-control"
+                                                    style="width:400px;height:50px;" id="type">
+                                                <option value='2'>培训产品</option>
+                                                <option value='1'>活动策划</option>
+                                                <option value='3'>精美商品</option>
+                                                <option value='4'>法律服务</option>
+                                            </select>
+                                        </t>
+                                        <t t-if="product.pro_type== '3'">
+                                            <select name="pro_type" class="form-control"
+                                                    style="width:400px;height:50px;" id="type">
+                                                <option value='3'>精美商品</option>
+                                                <option value='1'>活动策划</option>
+                                                <option value='2'>培训产品</option>
+                                                <option value='4'>法律服务</option>
+                                            </select>
+                                        </t>
+                                        <t t-if="product.pro_type == '4'">
+                                            <select name="pro_type" class="form-control"
+                                                    style="width:400px;height:50px;" id="type">
+                                                <option value='4'>法律服务</option>
+                                                <option value='1'>活动策划</option>
+                                                <option value='2'>培训产品</option>
+                                                <option value='3'>精美商品</option>
+                                            </select>
+                                        </t>
+                                    </div>
+                                    <!-- detail -->
+                                    <div class="form-group mb-30">
+                                        <label for="detail">商品详情</label>
+                                        <input name="pro_detail" type="text" class="form-control" id="detail"
+                                               t-att-value="product.pro_detail"
+                                               style="width:600px;height:100px;"></input>
+                                    </div>
+                                    <!-- Submit button -->
+                                    <input type="hidden" name="user_id"
+                                           t-att-value="user_id"/>
+                                    <button class="btn btn-transparent">修改</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+                    <!-- Row End -->
                 </div>
-		        <!-- Row End -->
-	        </div>
-	        <!-- Container End -->
-        </section>
-        <!--============================
-            =            Footer            =
-            =============================-->
+                <!-- Container End -->
+            </section>
+            <!--============================
+                =            Footer            =
+                =============================-->
             <footer class="footer section section-sm">
                 <!-- Container Start -->
                 <div class="container">
                     <div class="row offset-md-1 offset-lg-0 block about">
-                        <img src="\HRStore\static\src\images\logo.jpg" height="100" width="200" />
+                        <img src="\HRStore\static\src\images\logo.jpg" height="100" width="200"/>
                         <div class="footer-text">
                         </div>
                         <ul>
@@ -232,17 +366,19 @@
             </footer>
             <!-- Footer Bottom -->
             <footer class="footer-bottom">
-	            <!-- Container Start -->
-	            <div class="container">
-		            <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
-	            </div>
-	            <!-- Container End -->
-	            <!-- To Top -->
-	            <div class="top-to">
-		            <a id="top" class="" href=""><i class="fa fa-angle-up"></i></a>
-	            </div>
+                <!-- Container Start -->
+                <div class="container">
+                    <p type="center">Copyright © 2019.7-现在 HR商城 版权所有</p>
+                </div>
+                <!-- Container End -->
+                <!-- To Top -->
+                <div class="top-to">
+                    <a id="top" class="" href="">
+                        <i class="fa fa-angle-up"></i>
+                    </a>
+                </div>
             </footer>
 
         </body>
-     </template>
+    </template>
 </odoo>

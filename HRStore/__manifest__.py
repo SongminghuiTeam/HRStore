@@ -14,7 +14,6 @@
         'views/template.xml',
         'views/home.xml',
         'views/products.xml',
-        'views/forum.xml',
         'views/customer_service.xml',
         'views/product_details.xml',
         'views/supplier_addProduct.xml',
@@ -26,7 +25,11 @@
         'views/customer_info.xml',
         'views/customer_modifyInfo.xml',
         'views/customer_order.xml',
-        'views/customer_comment.xml'
+        'views/customer_comment.xml',
+        'views/confirm_order.xml',
+        'views/add_address.xml',
+        'views/pay_order.xml',
+        'views/forum.xml'
     ],
 
     'depends': ['base', 'website'],

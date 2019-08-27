@@ -24,21 +24,53 @@
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                    <ul class="navbar-nav ml-auto main-nav ">
+                                   <ul class="navbar-nav ml-auto main-nav ">
                                         <li class="nav-item active">
                                             <a class="nav-link" href="/home">首页</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=2">培训产品</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="2"/>
+                                                <button class="btn btn-link nav-link" style="color:black;" type="submit">培训产品</button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=1">活动策划</a>
+                                             <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="1"/>
+                                                <button class="btn btn-link nav-link" style="color:black;" type="submit">活动策划</button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=3">精美商品</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="3"/>
+                                                <button class="btn btn-link nav-link" style="color:black;" type="submit">精美商品</button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=4">法律服务</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="4"/>
+                                                <button class="btn btn-link nav-link" style="color:black;" type="submit">法律服务</button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="/customer_service">在线客服</a>

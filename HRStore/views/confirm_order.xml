@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
-    <!---->
-    <template id="forum" name="forum">
+    <!--页面  梁晓珂 计科162 161002221   实现 梁晓珂 计科162 161002221-->
+    <template id="confirm_order" name="confirm_order">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
             <t t-call-assets="HRStore.my_custom_assets" tcss="false"/>
@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <nav class="navbar navbar-expand-lg  navigation">
+                             <nav class="navbar navbar-expand-lg  navigation">
                                 <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
@@ -23,13 +23,13 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav ml-auto main-nav ">
-                                        <li class="nav-item">
+                                        <li class="nav-item active">
                                             <form action="/home" method="post">
                                                 <input type="hidden" name="csrf_token"
                                                        t-att-value="request.csrf_token()"/>
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
-                                                <button class="btn btn-link nav-link"  style="color:black;"
+                                                <button class="btn btn-link nav-link"
                                                         type="submit">首页
                                                 </button>
                                             </form>
@@ -86,13 +86,13 @@
                                                 </button>
                                             </form>
                                         </li>
-                                        <li class="nav-item active">
+                                        <li class="nav-item">
                                             <form action="/forum" method="post">
                                                 <input type="hidden" name="csrf_token"
                                                        t-att-value="request.csrf_token()"/>
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
-                                                <button class="btn btn-link nav-link"
+                                                <button class="btn btn-link nav-link" style="color:black;"
                                                         type="submit">论坛
                                                 </button>
                                             </form>
@@ -140,164 +140,127 @@
                     </div>
                 </div>
             </section>
-            <!--=================================
-            =            comment            =
-            ==================================-->
-
-            <section class="blog single-blog section">
+            <!--==================================
+            =            User Profile            =
+            ===================================-->
+            <section class="dashboard section">
+                <!-- Container Start -->
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 offset-md-1 col-lg-8 offset-lg-0" style="margin-right:70px;">
-                            <div class="sidebar">
-                                <!-- Category Widget -->
+                    <!-- Row Start -->
+                    <form action="/to_add_address" method="post" class="float-right">
+                        <input type="hidden" name="csrf_token"
+                               t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="product_id"
+                               t-att-value="product.id"/>
+                        <input type="hidden" name="user_id"
+                               t-att-value="user_id"/>
+                        <button class="btn btn-transparent btn-sm" type="submit">使用新地址
+                        </button>
+                    </form>
+                    <form action="/submit_order" method="post">
+                        <div class="row">
+
+                            <div class="col-md-12 offset-md-1 col-lg-12 offset-lg-0">
+                                <!-- Recently Favorited -->
+
                                 <div class="widget dashboard-container my-adslist">
-                                    <!-- Widget Header -->
-                                    <h5 class="widget-header">
-                                        我要发贴。。。
-                                    </h5>
-                                    <div class="goods-buy" style="margin:0 auto;margin-bottom:20px;">
+                                    <h3 class="widget-header">选择收货地址</h3>
+                                    <select class="form-control" name="address_id">
+                                        <t t-foreach="addresses" t-as="address">
+                                            <option value="address.id">
+                                                <sapn t-esc="address.province+' '+address.city+' '+address.block+' '+address.street+' '+address.details+'  (收货人：'+address.receiver_name+'-'+address.receiver_tel+')'"></sapn>
+                                            </option>
+                                        </t>
+                                    </select>
+                                    <br/>
 
-                                        <form action="/add_forum" method="post">
-                                            <input type="hidden" name="csrf_token"
-                                                   t-att-value="request.csrf_token()"/>
-                                            <input type="hidden" name="user_id"
-                                                   t-att-value="user_id"/>
-                                            <div class="form-group">
-                                                <input type="text" name="title"
-                                                       placeholder="标题："/>
-                                                <textarea name="content" class="form-control" rows="7"></textarea>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="name">标签</label>
-                                                <select class="form-control" name="label">
-                                                    <option value="1">公告</option>
-                                                    <option value="2">人员招聘</option>
-                                                    <option value="3">求职</option>
-                                                    <option value="4">我要提问</option>
-                                                    <option value="5">其它</option>
-                                                </select>
-                                            </div>
-
-                                            <button type="submit" class="btn add-button">发布</button>
-
-                                        </form>
-
-                                    </div>
 
                                 </div>
 
-                            </div>
-                            <div class="widget dashboard-container my-adslist row">
-                                <form action="/forum" method="post">
-                                    <input type="hidden" name="csrf_token"
-                                           t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="user_id"
-                                           t-att-value="user_id"/>
-                                    <button type="submit" class="btn btn-md btn-primary">全部</button>
-                                </form>
-                                <form action="/get_forum" method="post">
-                                    <input type="hidden" name="csrf_token"
-                                           t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="user_id"
-                                           t-att-value="user_id"/>
-                                    <input type="hidden" name="label"
-                                           t-att-value="1"/>
-                                    <button type="submit" class="btn btn-md btn-primary">公告</button>
-                                </form>
-                                 <form action="/get_forum" method="post">
-                                    <input type="hidden" name="csrf_token"
-                                           t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="user_id"
-                                           t-att-value="user_id"/>
-                                    <input type="hidden" name="label"
-                                           t-att-value="2"/>
-                                    <button type="submit" class="btn btn-md btn-primary">人员招聘</button>
-                                </form>
-                                 <form action="/get_forum" method="post">
-                                    <input type="hidden" name="csrf_token"
-                                           t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="user_id"
-                                           t-att-value="user_id"/>
-                                    <input type="hidden" name="label"
-                                           t-att-value="3"/>
-                                    <button type="submit" class="btn btn-md btn-primary">求职</button>
-                                </form>
-                                 <form action="/get_forum" method="post">
-                                    <input type="hidden" name="csrf_token"
-                                           t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="user_id"
-                                           t-att-value="user_id"/>
-                                    <input type="hidden" name="label"
-                                           t-att-value="4"/>
-                                    <button type="submit" class="btn btn-md btn-primary">我要提问</button>
-                                </form>
-                                 <form action="/get_forum" method="post">
-                                    <input type="hidden" name="csrf_token"
-                                           t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="user_id"
-                                           t-att-value="user_id"/>
-                                    <input type="hidden" name="label"
-                                           t-att-value="5"/>
-                                    <button type="submit" class="btn btn-md btn-primary">其他</button>
-                                </form>
-                            </div>
-                            <t t-if="forum_list">
-                                <t t-foreach="forum_list" t-as="forum">
-                                    <div class="widget dashboard-container my-adslist">
-                                        <h3 class="widget-header">
-                                            <t t-esc="forum.title"></t>
-                                        </h3>
-                                        <p t-esc="forum.username"></p>
-                                        <span t-esc="forum.content"></span>
-                                        <p>
-                                            <span id="time" t-esc="forum.create_date">2019年8月13日</span>
-                                        </p>
-                                        <button class="btn btn-sm btn-info">
-                                            <t t-if="forum.label=='1'">公告</t>
-                                            <t t-if="forum.label=='2'">人员招聘</t>
-                                            <t t-if="forum.label=='3'">求职</t>
-                                            <t t-if="forum.label=='4'">我要提问</t>
-                                            <t t-if="forum.label=='5'">其他</t>
-
-                                        </button>
-
-                                    </div>
-                                </t>
-                            </t>
-                        </div>
-
-                        <div class="col-md-3 offset-md-1 col-lg-3 offset-lg-0">
-                            <div class="sidebar">
-                                <!-- Category Widget -->
-                                <div class="widget category">
-                                    <!-- Widget Header -->
-                                    <h5 class="widget-header">商家信息</h5>
-                                    <div class="profile-thumb">
-                                        <img src="" alt="" class="rounded-circle"/>
-                                        <!--<span t-field="commonuser_info.user_image"
-                                              t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
-                                    -->
-                                    </div>
-                                    <p>联系方式：</p>
-                                </div>
-
-                            </div>
-                            <div class="sidebar">
-                                <!-- Category Widget -->
-                                <div class="widget category">
-                                    <!-- Widget Header -->
-                                    <h5 class="widget-header">您想在此推荐您的产品吗？</h5>
-                                    <p>咨询热线：886-886-886</p>
-                                </div>
 
                             </div>
                         </div>
 
-                    </div>
+                        <div class="row">
+                            <div class="col-md-12 offset-md-1 col-lg-12 offset-lg-0">
+                                <!-- Recently Favorited -->
+                                <div class="widget dashboard-container my-adslist">
+                                    <h3 class="widget-header">确认订单信息</h3>
+                                    <table class="table table-responsive product-dashboard-table">
+                                        <thead>
+                                            <tr>
+                                                <th>商品图片</th>
+                                                <th></th>
+                                                <th>商品</th>
+                                                <th>数量</th>
+                                                <th>总计</th>
+                                            </tr>
+                                        </thead>
+                                        <t t-if="product">
+                                            <tbody>
+
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <tr>
+
+                                                    <td class="product-thumb">
+                                                        <!--<img width="80px" height="auto" t-field="cart_product[0].pro_image"
+                                                             alt="image description" />-->
+                                                        <span t-field="product.pro_image"
+                                                              t-options="{'widget': 'image', 'class': 'mx-auto d-block img-thumbnail'}"/>
+                                                    </td>
+                                                    <td>
+                                                        <span></span>
+                                                    </td>
+                                                    <td>
+                                                        <!--<h3 class="title">Macbook Pro 15inch（商品名称）</h3>-->
+                                                        <h3 class="title">
+                                                            <span t-esc="product.pro_name"
+                                                                  class="title"></span>
+                                                        </h3>
+                                                        <span id="price">
+                                                            <span>单价:</span>
+                                                            <label t-esc="product.pro_price"></label>
+
+                                                        </span>
+                                                    </td>
+
+                                                    <td>
+                                                        <span id="jian">
+                                                            <span t-esc="1"></span>
+                                                        </span>
+                                                    </td>
+                                                    <td text="center">
+                                                        <span id="order_price">
+                                                            <span t-esc="order_price"></span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+
+                                        </t>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="csrf_token"
+                               t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="product_id"
+                               t-att-value="product.id"/>
+                        <input type="hidden" name="user_id"
+                               t-att-value="user_id"/>
+                        <center>
+                            <button class="btn btn-transparent" type="submit">提交订单
+                            </button>
+                        </center>
+                    </form>
+                    <!-- Row End -->
                 </div>
+                <!-- Container End -->
             </section>
-
             <!--============================
             =            Footer            =
             =============================-->
@@ -316,8 +279,8 @@
                                 <a href="#">值电信业务经营许可证（跨地区）： B2-20150210</a>
                             </li>
                             <li>
-                                <a href="#">北京市网络食品销售第三方平台提供者备案：京网食A33010001</a>
-                                <br/>
+                                <a href="#">北京市网络食品销售第三方平台提供者备案：京网食A33010001
+                                </a>
                             </li>
                             <li>
                                 <a href="#">信息网络传播视听许可证：1109364号</a>
@@ -347,6 +310,7 @@
 
 
         </body>
+
     </template>
 
 </odoo>

@@ -5,17 +5,18 @@ from odoo.addons.website.models.ir_http import sitemap_qs2dom
 
 from odoo import tools
 import base64
-
+import datetime
 
 # 何钰霖 计科162 161002219
 class HRStore(http.Controller):
     @http.route('/supplier_addProduct', auth="public")
     def addProduct(self, **post):
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
 
         return request.render('HRStore.supplier_addProduct', {
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/supplier_add', method="post")
@@ -30,11 +31,9 @@ class HRStore(http.Controller):
 
         pro_image = tools.image_resize_image_big(base64.b64encode(open(image_route, 'rb').read()))
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
-        print('userID:')
-        print(userID)
 
         request.env['hrstore.product'].sudo().create({'pro_name': name, 'pro_price': price, 'pro_detail': detail,
                                                       'pro_type': type, 'state': state, 'pro_view': view,
@@ -43,12 +42,13 @@ class HRStore(http.Controller):
 
         return request.render('HRStore.supplier_addProduct', {
             'message': "产品添加成功",
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/supplier_updateInfo', auth="public")
-    def updateProduct(self):
-        username = request.session['user_id']
+    def updateProduct(self, **post):
+        username = post.get('user_id')
         print(username)
 
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
@@ -56,7 +56,8 @@ class HRStore(http.Controller):
         print(telephone)
 
         return request.render('HRStore.supplier_updateInfo', {
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/supplier_updatepwd', auth="public")
@@ -65,32 +66,33 @@ class HRStore(http.Controller):
         new_pwd = post.get('new_pwd')
         ensure_pwd = post.get('ensure_pwd')
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         user = request.env['hrstore.user'].search([('user_id', '=', username)])
         password = user.password
 
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
-        print(username)
-        print(supplier.address)
-        print(supplier.telephone)
+
 
         if password != old_pwd:
             return request.render('HRStore.supplier_updateInfo', {
                 'message': "原始密码输入错误",
-                'supplier': supplier
+                'supplier': supplier,
+                'user_id': username
             })
 
         if new_pwd != ensure_pwd:
             return request.render('HRStore.supplier_updateInfo', {
                 'message': "新密码与确认密码输入不符",
-                'supplier': supplier
+                'supplier': supplier,
+                'user_id': username
             })
 
         info = {'password': new_pwd}
         user.write(info)
         return request.render('HRStore.supplier_updateInfo', {
             'message': "密码更新成功",
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/supplier_updateDetailed', method="post")
@@ -100,7 +102,7 @@ class HRStore(http.Controller):
         address = post.get('address')
         image_route = post.get('user_image')
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
 
         if image_route:
@@ -120,21 +122,34 @@ class HRStore(http.Controller):
 
         return request.render('HRStore.supplier_updateInfo', {
             'message': "个人信息修改成功",
-            'supplier': supplier_new
+            'supplier': supplier_new,
+            'user_id': username
         })
 
     @http.route('/supplier_changeStatus', method="post")
-    def changeStatus(self):
-        username = request.session['user_id']
+    def changeStatus(self, **post):
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
 
         products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '0')])
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
 
+        published_products = []
+        for product in products:
+            product_time = datetime.datetime.strptime(str(product.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+            product_time = (product_time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+            temp = []
+            temp.append(product_time)
+            temp.append(product)
+            published_products.append(temp)
+            print(product.pro_name)
+            print(product.pro_image)
+
         return request.render('HRStore.supplier_changeStatus', {
-            'products': products,
-            'supplier': supplier
+            'products': published_products,
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/deleteProduct', method="post")
@@ -144,30 +159,54 @@ class HRStore(http.Controller):
 
         request.env['hrstore.product'].search([('id', '=', pro_id)]).unlink()
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
 
         products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '0')])
+        supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
+
+        published_products = []
+        for product in products:
+            product_time = datetime.datetime.strptime(str(product.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+            product_time = (product_time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+            temp = []
+            temp.append(product_time)
+            temp.append(product)
+            published_products.append(temp)
+            print(product.pro_name)
+            print(product.pro_image)
 
         return request.render('HRStore.supplier_changeStatus', {
-            'products': products,
-            'supplier': supplier
+            'products': published_products,
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/supplier_publishedProduct', method="post")
-    def publisedProduct(self):
-        username = request.session['user_id']
+    def publisedProduct(self, **post):
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
 
         print(userID)
 
-        products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '1')])
+        published_products = request.env['hrstore.product'].search([('user_id', '=', userID), ('state', '=', '1')])
+        products = []
+        for product in published_products:
+            product_time = datetime.datetime.strptime(str(product.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+            product_time = (product_time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+            temp = []
+            temp.append(product_time)
+            temp.append(product)
+            products.append(temp)
+            print(product.pro_name)
+            print(product.pro_image)
 
         return request.render('HRStore.supplier_publishedProduct', {
             'published_products': products,
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/deletePublishedProduct', method="post")
@@ -177,7 +216,7 @@ class HRStore(http.Controller):
 
         request.env['hrstore.product'].search([('id', '=', pro_id)]).unlink()
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
 
@@ -185,7 +224,8 @@ class HRStore(http.Controller):
 
         return request.render('HRStore.supplier_publishedProduct', {
             'published_products': products,
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/updatePublishedProduct', method="post")
@@ -195,14 +235,15 @@ class HRStore(http.Controller):
 
         product = request.env['hrstore.product'].search([('id', '=', pro_id)])
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
 
         print(product.pro_detail)
 
         return request.render('HRStore.supplier_updatePublishedProduct', {
             'product': product,
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/updateProduct', method="post")
@@ -234,18 +275,19 @@ class HRStore(http.Controller):
 
         new_product = request.env['hrstore.product'].search([('id', '=', pro_id)])
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
 
         return request.render('HRStore.supplier_updatePublishedProduct', {
             'product': new_product,
             'message': '产品信息更新成功',
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/supplier_orderlist', method="post")
-    def orderlist(self):
-        username = request.session['user_id']
+    def orderlist(self, **post):
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
 
@@ -270,7 +312,9 @@ class HRStore(http.Controller):
                 orderinfo.append(product_search.pro_price)
                 orderinfo.append(product_search.pro_type)
                 orderinfo.append(product_search.id)
-                orderinfo.append(order.create_date)
+                order_time = datetime.datetime.strptime(str(order.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+                order_time = (order_time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                orderinfo.append(order_time)
                 orderinfo.append(order.state)
                 orderinfo.append(order.id)
                 orderinfo.append(order.order_price)
@@ -279,7 +323,8 @@ class HRStore(http.Controller):
 
         return request.render('HRStore.supplier_orderlist', {
             'orders': orderinfos,
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/ChangeOrder', type='http', method='POST', website=True, auth="public")
@@ -291,7 +336,7 @@ class HRStore(http.Controller):
         info = {'state': '1'}
         target.write(info)
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
 
@@ -316,7 +361,9 @@ class HRStore(http.Controller):
                 orderinfo.append(product_search.pro_price)
                 orderinfo.append(product_search.pro_type)
                 orderinfo.append(product_search.id)
-                orderinfo.append(order.create_date)
+                order_time = datetime.datetime.strptime(str(order.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+                order_time = (order_time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                orderinfo.append(order_time)
                 orderinfo.append(order.state)
                 orderinfo.append(order.id)
                 orderinfo.append(order.order_price)
@@ -325,7 +372,8 @@ class HRStore(http.Controller):
 
         return request.render('HRStore.supplier_orderlist', {
             'orders': orderinfos,
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })
 
     @http.route('/ChangeOrderPrice', type='http', method='POST', website=True, auth="public")
@@ -338,7 +386,7 @@ class HRStore(http.Controller):
         info = {'order_price': price}
         target.write(info)
 
-        username = request.session['user_id']
+        username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
         userID = supplier.id
 
@@ -363,7 +411,9 @@ class HRStore(http.Controller):
                 orderinfo.append(product_search.pro_price)
                 orderinfo.append(product_search.pro_type)
                 orderinfo.append(product_search.id)
-                orderinfo.append(order.create_date)
+                order_time = datetime.datetime.strptime(str(order.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+                order_time = (order_time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                orderinfo.append(order_time)
                 orderinfo.append(order.state)
                 orderinfo.append(order.id)
                 orderinfo.append(order.order_price)
@@ -372,5 +422,6 @@ class HRStore(http.Controller):
 
         return request.render('HRStore.supplier_orderlist', {
             'orders': orderinfos,
-            'supplier': supplier
+            'supplier': supplier,
+            'user_id': username
         })

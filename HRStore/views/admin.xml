@@ -15,9 +15,17 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="HR Store" id="hrstore_base_menu" />
+    <record id='hrstore_ad_action' model='ir.actions.act_window'>
+        <field name="name">HR Ad</field>
+        <field name="res_model">hrstore.ad</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="HR Store" id="hrstore_base_menu"/>
     <menuitem name="All Users" id="hrstore_user_menu" parent="hrstore_base_menu" action="hrstore_user_action"/>
     <menuitem name="All Products" id="hrstore_product_menu" parent="hrstore_base_menu" action="hrstore_product_action"/>
+    <menuitem name="All Ads" id="hrstore_ad_menu" parent="hrstore_base_menu" action="hrstore_ad_action"/>
 
     <!-- Form View (modified with sheet tag and oe_title) -->
     <record id="hrstore_user_view_form" model="ir.ui.view">
@@ -73,7 +81,9 @@
                     <field name="pro_image" widget='image' class="oe_avatar"/>
                     <div class="oe_title">
                         <label for="pro_name" class="oe_edit_only"/>
-                        <h1> <field name="pro_name"/> </h1>
+                        <h1>
+                            <field name="pro_name"/>
+                        </h1>
                     </div>
                     <group>
                         <group>
@@ -102,7 +112,8 @@
                 <field name="pro_price"/>
                 <field name="pro_view"/>
                 <field name="state"/>
-                <button string="通过" class="btn-sm" type="object" name="update_state" attrs="{'invisible':[('state','!=','0')]}"/>
+                <button string="通过" class="btn-sm" type="object" name="update_state"
+                        attrs="{'invisible':[('state','!=','0')]}"/>
 
             </tree>
         </field>
@@ -117,6 +128,51 @@
                 <field name="pro_name"/>
                 <field name="pro_type"/>
                 <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+
+    <!-- Form View (modified with sheet tag and oe_title) -->
+    <record id="hrstore_ad_view_form" model="ir.ui.view">
+        <field name="name">HRStore Ad Form</field>
+        <field name="model">hrstore.ad</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="image" widget='image' class="oe_avatar"/>
+                            <field name="title"/>
+                            <field name="text"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree(list) View -->
+    <record id="hrstore_ad_view_tree" model="ir.ui.view">
+        <field name="name">HRStore Ad List</field>
+        <field name="model">hrstore.ad</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title"/>
+                <field name="text"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="hrstore_ad_view_search" model="ir.ui.view">
+        <field name="name">HRStore Ad Search</field>
+        <field name="model">hrstore.ad</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="title"/>
+                <field name="text"/>
             </search>
         </field>
     </record>

@@ -55,17 +55,33 @@ class Hello(http.Controller):
     # 访问客服页面
     # 宋明惠
     @http.route('/customer_service', auth="public")
-    def customer_service(self):
-        return request.render('HRStore.customer_service')
+    def customer_service(self, **post):
+        user_id = post.get('user_id')
+        print(user_id)
+        return request.render('HRStore.customer_service',
+                              {'user_id': user_id})
 
-    # 通过链接直接访问首页
-    # 宋明惠
-    @http.route('/home', type='http', method='POST', website=True, auth="public")
-    def home(self, **post):
+        # 通过链接直接访问首页
+        # 宋明惠
+
+    @http.route('/index', type='http', method='POST', website=True, auth="public")
+    def index(self, **post):
         all_products = request.env['hrstore.product'].search([('state', '=', "1")])
         print("home")
         return request.render('HRStore.home', {
             'products': all_products
+        })
+
+    # 访问首页
+    # 宋明惠
+    @http.route('/home', type='http', method='POST', website=True, auth="public")
+    def home(self, **post):
+        user_id = post.get('user_id')
+        all_products = request.env['hrstore.product'].search([('state', '=', "1")])
+        print("home")
+        return request.render('HRStore.home', {
+            'products': all_products,
+            'user_id': user_id
         })
 
     # 通过登录页面的登录按钮访问
@@ -78,22 +94,23 @@ class Hello(http.Controller):
         all_products = request.env['hrstore.product'].search([('state', '=', "1")])
 
         if len(userslist) != 0:
-            request.session['user_id'] = username
+            # request.session['user_id'] = username
             return request.render(
                 'HRStore.home',
                 {
+                    'user_id': username,
                     'products': all_products
                 }
             )
         return request.render('HRStore.login', {
-
+            'user_id': username,
             'message': "用户名或密码错误！"
         })
 
     # 宋明惠
     @http.route('/products', auth="public", type='http', website=True)
     def get_products(self, **post):
-
+        user_id = post.get('user_id')
         type = post.get('type')
         all_products = request.env['hrstore.product'].search([('pro_type', '=', type), ('state', '=', "1")])
         product1_num = request.env['hrstore.product'].search_count([('pro_type', '=', "1"), ('state', '=', "1")])
@@ -108,7 +125,7 @@ class Hello(http.Controller):
         return request.render('HRStore.products', {
             'products': all_products,
             'type': type,
-
+            'user_id': user_id
         })
 
     # 进入我的
@@ -140,13 +157,15 @@ class Hello(http.Controller):
                 return request.render('HRStore.customer_info', {
                     'user_info': user,
                     'commonuser_info': commonuser,
-                    'cart_products': cart_products
+                    'cart_products': cart_products,
+                    'user_id': username
                 })
             elif user.user_type == '2':
                 supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
                 print(supplier)
                 return request.render('HRStore.supplier_addProduct', {
-                    'supplier': supplier
+                    'supplier': supplier,
+                    'user_id': username
                 })
 
         return request.render('HRStore.login')
@@ -155,23 +174,26 @@ class Hello(http.Controller):
     # 梁晓珂
     @http.route('/search', type='http', method='POST', website=True, auth="public")
     def search(self, **post):
+        user_id = post.get("user_id")
         pro_name = post.get('pro_name')
         all_products = request.env['hrstore.product'].search([('state', '=', "1"), ('pro_name', 'ilike', pro_name)])
         return request.render('HRStore.home', {
-            'products': all_products
+            'products': all_products,
+            'user_id': user_id
         })
 
     # 产品页查找
     # 梁晓珂
     @http.route('/search_product', type='http', method='POST', website=True, auth="public")
     def search_product(self, **post):
+        user_id = post.get("user_id")
         pro_name = post.get('pro_name')
         type = post.get('type')
         all_products = request.env['hrstore.product'].search(
             [('state', '=', "1"), ('pro_name', 'ilike', pro_name), ('pro_type', '=', type)])
 
         return request.render('HRStore.products', {
-
+            'user_id': user_id,
             'type': type,
             'products': all_products
         })
@@ -180,10 +202,13 @@ class Hello(http.Controller):
     # 宋明惠
     @http.route('/product_detail', type='http', method='POST', website=True, auth="public")
     def product_detail(self, **post):
+        user_id = post.get("user_id")
         pro_id = post.get('product_id')
         # 获取产品的详细信息
         all_products = request.env['hrstore.product'].search(
             [('state', '=', "1"), ('id', '=', pro_id)])
+        info = {'pro_view': all_products.pro_view + 1}
+        all_products.write(info)
 
         # 获取产品的评论
         orders = request.env['hrstore.order'].search(
@@ -206,7 +231,8 @@ class Hello(http.Controller):
             return request.render('HRStore.product_detail', {
                 'product': product,
                 'comments': all_comments,
-                'shop_user': user
+                'shop_user': user,
+                'user_id': user_id
             })
 
     # 预购功能
@@ -227,21 +253,25 @@ class Hello(http.Controller):
             if user2.user_type == '2':
                 message = "请使用普通用户账号登录"
             else:
-                if pro_type == '3':
-                    message = "购买成功！"
-                    request.env['hrstore.order'].sudo().create(
-                        {'state': '1', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
-                else:
-
+                if pro_type == '3':  # 如果是精美商品，可直接购买，跳到付款页面
+                    addresses = request.env['hrstore.address'].search([('user_id', '=', user.id)])
+                    return request.render('HRStore.confirm_order', {
+                        'product': product,
+                        'addresses': addresses,
+                        'order_price': order_price,
+                        'user_id': user_id
+                    })
+                else:  # 其他产品，需要经过供应商确认订单，然后在“我的订单”中，进行购买
                     message = "预购成功,订单待处理......"
                     request.env['hrstore.order'].sudo().create(
-                        {'state': '0', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
+                        {'state': '0', 'user_id': user.id, 'pro_id': pro_id})
         else:
             message = "请先登录"
 
         return request.render('HRStore.product_detail', {
             'product': product,
-            'message': message
+            'message': message,
+            'user_id': user_id
         })
 
     # 加入购物车功能
@@ -275,12 +305,73 @@ class Hello(http.Controller):
 
         return request.render('HRStore.product_detail', {
             'product': product,
-            'message': message
+            'message': message,
+            'user_id': user_id
+        })
+
+    # 转到添加收货地址页面
+    # 梁晓珂
+    @http.route('/to_add_address', type='http', method='POST', website=True, auth="public")
+    def to_add_address(self, **post):
+        user_id = post.get("user_id")
+        product_id = post.get("product_id")
+        return request.render('HRStore.add_address', {
+            'user_id': user_id,
+            'product_id': product_id
+        })
+
+    # 添加收货地址
+    # 梁晓珂
+    @http.route('/add_address', type='http', method='POST', website=True, auth="public")
+    def add_address(self, **post):
+        user_id = post.get("user_id")
+        product_id = post.get("product_id")
+        province = post.get("province")
+        city = post.get("city")
+        block = post.get("block")
+        street = post.get("street")
+        details = post.get("details")
+        receiver_name = post.get("receiver_name")
+        receiver_tel = post.get("receiver_tel")
+
+        user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
+        request.env['hrstore.address'].sudo().create(
+            {'province': province, 'city': city, 'block': block,
+             'street': street, 'details': details, 'receiver_name': receiver_name, 'receiver_tel': receiver_tel,
+             'user_id': user.id})
+
+        product = request.env['hrstore.product'].search(
+            [('state', '=', "1"), ('id', '=', product_id)])
+
+        addresses = request.env['hrstore.address'].search([('user_id', '=', user.id)])
+
+        return request.render('HRStore.confirm_order', {
+            'product': product,
+            'addresses': addresses,
+            'order_price': product.pro_price,
+            'user_id': user_id
+        })
+
+    # 提交订单--添加一条订单记录变成待付款状态1
+    # 梁晓珂
+    @http.route('/submit_order', type='http', method='POST', website=True, auth="public")
+    def submit_order(self, **post):
+        user_id = post.get("user_id")
+        product_id = post.get("product_id")
+        address_id = post.get("address_id")
+
+        user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
+
+        request.env['hrstore.order'].sudo().create(
+            {'state': '1', 'user_id': user.id, 'pro_id': product_id, 'address_id': address_id})
+
+        return request.render('HRStore.pay_order', {
+            'user_id': user_id
+
         })
 
     @http.route('/forum', type='http', method='POST', website=True, auth="public")
     def forum(self, **post):
-
         user_id = post.get('user_id')
         print(user_id)
         forum_list = request.env['hrstore.forum'].search([])

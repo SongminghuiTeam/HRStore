@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-<!--页面  李甜甜 计科162 161002229   实现 陈婉菁 计科162 161002218-->
+    <!--页面  李甜甜 计科162 161002229   实现 陈婉菁 计科162 161002218-->
     <template id="customer_modifyInfo" name="HRStore Products">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <nav class="navbar navbar-expand-lg  navigation">
+                             <nav class="navbar navbar-expand-lg  navigation">
                                 <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
@@ -24,32 +24,99 @@
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav ml-auto main-nav ">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="/home">首页</a>
+                                            <form action="/home" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link"
+                                                        type="submit">首页
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=2">培训产品</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="2"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">培训产品
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=1">活动策划</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="1"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">活动策划
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=3">精美商品</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="3"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">精美商品
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/products?type=4">法律服务</a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="4"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">法律服务
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/customer_service">在线客服</a>
+                                            <form action="/forum" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">论坛
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li class="nav-item">
+                                            <form action="/customer_service" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">在线客服
+                                                </button>
+                                            </form>
                                         </li>
                                     </ul>
-                                    <t t-if="request.session.user_id">
+                                    <t t-if="user_id">
                                         <ul class="navbar-nav ml-auto mt-10">
                                             <li class="nav-item">
                                                 <form action="/user_profile" method="post">
                                                     <input type="hidden" name="csrf_token"
                                                            t-att-value="request.csrf_token()"/>
                                                     <input type="hidden" name="user_id"
-                                                           t-att-value="request.session.user_id"/>
+                                                           t-att-value="user_id"/>
                                                     <input type="image"
                                                            src="\HRStore\static\src\images\my.png" height="60px"/>
                                                 </form>
@@ -57,6 +124,7 @@
                                         </ul>
                                     </t>
                                     <t t-else="">
+
                                         <ul class="navbar-nav ml-auto mt-10">
                                             <li class="nav-item">
                                                 <a class="nav-link login-button" href="/login">登陆</a>
@@ -103,22 +171,40 @@
                                 <div class="widget user-dashboard-menu">
                                     <ul>
                                         <li>
-                                            <a href="/cart">
-                                                <i class="fa fa-user"></i>
+                                             <form action="/cart" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link" style="color:black;"
+                                                        type="submit"><i class="fa fa-user"></i>
                                                 购物车
-                                            </a>
+                                                </button>
+                                            </form>
                                         </li>
                                         <li>
-                                            <a href="/order">
-                                                <i class="fa fa-bookmark-o"></i>
+                                            <form action="/order" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link" style="color:black;"
+                                                        type="submit"><i class="fa fa-user"></i>
                                                 订单
-                                            </a>
+                                                </button>
+                                            </form>
                                         </li>
                                         <li>
-                                            <a href="/logout">
-                                                <i class="fa fa-cog"></i>
+                                            <form action="/logout" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link" style="color:black;"
+                                                        type="submit"><i class="fa fa-cog"></i>
                                                 退出登录
-                                            </a>
+                                                </button>
+                                            </form>
                                         </li>
                                     </ul>
                                 </div>
@@ -164,6 +250,8 @@
                                                style="width:600px;height:100px;"/>
                                     </div>
                                     <!-- Submit button -->
+                                    <input type="hidden" name="user_id"
+                                           t-att-value="user_id"/>
                                     <button class="btn btn-transparent btn-sm">保存</button>
                                 </form>
                             </div>
@@ -194,6 +282,8 @@
                                                size="15" style="width:400px;height:50px;"/>
                                     </div>
                                     <!-- Submit Button -->
+                                    <input type="hidden" name="user_id"
+                                           t-att-value="user_id"/>
                                     <button class="btn btn-transparent">保存</button>
                                 </form>
                             </div>

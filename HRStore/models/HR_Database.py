@@ -24,6 +24,25 @@ class HRCommonUser(models.Model):
     user_id = fields.Char('账号', required=True)
 
 
+class HRAddress(models.Model):
+    _name = 'hrstore.address'
+    _description = 'HRStore Address'
+
+    province = fields.Char('省')
+    city = fields.Char('市')
+    block = fields.Char('区')
+    street = fields.Char('街道')
+    details = fields.Char('详细地址')
+    receiver_name = fields.Char('收货人姓名')
+    receiver_tel = fields.Char('收货人电话')
+
+    user_id = fields.Many2one(
+        'hrstore.commonuser',
+        string='普通用户',
+        ondelete='set null',
+    )
+
+
 class HRShop(models.Model):
     _name = 'hrstore.shop'
     _description = 'HRStore Shop'
@@ -66,8 +85,9 @@ class HROrder(models.Model):
     _description = 'HRStore Order'
 
     order_time = fields.Datetime('下单时间')
-    state = fields.Selection(string='订单状态', selection=[('0', '待处理'), ('1', '已处理')], default='0')
+    state = fields.Selection(string='订单状态', selection=[('0', '待处理'), ('1', '待付款'), ('2', '已通过')], default='0')
     order_price = fields.Float('价格', (10, 2))
+    address_id = fields.Integer('收货地址')
 
     user_id = fields.Many2one(
         'hrstore.commonuser',
@@ -130,3 +150,12 @@ class HRForum(models.Model):
         string='用户ID',
         ondelete='set null',
     )
+
+
+class HRAd(models.Model):
+    _name = 'hrstore.ad'
+    _description = 'HRStore Ad'
+
+    title = fields.Text('标题')
+    image = fields.Binary(string='图片', attachment=True)
+    text = fields.Text('链接')

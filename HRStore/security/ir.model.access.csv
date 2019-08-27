@@ -13,4 +13,10 @@ acl_hrstore_cartdft,hrstore.cart_default,model_hrstore_cart,,1,1,1,1
 acl_hrstore_cart,hrstore.cart_default,model_hrstore_cart,group_hrstore,1,1,1,1
 acl_hrstore_commentdft,hrstore.comment_default,model_hrstore_comment,,1,1,1,1
 acl_hrstore_comment,hrstore.comment_default,model_hrstore_comment,group_hrstore,1,1,1,1
+acl_hrstore_addressdft,hrstore.address_default,model_hrstore_address,,1,1,1,1
+acl_hrstore_address,hrstore.address_default,model_hrstore_address,group_hrstore,1,1,1,1
+acl_hrstore_forumdft,hrstore.forum_default,model_hrstore_forum,,1,1,1,1
+acl_hrstore_forum,hrstore.forum_default,model_hrstore_forum,group_hrstore,1,1,1,1
+acl_hrstore_adft,hrstore.ad_default,model_hrstore_ad,,1,1,1,1
+acl_hrstore_ad,hrstore.ad_default,model_hrstore_ad,group_hrstore,1,1,1,1
 

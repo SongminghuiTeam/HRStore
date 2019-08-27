@@ -4,6 +4,7 @@ from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.models.ir_http import sitemap_qs2dom
 from odoo import tools
 import base64
+import datetime
 
 
 # 陈婉菁 计科162 161002218
@@ -11,13 +12,14 @@ class Customer(http.Controller):
     # 访问个人信息修改页面
     @http.route('/customer_modifyInfo', type='http', method='POST', website=True, auth="public")
     def customerInfo_modify(self, **post):
-        user_id = request.session['user_id']
+        user_id = post.get("user_id")
         userslist = request.env['hrstore.user'].sudo().search([('user_id', '=', user_id)])
         user = userslist[0]  # 用户信息
         commonuserlist = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])
         commonuser = commonuserlist[0]  # 用户详细信息
 
         return request.render('HRStore.customer_modifyInfo', {
+            'user_id': user_id,
             'user_info': user,
             'commonuser_info': commonuser
         })
@@ -28,7 +30,7 @@ class Customer(http.Controller):
         username = post.get('username')
         telephone = post.get('telephone')
         address = post.get('address')
-        user_id = request.session['user_id']
+        user_id = post.get("user_id")
         commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])
 
         image_route = post.get('user_image')
@@ -45,6 +47,7 @@ class Customer(http.Controller):
         user = request.env['hrstore.user'].sudo().search([('user_id', '=', user_id)])
 
         return request.render('HRStore.customer_modifyInfo', {
+            'user_id': user_id,
             'message': "个人信息修改成功",
             'user_info': user,
             'commonuser_info': commonuser_new
@@ -61,7 +64,7 @@ class Customer(http.Controller):
         print(new_pwd)
         print(ensure_pwd)
 
-        user_id = request.session['user_id']
+        user_id = post.get("user_id")
         user = request.env['hrstore.user'].sudo().search([('user_id', '=', user_id)])
         password = user.password
 
@@ -76,14 +79,16 @@ class Customer(http.Controller):
             return request.render('HRStore.customer_modifyInfo', {
                 'message': "原始密码输入错误",
                 'user_info': user,
-                'commonuser_info': customer
+                'commonuser_info': customer,
+                'user_id': user_id
             })
 
         if new_pwd != ensure_pwd:
             return request.render('HRStore.customer_modifyInfo', {
                 'message': "新密码与确认密码输入不符",
                 'user_info': user,
-                'commonuser_info': customer
+                'commonuser_info': customer,
+                'user_id': user_id
             })
 
         info = {'password': new_pwd}
@@ -91,7 +96,8 @@ class Customer(http.Controller):
         return request.render('HRStore.customer_modifyInfo', {
             'message': "密码更新成功",
             'user_info': user,
-            'commonuser_info': customer
+            'commonuser_info': customer,
+            'user_id':user_id
         })
 
     # 删除购物车
@@ -101,7 +107,7 @@ class Customer(http.Controller):
         cart_id = post.get('cart_id')
         print(cart_id)
 
-        user_id = request.session['user_id']
+        user_id = post.get("user_id")
         user = request.env['hrstore.user'].search([('user_id', '=', user_id)])  # 用户信息
         commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])  # 用户详细信息
         cart_records = request.env['hrstore.cart'].sudo().search([('user_id', '=', user_id)])  # 购物车信息
@@ -109,7 +115,7 @@ class Customer(http.Controller):
         request.env['hrstore.cart'].sudo().search([('id', '=', cart_id)]).unlink()  # 删除
 
         ###
-        user_id = request.session['user_id']
+        user_id = post.get("user_id")
         user = request.env['hrstore.user'].search([('user_id', '=', user_id)])  # 用户信息
         commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])  # 用户详细信息
         cart_records = request.env['hrstore.cart'].sudo().search([('user_id', '=', user_id)])  # 购物车信息
@@ -130,7 +136,8 @@ class Customer(http.Controller):
         return request.render('HRStore.customer_info', {
             'user_info': user,
             'commonuser_info': commonuser,
-            'cart_products': cart_products
+            'cart_products': cart_products,
+            'user_id': user_id
         })
 
     # 购买
@@ -180,14 +187,15 @@ class Customer(http.Controller):
             'message': message,
             'user_info': user,
             'commonuser_info': commonuser,
-            'cart_products': cart_products
+            'cart_products': cart_products,
+            'user_id': user_id
         })
 
     # 进入购物车
     @http.route('/cart', type='http', method='POST', website=True, auth="public")
     def cart(self, **post):
         print("进入购物车")
-        username = request.session['user_id']
+        username = post.get("user_id")
         user = request.env['hrstore.user'].search([('user_id', '=', username)])  # 用户基本信息
         commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', username)])  # 用户详细信息
         cart_records = request.env['hrstore.cart'].sudo().search([('user_id', '=', username)])  # 购物车信息
@@ -205,7 +213,8 @@ class Customer(http.Controller):
         return request.render('HRStore.customer_info', {
             'user_info': user,
             'commonuser_info': commonuser,
-            'cart_products': cart_products
+            'cart_products': cart_products,
+            'user_id': username
         })
 
     # 进入订单
@@ -228,31 +237,39 @@ class Customer(http.Controller):
             one_order.append(shop_info)
             one_order.append(order_record)
             if order_record.state == "1":
-                one_order.append("已完成")
+                one_order.append("待付款")
             else:
-                one_order.append("待处理")
+                if order_record.state == "2":
+                    one_order.append("已完成")
+                else:
+                    one_order.append("待处理")
             num = '×' + str(int(order_record.order_price / product_info.pro_price))
             one_order.append(num)
+            order_time = datetime.datetime.strptime(str(order_record.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+            order_time = (order_time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+            one_order.append(order_time)
             all_orders.append(one_order)
 
         return request.render('HRStore.customer_order', {
             'user_info': user,
             'commonuser_info': commonuser,
-            'all_orders': all_orders
+            'all_orders': all_orders,
+            'user_id': user_id
         })
 
     # 进入评论
     @http.route('/comment', type='http', method='POST', website=True, auth="public")
     def comment(self, **post):
         print("进入评论")
-        user_id = request.session['user_id']
+        user_id = post.get("user_id")
         order_id = post.get('order_id')
 
         user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
 
         return request.render('HRStore.customer_comment', {
             'user_info': user,
-            'order_id': order_id
+            'order_id': order_id,
+            'user_id': user_id
         })
 
     # 添加评论
@@ -272,12 +289,11 @@ class Customer(http.Controller):
         return request.render('HRStore.customer_comment', {
             'user_info': user,
             'order_id': order_id,
-            'message': message
+            'message': message,
+            'user_id': user_id
         })
 
     # 退出
     @http.route('/logout', type='http', method='POST', website=True, auth="public")
     def logout(self, **post):
-        print("退出")
-        request.session['user_id'] = False
         return request.render('HRStore.login')
