@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-<!--页面  田紫微 计科162  161002420 实现 宋明惠 计科162 161002226-->
+    <!--页面  田紫微 计科162  161002420 实现 宋明惠 计科162 161002226-->
     <template id="login" name="Login">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
@@ -25,7 +25,15 @@
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav ml-auto main-nav ">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="/home">首页</a>
+                                            <form action="/home" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link"
+                                                        type="submit">首页
+                                                </button>
+                                            </form>
                                         </li>
                                         <li class="nav-item">
                                             <form action="/products" method="post">
@@ -35,18 +43,22 @@
                                                        t-att-value="user_id"/>
                                                 <input type="hidden" name="type"
                                                        t-att-value="2"/>
-                                                <button class="btn btn-link nav-link" style="color:black;" type="submit">培训产品</button>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">培训产品
+                                                </button>
                                             </form>
                                         </li>
                                         <li class="nav-item">
-                                             <form action="/products" method="post">
+                                            <form action="/products" method="post">
                                                 <input type="hidden" name="csrf_token"
                                                        t-att-value="request.csrf_token()"/>
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <input type="hidden" name="type"
                                                        t-att-value="1"/>
-                                                <button class="btn btn-link nav-link" style="color:black;" type="submit">活动策划</button>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">活动策划
+                                                </button>
                                             </form>
                                         </li>
                                         <li class="nav-item">
@@ -57,7 +69,9 @@
                                                        t-att-value="user_id"/>
                                                 <input type="hidden" name="type"
                                                        t-att-value="3"/>
-                                                <button class="btn btn-link nav-link" style="color:black;" type="submit">精美商品</button>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">精美商品
+                                                </button>
                                             </form>
                                         </li>
                                         <li class="nav-item">
@@ -68,11 +82,32 @@
                                                        t-att-value="user_id"/>
                                                 <input type="hidden" name="type"
                                                        t-att-value="4"/>
-                                                <button class="btn btn-link nav-link" style="color:black;" type="submit">法律服务</button>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">法律服务
+                                                </button>
                                             </form>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/customer_service">在线客服</a>
+                                            <form action="/forum" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">论坛
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li class="nav-item">
+                                            <form action="/customer_service" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <button class="btn btn-link nav-link" style="color:black;"
+                                                        type="submit">在线客服
+                                                </button>
+                                            </form>
                                         </li>
                                     </ul>
 
@@ -96,7 +131,7 @@
                 <div class="container">
                     <center>
                         <div class="row-row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <!-- Header Contetnt -->
                                 <div class="content-block">
                                     <div class="advance-search">
@@ -137,7 +172,7 @@
                 </div>
                 <!-- Container End -->
             </section>
-<footer class="footer section section-sm">
+            <footer class="footer section section-sm">
                 <!-- Container Start -->
                 <div class="container">
                     <div class="row offset-md-1 offset-lg-0 block about">

@@ -214,7 +214,8 @@ class HRStore(http.Controller):
         pro_id = post.get('pro_id')
         print(pro_id)
 
-        request.env['hrstore.product'].search([('id', '=', pro_id)]).unlink()
+        request.env['hrstore.product'].search([('id', '=', int(pro_id))]).unlink()
+        print(pro_id)
 
         username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])

@@ -279,12 +279,12 @@
                                     <t t-foreach="comments" t-as="comment">
                                         <div class="user-comment">
                                             <h4>
-                                                <span id="username" t-esc="comment.username">用户名称</span>
+                                                <span id="username" t-esc="comment[1].username">用户名称</span>
                                             </h4>
                                             <p>
-                                                <span id="time" t-esc="comment.create_date">2019年8月13日</span>
+                                                <span id="time" t-esc="comment[0]">2019年8月13日</span>
                                             </p>
-                                            <span id="comment" t-esc="comment.content">这个商品很不错？！</span>
+                                            <span id="comment" t-esc="comment[1].content">这个商品很不错？！</span>
                                             <hr/>
                                         </div>
                                     </t>

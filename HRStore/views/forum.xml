@@ -156,21 +156,29 @@
                                         我要发贴。。。
                                     </h5>
                                     <div class="goods-buy" style="margin:0 auto;margin-bottom:20px;">
-
                                         <form action="/add_forum" method="post">
                                             <input type="hidden" name="csrf_token"
                                                    t-att-value="request.csrf_token()"/>
                                             <input type="hidden" name="user_id"
                                                    t-att-value="user_id"/>
                                             <div class="form-group">
-                                                <input type="text" name="title"
-                                                       placeholder="标题："/>
-                                                <textarea name="content" class="form-control" rows="7"></textarea>
+                                                <label for="title">标题：</label>
+                                                <input id="title" type="text" name="title"
+                                                       class="form-control input-search"
+                                                       size="15" style="width:400px;height:50px;"/>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="name">标签</label>
-                                                <select class="form-control" name="label">
+                                                <label for="content">内容：</label>
+                                                <textarea id="content" name="content" class="form-control input-search"
+                                                          rows="7"
+                                                          size="15" style="width:600px;height:100px;"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="label">标签：</label>
+                                                <select id="label" class="form-control" name="label"
+                                                        style="width:400px;">
                                                     <option value="1">公告</option>
                                                     <option value="2">人员招聘</option>
                                                     <option value="3">求职</option>
@@ -178,24 +186,23 @@
                                                     <option value="5">其它</option>
                                                 </select>
                                             </div>
-
-                                            <button type="submit" class="btn add-button">发布</button>
+                                            <br/>
+                                            <button type="submit" class="btn btn-transparent">发布</button>
 
                                         </form>
-
                                     </div>
-
                                 </div>
-
                             </div>
                             <div class="widget dashboard-container my-adslist row">
+
                                 <form action="/forum" method="post">
                                     <input type="hidden" name="csrf_token"
                                            t-att-value="request.csrf_token()"/>
                                     <input type="hidden" name="user_id"
                                            t-att-value="user_id"/>
-                                    <button type="submit" class="btn btn-md btn-primary">全部</button>
+                                    <button type="submit" class="btn btn-md btn-outline-primary">全部</button>
                                 </form>
+                                <span></span>
                                 <form action="/get_forum" method="post">
                                     <input type="hidden" name="csrf_token"
                                            t-att-value="request.csrf_token()"/>
@@ -203,8 +210,9 @@
                                            t-att-value="user_id"/>
                                     <input type="hidden" name="label"
                                            t-att-value="1"/>
-                                    <button type="submit" class="btn btn-md btn-primary">公告</button>
+                                    <button type="submit" class="btn btn-md btn-outline-primary">公告</button>
                                 </form>
+                                <span></span>
                                 <form action="/get_forum" method="post">
                                     <input type="hidden" name="csrf_token"
                                            t-att-value="request.csrf_token()"/>
@@ -212,8 +220,9 @@
                                            t-att-value="user_id"/>
                                     <input type="hidden" name="label"
                                            t-att-value="2"/>
-                                    <button type="submit" class="btn btn-md btn-primary">人员招聘</button>
+                                    <button type="submit" class="btn btn-md btn-outline-primary">人员招聘</button>
                                 </form>
+                                <span></span>
                                 <form action="/get_forum" method="post">
                                     <input type="hidden" name="csrf_token"
                                            t-att-value="request.csrf_token()"/>
@@ -221,8 +230,9 @@
                                            t-att-value="user_id"/>
                                     <input type="hidden" name="label"
                                            t-att-value="3"/>
-                                    <button type="submit" class="btn btn-md btn-primary">求职</button>
+                                    <button type="submit" class="btn btn-md btn-outline-primary">求职</button>
                                 </form>
+                                <span></span>
                                 <form action="/get_forum" method="post">
                                     <input type="hidden" name="csrf_token"
                                            t-att-value="request.csrf_token()"/>
@@ -230,8 +240,9 @@
                                            t-att-value="user_id"/>
                                     <input type="hidden" name="label"
                                            t-att-value="4"/>
-                                    <button type="submit" class="btn btn-md btn-primary">我要提问</button>
+                                    <button type="submit" class="btn btn-md btn-outline-primary">我要提问</button>
                                 </form>
+                                <span></span>
                                 <form action="/get_forum" method="post">
                                     <input type="hidden" name="csrf_token"
                                            t-att-value="request.csrf_token()"/>
@@ -239,26 +250,27 @@
                                            t-att-value="user_id"/>
                                     <input type="hidden" name="label"
                                            t-att-value="5"/>
-                                    <button type="submit" class="btn btn-md btn-primary">其他</button>
+                                    <button type="submit" class="btn btn-md btn-outline-primary">其他</button>
                                 </form>
+
                             </div>
                             <t t-if="forum_list">
                                 <t t-foreach="forum_list" t-as="forum">
                                     <div class="widget dashboard-container my-adslist">
                                         <h3 class="widget-header">
-                                            <t t-esc="forum.title"></t>
+                                            <t t-esc="forum[1].title"></t>
                                         </h3>
-                                        <p t-esc="forum.username"></p>
-                                        <span t-esc="forum.content"></span>
+                                        <p t-esc="forum[1].username"></p>
+                                        <span t-esc="forum[1].content"></span>
                                         <p>
-                                            <span id="time" t-esc="forum.create_date">2019年8月13日</span>
+                                            <span id="time" t-esc="forum[0]">2019年8月13日</span>
                                         </p>
                                         <button class="btn btn-sm btn-info">
-                                            <t t-if="forum.label=='1'">公告</t>
-                                            <t t-if="forum.label=='2'">人员招聘</t>
-                                            <t t-if="forum.label=='3'">求职</t>
-                                            <t t-if="forum.label=='4'">我要提问</t>
-                                            <t t-if="forum.label=='5'">其他</t>
+                                            <t t-if="forum[1].label=='1'">公告</t>
+                                            <t t-if="forum[1].label=='2'">人员招聘</t>
+                                            <t t-if="forum[1].label=='3'">求职</t>
+                                            <t t-if="forum[1].label=='4'">我要提问</t>
+                                            <t t-if="forum[1].label=='5'">其他</t>
 
                                         </button>
 
@@ -275,7 +287,9 @@
                                         <div class="widget category">
                                             <!-- Widget Header -->
                                             <h5 class="widget-header">
-                                                <a t-att-href="ad.text"> <t t-esc="ad.title"></t></a>
+                                                <a t-att-href="ad.text">
+                                                    <t t-esc="ad.title"></t>
+                                                </a>
                                             </h5>
                                             <div class="profile-thumb">
 

@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                             <nav class="navbar navbar-expand-lg  navigation">
+                            <nav class="navbar navbar-expand-lg  navigation">
                                 <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
@@ -167,7 +167,7 @@
                                     <h3 class="widget-header">选择收货地址</h3>
                                     <select class="form-control" name="address_id">
                                         <t t-foreach="addresses" t-as="address">
-                                            <option value="address.id">
+                                            <option name="address.id" t-att-value="address.id">
                                                 <sapn t-esc="address.province+' '+address.city+' '+address.block+' '+address.street+' '+address.details+'  (收货人：'+address.receiver_name+'-'+address.receiver_tel+')'"></sapn>
                                             </option>
                                         </t>
@@ -227,12 +227,19 @@
 
                                                     <td>
                                                         <span id="jian">
-                                                            <span t-esc="1"></span>
+                                                            <t t-if="flag == '0'">
+                                                                <span t-esc="1"></span>
+                                                            </t>
+                                                            <t t-if="flag == '1'">
+                                                                <span t-esc="product_num"></span>
+
+                                                            </t>
                                                         </span>
                                                     </td>
                                                     <td text="center">
                                                         <span id="order_price">
                                                             <span t-esc="order_price"></span>
+                                                            <input type="hidden" t-att-value="order_price" name="order_price"></input>
                                                         </span>
                                                     </td>
                                                 </tr>

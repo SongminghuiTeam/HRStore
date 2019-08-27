@@ -295,42 +295,10 @@
                                                     </td>
                                                     <form action="/cart_product_purchase" method="post">
                                                         <td>
-                                                            <span class="jian" id="jian" style="cursor:pointer;">-
-                                                            </span>
-                                                            <input name="pro_num_hidden" id="pro_num_hidden"
-                                                                   type="hidden"
+                                                            <input name="pro_num" id="pro_num"
+                                                                   type="text"
                                                                    t-att-value="cart_product[1]"
                                                                    style="width:50px;text-align:center;height:22px;"/>
-                                                            <input name="pro_num" type="text" id="pro_num"
-                                                                   style="width:50px;text-align:center;height:22px;"/>
-                                                            <span class="jia" id="jia" style="cursor:pointer;">+</span>
-                                                            <script type="text/javascript">
-                                                                window.onload = function()
-                                                                {
-                                                                var Jjian = document.getElementById("jian");
-                                                                var Jjia = document.getElementById("jia");
-
-                                                                var zj = document.getElementById("pro_num_hidden");
-                                                                var num = document.getElementById("pro_num");
-                                                                num.value = zj.value;
-                                                                var i = 1;
-
-                                                                Jjia.onclick = function()
-                                                                {
-                                                                //zj.value = ++i;
-                                                                i = num.value;
-                                                                num.value = ++i;
-                                                                }
-                                                                Jjian.onclick = function()
-                                                                {
-                                                                i = num.value;
-                                                                if(i!=0){
-                                                                num.value = --i;
-                                                                }
-                                                                }
-
-                                                                }
-                                                            </script>
                                                         </td>
                                                         <td text="center">
                                                             <center>

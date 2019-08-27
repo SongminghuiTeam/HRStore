@@ -165,8 +165,7 @@ class Customer(http.Controller):
         request.env['hrstore.cart'].sudo().search([('id', '=', cart_id)]).unlink()
 
         message = "购买成功,订单待处理......"
-        ###
-        user = request.env['hrstore.user'].search([('user_id', '=', user_id)])  # 用户信息
+        # user = request.env['hrstore.user'].search([('user_id', '=', user_id)])  # 用户信息
         commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])  # 用户详细信息
         cart_records = request.env['hrstore.cart'].sudo().search([('user_id', '=', user_id)])  # 购物车信息
         cart_products = []
@@ -182,14 +181,28 @@ class Customer(http.Controller):
             cart_product.append(shop_info.shopname)
             cart_product.append(cart_record.id)
             cart_products.append(cart_product)
+        if product.pro_type == '3':         # 如果是精美商品，可直接购买，跳到付款页面
+            addresses = request.env['hrstore.address'].search([('user_id', '=', user.id)])
+            print(user.id)
+            print(addresses)
+            return request.render('HRStore.confirm_order', {
+                'product': product,
+                'addresses': addresses,
+                'order_price': order_price,
+                'user_id': user_id,
+                'product_num': pro_num,
+                'flag': '1'
 
-        return request.render('HRStore.customer_info', {
-            'message': message,
-            'user_info': user,
-            'commonuser_info': commonuser,
-            'cart_products': cart_products,
-            'user_id': user_id
-        })
+            })
+        else:
+            return request.render('HRStore.customer_info', {
+                'message': message,
+                'user_info': user,
+                'commonuser_info': commonuser,
+                'cart_products': cart_products,
+                'user_id': user_id,
+            })
+
 
     # 进入购物车
     @http.route('/cart', type='http', method='POST', website=True, auth="public")

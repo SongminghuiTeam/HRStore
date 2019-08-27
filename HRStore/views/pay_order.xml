@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-<!--页面  梁晓珂 计科162 161002221   实现 梁晓珂 计科162 161002221-->
+    <!--页面  梁晓珂 计科162 161002221   实现 梁晓珂 计科162 161002221-->
     <template id="pay_order" name="HRStore Payment">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                             <nav class="navbar navbar-expand-lg  navigation">
+                            <nav class="navbar navbar-expand-lg  navigation">
                                 <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
@@ -154,21 +154,26 @@
                                 <center>
 
 
-                                <form action="/pay" method="post">
+                                    <form action="/pay" method="post">
+                                        <t t-if="message">
+                                            <div class="alert alert-warning">
+                                                <span t-esc="message"></span>
+                                            </div>
+                                        </t>
 
-                                    <!-- File chooser -->
-                                    <center>
-                                        <img src="/HRStore/static/src/images/Q2code.jpg" height="100" width="220"/>
-                                    </center>
+                                        <!-- File chooser -->
+                                        <center>
+                                            <img src="/HRStore/static/src/images/Q2code.jpg" height="220" width="220"/>
+                                        </center>
 
-                                     <input type="hidden" name="csrf_token"
-                                           t-att-value="request.csrf_token()"/>
-                                    <input type="hidden" name="product_id"
-                                           t-att-value="product_id"/>
-                                    <input type="hidden" name="user_id"
-                                           t-att-value="user_id"/>
-                                    <button class="btn btn-transparent">确认付款</button>
-                                </form>
+                                        <input type="hidden" name="csrf_token"
+                                               t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="order_id"
+                                               t-att-value="order_id"/>
+                                        <input type="hidden" name="user_id"
+                                               t-att-value="user_id"/>
+                                        <button class="btn btn-transparent">确认付款</button>
+                                    </form>
                                 </center>
                             </div>
 

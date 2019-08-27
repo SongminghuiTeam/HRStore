@@ -3,6 +3,7 @@ from odoo import http
 from odoo.http import request
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website.models.ir_http import sitemap_qs2dom
+import datetime
 
 
 # 梁晓珂 计科162  161002221 和 宋明惠 计科162  161002226
@@ -212,13 +213,25 @@ class Hello(http.Controller):
 
         # 获取产品的评论
         orders = request.env['hrstore.order'].search(
-            [('pro_id', '=', pro_id)])
+            [('pro_id', '=', int(pro_id))])
+        print("################")
+        print(pro_id)
+        print(user_id)
+
+        print(orders)
         all_comments = []
         for order in orders:
+            print(order.id)
             comments = request.env['hrstore.comment'].search(
                 [('order_id', '=', order.id)])
             for comment in comments:
-                all_comments.append(comment)
+                time = datetime.datetime.strptime(str(comment.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+                time = (time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                print(time)
+                temp = []
+                temp.append(time)
+                temp.append(comment)
+                all_comments.append(temp)
 
         print(all_comments)
         for comment in all_comments:
@@ -259,7 +272,8 @@ class Hello(http.Controller):
                         'product': product,
                         'addresses': addresses,
                         'order_price': order_price,
-                        'user_id': user_id
+                        'user_id': user_id,
+                        'flag': '0'
                     })
                 else:  # 其他产品，需要经过供应商确认订单，然后在“我的订单”中，进行购买
                     message = "预购成功,订单待处理......"
@@ -268,10 +282,31 @@ class Hello(http.Controller):
         else:
             message = "请先登录"
 
+        user = request.env['hrstore.shop'].search(
+            [('id', '=', product.user_id.id)])
+
+        # 获取产品的评论
+        orders = request.env['hrstore.order'].search(
+            [('pro_id', '=', pro_id)])
+        all_comments = []
+        for order in orders:
+            comments = request.env['hrstore.comment'].search(
+                [('order_id', '=', order.id)])
+            for comment in comments:
+                time = datetime.datetime.strptime(str(comment.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+                time = (time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                print(time)
+                temp = []
+                temp.append(time)
+                temp.append(comment)
+                all_comments.append(temp)
+
         return request.render('HRStore.product_detail', {
             'product': product,
-            'message': message,
-            'user_id': user_id
+            'comments': all_comments,
+            'shop_user': user,
+            'user_id': user_id,
+            'message': message
         })
 
     # 加入购物车功能
@@ -303,11 +338,33 @@ class Hello(http.Controller):
         else:
             message = "请先登录"
 
+        user = request.env['hrstore.shop'].search(
+            [('id', '=', product.user_id.id)])
+
+        # 获取产品的评论
+        orders = request.env['hrstore.order'].search(
+            [('pro_id', '=', pro_id)])
+        all_comments = []
+        for order in orders:
+            comments = request.env['hrstore.comment'].search(
+                [('order_id', '=', order.id)])
+            for comment in comments:
+                time = datetime.datetime.strptime(str(comment.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+                time = (time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+                print(time)
+                temp = []
+                temp.append(time)
+                temp.append(comment)
+                all_comments.append(temp)
+
         return request.render('HRStore.product_detail', {
             'product': product,
-            'message': message,
-            'user_id': user_id
+            'comments': all_comments,
+            'shop_user': user,
+            'user_id': user_id,
+            'message': message
         })
+
 
     # 转到添加收货地址页面
     # 梁晓珂
@@ -359,27 +416,42 @@ class Hello(http.Controller):
         user_id = post.get("user_id")
         product_id = post.get("product_id")
         address_id = post.get("address_id")
+        order_price = post.get('order_price')
+
+        print(product_id)
+        print(address_id)
 
         user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
 
-        request.env['hrstore.order'].sudo().create(
-            {'state': '1', 'user_id': user.id, 'pro_id': product_id, 'address_id': address_id})
+        order = request.env['hrstore.order'].sudo().create(
+            {'state': '1', 'user_id': user.id, 'pro_id': product_id, 'address_id': address_id, 'order_price': order_price})
 
         return request.render('HRStore.pay_order', {
-            'user_id': user_id
-
+            'user_id': user_id,
+            'order_id': order.id
         })
 
-    # 进入论坛
-    # 宋明惠
+        # 进入论坛
+        # 宋明惠
+
     @http.route('/forum', type='http', method='POST', website=True, auth="public")
     def forum(self, **post):
         user_id = post.get('user_id')
         print(user_id)
         forum_list = request.env['hrstore.forum'].search([])
+
+        forums = []
+        for forum in forum_list:
+            time = datetime.datetime.strptime(str(forum.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+            time = (time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+            temp = []
+            temp.append(time)
+            temp.append(forum)
+            forums.append(temp)
+
         ad_list = request.env['hrstore.ad'].search([])
         return request.render('HRStore.forum', {
-            'user_id': user_id, 'forum_list': forum_list, 'ad_list': ad_list})
+            'user_id': user_id, 'forum_list': forums, 'ad_list': ad_list})
 
     # 添加论坛
     # 宋明惠
@@ -404,9 +476,17 @@ class Hello(http.Controller):
             request.env['hrstore.forum'].sudo().create(
                 {'user_id': user.id, 'title': title, 'content': content, 'label': label, 'username': name})
         forum_list = request.env['hrstore.forum'].search([])
+        forums = []
+        for forum in forum_list:
+            time = datetime.datetime.strptime(str(forum.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+            time = (time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+            temp = []
+            temp.append(time)
+            temp.append(forum)
+            forums.append(temp)
         ad_list = request.env['hrstore.ad'].search([])
         return request.render('HRStore.forum', {
-            'user_id': user_id, 'forum_list': forum_list, 'ad_list': ad_list})
+            'user_id': user_id, 'forum_list': forums, 'ad_list': ad_list})
 
     # 进入论坛特定标签的论坛
     # 宋明惠
@@ -416,6 +496,29 @@ class Hello(http.Controller):
         label = post.get('label')
         print("user_id" + user_id)
         forum_list = request.env['hrstore.forum'].search([('label', '=', label)])
+        forums = []
+        for forum in forum_list:
+            time = datetime.datetime.strptime(str(forum.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
+            time = (time + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+            temp = []
+            temp.append(time)
+            temp.append(forum)
+            forums.append(temp)
         ad_list = request.env['hrstore.ad'].search([])
         return request.render('HRStore.forum', {
-            'user_id': user_id, 'forum_list': forum_list, 'ad_list': ad_list})
+            'user_id': user_id, 'forum_list': forums, 'ad_list': ad_list})
+
+
+    @http.route('/pay')
+    def pay(self, **post):
+        user_id = post.get('user_id')
+        order_id = post.get('order_id')
+
+        order = request.env['hrstore.order'].search([('id', '=', order_id)])
+        info = {'state': '2'}
+        order.write(info)
+
+        return request.render('HRStore.pay_order', {
+            'message': '付款成功',
+            'user_id': user_id
+        })
