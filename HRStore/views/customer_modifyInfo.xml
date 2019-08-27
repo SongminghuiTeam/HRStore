@@ -103,13 +103,13 @@
                                 <div class="widget user-dashboard-menu">
                                     <ul>
                                         <li>
-                                            <a href="my-info.html">
+                                            <a href="/cart">
                                                 <i class="fa fa-user"></i>
                                                 购物车
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="my-order.html">
+                                            <a href="/order">
                                                 <i class="fa fa-bookmark-o"></i>
                                                 订单
                                             </a>
