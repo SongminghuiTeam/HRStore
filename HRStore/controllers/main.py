@@ -89,6 +89,7 @@ class Hello(http.Controller):
 
             'message': "用户名或密码错误！"
         })
+
     # 宋明惠
     @http.route('/products', auth="public", type='http', website=True)
     def get_products(self, **post):
@@ -276,3 +277,45 @@ class Hello(http.Controller):
             'product': product,
             'message': message
         })
+
+    @http.route('/forum', type='http', method='POST', website=True, auth="public")
+    def forum(self, **post):
+
+        user_id = post.get('user_id')
+        print(user_id)
+        forum_list = request.env['hrstore.forum'].search([])
+        return request.render('HRStore.forum', {
+            'user_id': user_id, 'forum_list': forum_list})
+
+    @http.route('/add_forum', type='http', method='POST', website=True, auth="public")
+    def add_forum(self, **post):
+        user_id = post.get('user_id')
+        title = post.get('title')
+        content = post.get('content')
+        label = post.get('label')
+        print("user_id" + user_id)
+        user = request.env['hrstore.user'].search([('user_id', '=', user_id)])
+        print(user.id)
+        print(user.user_type)
+        if user.user_type == '1':
+            username = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
+            name = username.username
+            request.env['hrstore.forum'].sudo().create(
+                {'user_id': user.id, 'title': title, 'content': content, 'label': label, 'username': name})
+        elif user.user_type == '2':
+            username = request.env['hrstore.shop'].search([('user_id', '=', user_id)])
+            name = username.shopname
+            request.env['hrstore.forum'].sudo().create(
+                {'user_id': user.id, 'title': title, 'content': content, 'label': label, 'username': name})
+        forum_list = request.env['hrstore.forum'].search([])
+        return request.render('HRStore.forum', {
+            'user_id': user_id, 'forum_list': forum_list})
+
+    @http.route('/get_forum', type='http', method='POST', website=True, auth="public")
+    def get_forum(self, **post):
+        user_id = post.get('user_id')
+        label = post.get('label')
+        print("user_id" + user_id)
+        forum_list = request.env['hrstore.forum'].search([('label', '=', label)])
+        return request.render('HRStore.forum', {
+            'user_id': user_id, 'forum_list': forum_list})

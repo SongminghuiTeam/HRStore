@@ -14,6 +14,7 @@
         'views/template.xml',
         'views/home.xml',
         'views/products.xml',
+        'views/forum.xml',
         'views/customer_service.xml',
         'views/product_details.xml',
         'views/supplier_addProduct.xml',

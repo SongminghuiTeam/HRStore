@@ -112,3 +112,21 @@ class HRComment(models.Model):
         string='产品ID',
         ondelete='set null',
     )
+
+
+class HRForum(models.Model):
+    _name = 'hrstore.forum'
+    _description = 'HRStore Forum'
+    _order = 'id desc'
+    title = fields.Text('标题')
+    content = fields.Text('内容')
+    username = fields.Char('昵称')
+    label = fields.Selection(string='标签',
+                             selection=[('1', '公告'), ('2', '人员招聘'), ('3', '求职'), ('4', '我要提问'), ('5', '其他')],
+                             default='1')
+
+    user_id = fields.Many2one(
+        'hrstore.user',
+        string='用户ID',
+        ondelete='set null',
+    )

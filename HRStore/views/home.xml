@@ -38,6 +38,15 @@
                                             <a class="nav-link" href="/products?type=4">法律服务</a>
                                         </li>
                                         <li class="nav-item">
+                                            <form action="/forum" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="request.session.user_id"/>
+                                                <input type="submit" value="论坛"/>
+                                            </form>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link" href="/customer_service">在线客服</a>
                                         </li>
                                     </ul>
@@ -176,7 +185,9 @@
                                                             <t t-if="product.pro_type=='4'">类型：法律服务</t>
                                                         </li>
                                                     </ul>
-                                                    <p>访问量：<span class="card-text" t-esc="product.pro_view"></span></p>
+                                                    <p>访问量：
+                                                        <span class="card-text" t-esc="product.pro_view"></span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
