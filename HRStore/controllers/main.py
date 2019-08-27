@@ -370,14 +370,19 @@ class Hello(http.Controller):
 
         })
 
+    # 进入论坛
+    # 宋明惠
     @http.route('/forum', type='http', method='POST', website=True, auth="public")
     def forum(self, **post):
         user_id = post.get('user_id')
         print(user_id)
         forum_list = request.env['hrstore.forum'].search([])
+        ad_list = request.env['hrstore.ad'].search([])
         return request.render('HRStore.forum', {
-            'user_id': user_id, 'forum_list': forum_list})
+            'user_id': user_id, 'forum_list': forum_list, 'ad_list': ad_list})
 
+    # 添加论坛
+    # 宋明惠
     @http.route('/add_forum', type='http', method='POST', website=True, auth="public")
     def add_forum(self, **post):
         user_id = post.get('user_id')
@@ -399,14 +404,18 @@ class Hello(http.Controller):
             request.env['hrstore.forum'].sudo().create(
                 {'user_id': user.id, 'title': title, 'content': content, 'label': label, 'username': name})
         forum_list = request.env['hrstore.forum'].search([])
+        ad_list = request.env['hrstore.ad'].search([])
         return request.render('HRStore.forum', {
-            'user_id': user_id, 'forum_list': forum_list})
+            'user_id': user_id, 'forum_list': forum_list, 'ad_list': ad_list})
 
+    # 进入论坛特定标签的论坛
+    # 宋明惠
     @http.route('/get_forum', type='http', method='POST', website=True, auth="public")
     def get_forum(self, **post):
         user_id = post.get('user_id')
         label = post.get('label')
         print("user_id" + user_id)
         forum_list = request.env['hrstore.forum'].search([('label', '=', label)])
+        ad_list = request.env['hrstore.ad'].search([])
         return request.render('HRStore.forum', {
-            'user_id': user_id, 'forum_list': forum_list})
+            'user_id': user_id, 'forum_list': forum_list, 'ad_list': ad_list})
