@@ -165,6 +165,11 @@
                                                             <span>价格: </span>
                                                                 <label t-esc="one_order[0].pro_price"></label>
                                                         </span>
+                                                        <br/>
+                                                        <span id="price">
+                                                            <span>总价: </span>
+                                                                <label t-esc="one_order[2].order_price"></label>
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         <span id="num" class="categories" t-esc="one_order[4]"></span>
