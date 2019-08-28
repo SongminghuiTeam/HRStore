@@ -310,6 +310,7 @@
                                                     <span id="status">已完成</span>
                                                 </t>
                                             </td>
+
                                             <t t-if="order[6] == '1'">
                                                 <td>
                                                     <form action="/ChangeOrderPrice" method="post">
@@ -322,6 +323,7 @@
                                                         <input name="order_price" type="text"
                                                                t-att-value="order[8]" class="form-control input-search"
                                                                style="width:100px;height:30px;"/>
+                                                        <br/>
                                                         <button class="btn btn-outline-success btn-sm">修改价格</button>
                                                     </form>
                                                 </td>

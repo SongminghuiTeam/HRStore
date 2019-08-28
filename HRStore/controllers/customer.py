@@ -160,8 +160,7 @@ class Customer(http.Controller):
         order_price = product.pro_price * int(pro_num)
 
         user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
-        request.env['hrstore.order'].sudo().create(
-            {'state': '0', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
+
         request.env['hrstore.cart'].sudo().search([('id', '=', cart_id)]).unlink()
 
         message = "购买成功,订单待处理......"
@@ -195,6 +194,8 @@ class Customer(http.Controller):
 
             })
         else:
+            request.env['hrstore.order'].sudo().create(
+                {'state': '0', 'order_price': order_price, 'user_id': user.id, 'pro_id': pro_id})
             return request.render('HRStore.customer_info', {
                 'message': message,
                 'user_info': user,
@@ -234,7 +235,7 @@ class Customer(http.Controller):
     @http.route('/order', type='http', method='POST', website=True, auth="public")
     def order(self, **post):
         print("进入订单")
-        user_id = request.session['user_id']
+        user_id = post.get('user_id')
 
         user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])  # user基本信息
         commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])  # user详细信息

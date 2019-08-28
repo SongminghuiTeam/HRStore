@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-    <!---->
+<!--页面  宋明惠 计科162 161002226   实现 宋明惠 计科162 161002226-->
     <template id="forum" name="forum">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
@@ -201,8 +201,9 @@
                                     <input type="hidden" name="user_id"
                                            t-att-value="user_id"/>
                                     <button type="submit" class="btn btn-md btn-outline-primary">全部</button>
+
                                 </form>
-                                <span></span>
+
                                 <form action="/get_forum" method="post">
                                     <input type="hidden" name="csrf_token"
                                            t-att-value="request.csrf_token()"/>
