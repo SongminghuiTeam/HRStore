@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <odoo>
-<!--页面  李甜甜 计科162 161002229   实现 何钰霖 计科162 161002219-->
+    <!--页面  李甜甜 计科162 161002229   实现 何钰霖 计科162 161002219-->
     <template id="supplier_addProduct" name="supplier_addProduct">
         <head>
             <t t-call-assets="HRStore.my_custom_assets" tjs="false"/>
@@ -12,7 +12,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                             <nav class="navbar navbar-expand-lg  navigation">
+                            <nav class="navbar navbar-expand-lg  navigation">
                                 <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
@@ -171,19 +171,26 @@
                                                   t-esc="supplier.address"></span>
                                         </p>
                                     </t>
-                                    <a href="/supplier_updateInfo" class="btn btn-main-sm">编辑</a>
+                                    <form action="/supplier_updateInfo" method="post">
+                                        <input type="hidden" name="csrf_token"
+                                               t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="user_id"
+                                               t-att-value="user_id"/>
+                                        <button class="btn btn-main-sm" type="submit">编辑</button>
+                                    </form>
                                 </div>
                                 <!-- Dashboard Links -->
                                 <div class="widget user-dashboard-menu">
                                     <ul>
                                         <li class="active">
-                                             <form action="/supplier_addProduct" method="post">
+                                            <form action="/supplier_addProduct" method="post">
                                                 <input type="hidden" name="csrf_token"
                                                        t-att-value="request.csrf_token()"/>
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link"
-                                                        type="submit"><i class="fa fa-user"></i>
+                                                        type="submit">
+                                                    <i class="fa fa-user"></i>
                                                     发布商品
                                                 </button>
                                             </form>
@@ -195,7 +202,8 @@
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link" style="color:black;"
-                                                        type="submit"><i class="fa fa-user"></i>
+                                                        type="submit">
+                                                    <i class="fa fa-user"></i>
                                                     待审核
                                                 </button>
                                             </form>
@@ -207,7 +215,8 @@
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link" style="color:black;"
-                                                        type="submit"><i class="fa fa-user"></i>
+                                                        type="submit">
+                                                    <i class="fa fa-user"></i>
                                                     已发布
                                                 </button>
                                             </form>
@@ -219,7 +228,8 @@
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link" style="color:black;"
-                                                        type="submit"><i class="fa fa-user"></i>
+                                                        type="submit">
+                                                    <i class="fa fa-user"></i>
                                                     订单
                                                 </button>
                                             </form>
@@ -231,8 +241,9 @@
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link" style="color:black;"
-                                                        type="submit"><i class="fa fa-cog"></i>
-                                                退出登录
+                                                        type="submit">
+                                                    <i class="fa fa-cog"></i>
+                                                    退出登录
                                                 </button>
                                             </form>
                                         </li>
@@ -288,9 +299,9 @@
                                     </div>
                                     <!-- Submit button -->
                                     <input type="hidden" name="user_id"
-                                                       t-att-value="user_id"/>
+                                           t-att-value="user_id"/>
                                     <input type="hidden" name="csrf_token"
-                                                           t-att-value="request.csrf_token()"/>
+                                           t-att-value="request.csrf_token()"/>
                                     <button class="btn btn-transparent">发布</button>
                                 </form>
                             </div>

@@ -167,7 +167,13 @@
                                     <p>
                                         <span t-esc="commonuser_info.address"></span>
                                     </p>
-                                    <a href="/customer_modifyInfo" class="btn btn-main-sm">编辑</a>
+                                    <form action="/customer_modifyInfo" method="post">
+                                        <input type="hidden" name="csrf_token"
+                                               t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="user_id"
+                                               t-att-value="user_id"/>
+                                        <button class="btn btn-main-sm" type="submit">编辑</button>
+                                    </form>
                                 </div>
                                 <!-- Dashboard Links -->
                                 <div class="widget user-dashboard-menu">

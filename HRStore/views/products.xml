@@ -25,16 +25,16 @@
                                     <ul class="navbar-nav ml-auto main-nav ">
                                         <li class="nav-item ">
                                             <li class="nav-item">
-                                            <form action="/home" method="post">
-                                                <input type="hidden" name="csrf_token"
-                                                       t-att-value="request.csrf_token()"/>
-                                                <input type="hidden" name="user_id"
-                                                       t-att-value="user_id"/>
-                                                <button class="btn btn-link nav-link" style="color:black;"
-                                                        type="submit">首页
-                                                </button>
-                                            </form>
-                                        </li>
+                                                <form action="/home" method="post">
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="user_id"
+                                                           t-att-value="user_id"/>
+                                                    <button class="btn btn-link nav-link" style="color:black;"
+                                                            type="submit">首页
+                                                    </button>
+                                                </form>
+                                            </li>
                                         </li>
                                         <t t-if="type=='2'">
                                             <li class="nav-item active">
@@ -287,7 +287,7 @@
                                                            t-att-value="product.id"/>
                                                     <input type="hidden" name="user_id"
                                                            t-att-value="user_id"/>
-                                                    <div class="product-item bg-light">
+                                                    <div class="product-item bg-light" >
                                                         <div class="card">
                                                             <div class="thumb-content">
 
@@ -297,14 +297,13 @@
 
                                                             </div>
                                                             <div class="card-body">
-
-                                                                <button type="submit" class="btn btn-link">
-                                                                    <h4 class="card-title">
-                                                                        <span t-esc="product.pro_name"></span>
-                                                                    </h4>
-                                                                </button>
-
-
+                                                                <div style="margin-right:5px;overflow:hidden;text-overflow:ellipsis;">
+                                                                    <button type="submit" class="btn btn-link" >
+                                                                        <h4 class="widget-header">
+                                                                            <span t-field="product.pro_name"></span>
+                                                                        </h4>
+                                                                    </button>
+                                                                </div>
                                                                 <ul class="list-inline product-meta">
 
                                                                     <li class="list-inline-item">

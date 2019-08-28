@@ -230,11 +230,13 @@
                                                 </div>
                                                 <div class="card-body">
 
-                                                    <button type="submit" class="btn btn-link">
-                                                        <h4 class="card-title">
-                                                            <span t-esc="product.pro_name"></span>
-                                                        </h4>
-                                                    </button>
+                                                    <div style="margin-right:5px;overflow:hidden;text-overflow:ellipsis;">
+                                                        <button type="submit" class="btn btn-link">
+                                                            <h4 class="widget-header">
+                                                                <span t-field="product.pro_name"></span>
+                                                            </h4>
+                                                        </button>
+                                                    </div>
 
 
                                                     <ul class="list-inline product-meta">

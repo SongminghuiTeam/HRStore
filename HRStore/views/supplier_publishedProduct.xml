@@ -171,7 +171,13 @@
                                                   t-esc="supplier.address"></span>
                                         </p>
                                     </t>
-                                    <a href="/supplier_updateInfo" class="btn btn-main-sm">编辑</a>
+                                    <form action="/supplier_updateInfo" method="post">
+                                        <input type="hidden" name="csrf_token"
+                                               t-att-value="request.csrf_token()"/>
+                                        <input type="hidden" name="user_id"
+                                               t-att-value="user_id"/>
+                                        <button class="btn btn-main-sm" type="submit">编辑</button>
+                                    </form>
                                 </div>
                                 <!-- Dashboard Links -->
                                 <div class="widget user-dashboard-menu">
