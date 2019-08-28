@@ -13,7 +13,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                             <nav class="navbar navbar-expand-lg  navigation">
+                            <nav class="navbar navbar-expand-lg  navigation">
                                 <a class="navbar-brand" href="/home">
                                     <img src="/HRStore/static/src/images/logo.jpg" height="100" width="220"/>
                                 </a>
@@ -184,13 +184,14 @@
                                 <div class="widget user-dashboard-menu">
                                     <ul>
                                         <li>
-                                             <form action="/supplier_addProduct" method="post">
+                                            <form action="/supplier_addProduct" method="post">
                                                 <input type="hidden" name="csrf_token"
                                                        t-att-value="request.csrf_token()"/>
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link" style="color:black;"
-                                                        type="submit"><i class="fa fa-user"></i>
+                                                        type="submit">
+                                                    <i class="fa fa-user"></i>
                                                     发布商品
                                                 </button>
                                             </form>
@@ -202,7 +203,8 @@
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link" style="color:black;"
-                                                        type="submit"><i class="fa fa-user"></i>
+                                                        type="submit">
+                                                    <i class="fa fa-user"></i>
                                                     待审核
                                                 </button>
                                             </form>
@@ -214,7 +216,8 @@
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link" style="color:black;"
-                                                        type="submit"><i class="fa fa-user"></i>
+                                                        type="submit">
+                                                    <i class="fa fa-user"></i>
                                                     已发布
                                                 </button>
                                             </form>
@@ -226,7 +229,8 @@
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link"
-                                                        type="submit"><i class="fa fa-user"></i>
+                                                        type="submit">
+                                                    <i class="fa fa-user"></i>
                                                     订单
                                                 </button>
                                             </form>
@@ -238,8 +242,9 @@
                                                 <input type="hidden" name="user_id"
                                                        t-att-value="user_id"/>
                                                 <button class="btn btn-link" style="color:black;"
-                                                        type="submit"><i class="fa fa-cog"></i>
-                                                退出登录
+                                                        type="submit">
+                                                    <i class="fa fa-cog"></i>
+                                                    退出登录
                                                 </button>
                                             </form>
                                         </li>
@@ -263,21 +268,32 @@
                                     </thead>
                                     <tbody>
                                         <tr t-foreach="orders" t-as="order">
-                                            <td class="product-thumb text-center">
+                                            <td class="text-center">
                                                 <span id="order_id" t-esc="order[0]"/>
                                             </td>
                                             <td>
-                                                <span id="name">
-                                                    <form action="product_detail" method="post">
-                                                        <input name="product_id" type="hidden" t-att-value="order[4]"/>
-                                                        <input type="hidden" name="user_id"
-                                                               t-att-value="user_id"/>
-                                                        <button type="submit" class="btn btn-link" style="color:black">
-                                                            <h5 t-esc="order[1]"/>
+
+                                                <form action="/product_detail" method="post">
+                                                    <input name="product_id" type="hidden"
+                                                           t-att-value="order[4]"/>
+                                                    <input type="hidden" name="user_id"
+                                                           t-att-value="user_id"/>
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
+
+                                                    <div class="text"
+                                                         style="margin-right:5px;width:100px;overflow: hidden;text-overflow:ellipsis;word-break: break-all;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;">
+
+                                                        <button type="submit" class="btn btn-link"
+                                                                style="color:black">
+                                                            <h5>
+                                                                <span t-esc="order[1]"></span>
+                                                            </h5>
+
                                                         </button>
-                                                    </form>
-                                                </span>
-                                                <br/>
+                                                    </div>
+
+                                                </form>
                                                 <span id="price">
                                                     <span>价格:</span>
                                                     <label t-esc="order[8]"/>
