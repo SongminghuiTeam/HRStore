@@ -413,23 +413,33 @@ class Hello(http.Controller):
     # 梁晓珂
     @http.route('/submit_order', type='http', method='POST', website=True, auth="public")
     def submit_order(self, **post):
-        user_id = post.get("user_id")
-        product_id = post.get("product_id")
-        address_id = post.get("address_id")
-        order_price = post.get('order_price')
+        type_flag = post.get("type_flag")
+        if type_flag == '1':
+            user_id = post.get("user_id")
+            order_id = post.get("order_id")
+            return request.render('HRStore.pay_order', {
+                'user_id': user_id,
+                'order_id': order_id
+            })
 
-        print(product_id)
-        print(address_id)
+        else:
+            user_id = post.get("user_id")
+            product_id = post.get("product_id")
+            address_id = post.get("address_id")
+            order_price = post.get('order_price')
 
-        user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
+            print(product_id)
+            print(address_id)
 
-        order = request.env['hrstore.order'].sudo().create(
-            {'state': '1', 'user_id': user.id, 'pro_id': product_id, 'address_id': address_id, 'order_price': order_price})
+            user = request.env['hrstore.commonuser'].search([('user_id', '=', user_id)])
 
-        return request.render('HRStore.pay_order', {
-            'user_id': user_id,
-            'order_id': order.id
-        })
+            order = request.env['hrstore.order'].sudo().create(
+                {'state': '1', 'user_id': user.id, 'pro_id': product_id, 'address_id': address_id, 'order_price': order_price})
+
+            return request.render('HRStore.pay_order', {
+                'user_id': user_id,
+                'order_id': order.id
+            })
 
         # 进入论坛
         # 宋明惠

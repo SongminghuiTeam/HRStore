@@ -256,6 +256,9 @@ class Customer(http.Controller):
                     one_order.append("已完成")
                 else:
                     one_order.append("待处理")
+            print(order_record.order_price)
+            print('---')
+            print(product_info.pro_price)
             num = '×' + str(int(order_record.order_price / product_info.pro_price))
             one_order.append(num)
             order_time = datetime.datetime.strptime(str(order_record.create_date)[0:19], '%Y-%m-%d %H:%M:%S')
