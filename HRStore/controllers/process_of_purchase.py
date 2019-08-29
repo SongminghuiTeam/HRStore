@@ -226,7 +226,8 @@ class Process(http.Controller):
             'product': product,
             'addresses': addresses,
             'order_price': product.pro_price,
-            'user_id': user_id
+            'user_id': user_id,
+            'flag': '0'
         })
 
     # 提交订单--添加一条订单记录变成待付款状态1

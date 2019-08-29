@@ -143,11 +143,13 @@
             <!--==================================
             =            User Profile            =
             ===================================-->
+
+
             <section class="dashboard section">
                 <!-- Container Start -->
                 <div class="container">
                     <!-- Row Start -->
-                    <form action="/to_add_address" method="post" class="float-right">
+                    <form action="/to_add_address" method="post">
                         <input type="hidden" name="csrf_token"
                                t-att-value="request.csrf_token()"/>
                         <input type="hidden" name="product_id"
@@ -239,7 +241,8 @@
                                                     <td text="center">
                                                         <span id="order_price">
                                                             <span t-esc="order_price"></span>
-                                                            <input type="hidden" t-att-value="order_price" name="order_price"></input>
+                                                            <input type="hidden" t-att-value="order_price"
+                                                                   name="order_price"></input>
                                                         </span>
                                                     </td>
                                                 </tr>

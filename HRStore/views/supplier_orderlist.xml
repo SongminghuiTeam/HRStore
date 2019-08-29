@@ -260,9 +260,12 @@
                                     <thead>
                                         <tr>
                                             <th>订购人</th>
+
                                             <th>产品信息</th>
                                             <th>预定时间</th>
+                                            <th></th>
                                             <th>状态</th>
+                                            <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -272,7 +275,6 @@
                                                 <span id="order_id" t-esc="order[0]"/>
                                             </td>
                                             <td>
-
                                                 <form action="/product_detail" method="post">
                                                     <input name="product_id" type="hidden"
                                                            t-att-value="order[4]"/>
@@ -282,14 +284,13 @@
                                                            t-att-value="request.csrf_token()"/>
 
                                                     <div class="text"
-                                                         style="margin-right:5px;width:100px;overflow: hidden;text-overflow:ellipsis;word-break: break-all;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;">
+                                                         style="margin-right:5px;width:200px;overflow: hidden;text-overflow:ellipsis;">
 
                                                         <button type="submit" class="btn btn-link"
                                                                 style="color:black">
                                                             <h5>
                                                                 <span t-esc="order[1]"></span>
                                                             </h5>
-
                                                         </button>
                                                     </div>
 
@@ -322,6 +323,9 @@
                                                 <span id="date" class="categories" t-esc="order[5]"></span>
                                             </td>
                                             <td>
+                                                <span/>
+                                            </td>
+                                            <td>
                                                 <t t-if="order[6] == '0'">
                                                     <span id="status">待处理</span>
                                                 </t>
@@ -332,7 +336,9 @@
                                                     <span id="status">已完成</span>
                                                 </t>
                                             </td>
-
+                                            <td>
+                                                <span/>
+                                            </td>
                                             <t t-if="order[6] == '1'">
                                                 <td>
                                                     <form action="/ChangeOrderPrice" method="post">

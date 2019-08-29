@@ -34,7 +34,11 @@ class Customer(http.Controller):
         commonuser = request.env['hrstore.commonuser'].sudo().search([('user_id', '=', user_id)])
 
         image_route = post.get('user_image')
-
+        if ':' in image_route:
+            print(image_route)
+        else:
+            image_route = "D://picture//" + image_route
+        print(image_route)
         if image_route:
             user_image = tools.image_resize_image_big(base64.b64encode(open(image_route, 'rb').read()))
             info = {'user_image': user_image, 'username': username, 'telephone': telephone, 'address': address}

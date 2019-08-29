@@ -28,7 +28,11 @@ class HRStore(http.Controller):
         state = '0'
         view = 0
         image_route = post.get('pro_image')
-
+        if ':' in image_route:
+            print(image_route)
+        else:
+            image_route = "D://picture//" + image_route
+        print(image_route)
         pro_image = tools.image_resize_image_big(base64.b64encode(open(image_route, 'rb').read()))
 
         username = post.get('user_id')
@@ -101,7 +105,11 @@ class HRStore(http.Controller):
         telephone = post.get('telephone')
         address = post.get('address')
         image_route = post.get('user_image')
-
+        if ':' in image_route:
+            print(image_route)
+        else:
+            image_route = "D://picture//" + image_route
+        print(image_route)
         username = post.get('user_id')
         supplier = request.env['hrstore.shop'].search([('user_id', '=', username)])
 
@@ -265,6 +273,11 @@ class HRStore(http.Controller):
         product = request.env['hrstore.product'].search([('id', '=', pro_id)])
 
         if image_route:
+            if ':' in image_route:
+                print(image_route)
+            else:
+                image_route = "D://picture//" + image_route
+            print(image_route)
             pro_image = tools.image_resize_image_big(base64.b64encode(open(image_route, 'rb').read()))
             info = {'pro_name': name, 'pro_price': price, 'pro_detail': detail, 'pro_type': type,
                     'pro_image': pro_image}
