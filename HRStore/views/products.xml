@@ -239,32 +239,81 @@
                                     <h4 class="widget-header">类别</h4>
                                     <ul class="category-list">
                                         <li>
-                                            <a href="/products?type=2">培训产品
-                                                <t t-if="request.session.product2_num">
-                                                    <span t-esc="request.session.product2_num"></span>
-                                                </t>
-                                            </a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="2"/>
+                                                <button class="btn btn-link btn-sm" style="color:black;"
+                                                        type="submit">
+                                                    <a>培训产品  ------------
+                                                        <t t-if="request.session.product2_num">
+                                                            <span t-esc="request.session.product2_num"></span>
+                                                        </t>
+                                                    </a>
+                                                </button>
+                                            </form>
+
+
                                         </li>
                                         <li>
-                                            <a href="/products?type=1">活动策划
-                                                <t t-if="request.session.product1_num">
-                                                    <span t-esc="request.session.product1_num"></span>
-                                                </t>
-                                            </a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="1"/>
+                                                <button class="btn btn-link btn-sm" style="color:black;"
+                                                        type="submit">
+                                                    <a>活动策划  ------------
+                                                        <t t-if="request.session.product1_num">
+                                                            <span t-esc="request.session.product1_num"></span>
+                                                        </t>
+                                                    </a>
+                                                </button>
+                                            </form>
+
                                         </li>
                                         <li>
-                                            <a href="/products?type=3">精美商品
-                                                <t t-if="request.session.product3_num">
-                                                    <span t-esc="request.session.product3_num"></span>
-                                                </t>
-                                            </a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="3"/>
+                                                <button class="btn btn-link btn-sm" style="color:black;"
+                                                        type="submit">
+                                                    <a>精美商品  ------------
+                                                        <t t-if="request.session.product3_num">
+                                                            <span t-esc="request.session.product3_num"></span>
+                                                        </t>
+                                                    </a>
+                                                </button>
+                                            </form>
+
                                         </li>
                                         <li>
-                                            <a href="/products?type=4">法律服务
-                                                <t t-if="request.session.product4_num">
-                                                    <span t-esc="request.session.product4_num"></span>
-                                                </t>
-                                            </a>
+                                            <form action="/products" method="post">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="user_id"
+                                                       t-att-value="user_id"/>
+                                                <input type="hidden" name="type"
+                                                       t-att-value="4"/>
+                                                <button class="btn btn-link btn-sm" style="color:black;"
+                                                        type="submit">
+                                                    <a>法律服务  ------------
+                                                        <t t-if="request.session.product4_num">
+                                                            <span t-esc="request.session.product4_num"></span>
+                                                        </t>
+                                                    </a>
+                                                </button>
+                                            </form>
+
                                         </li>
                                     </ul>
                                 </div>
@@ -287,7 +336,7 @@
                                                            t-att-value="product.id"/>
                                                     <input type="hidden" name="user_id"
                                                            t-att-value="user_id"/>
-                                                    <div class="product-item bg-light" >
+                                                    <div class="product-item bg-light">
                                                         <div class="card">
                                                             <div class="thumb-content">
 
@@ -298,7 +347,7 @@
                                                             </div>
                                                             <div class="card-body">
                                                                 <div style="margin-right:5px;overflow:hidden;text-overflow:ellipsis;">
-                                                                    <button type="submit" class="btn btn-link" >
+                                                                    <button type="submit" class="btn btn-link">
                                                                         <h4 class="widget-header">
                                                                             <span t-field="product.pro_name"></span>
                                                                         </h4>
