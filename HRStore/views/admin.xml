@@ -2,14 +2,14 @@
 <odoo>
     <!-- 梁晓珂 计科162 161002221-->
     <record id='hrstore_user_action' model='ir.actions.act_window'>
-        <field name="name">HR Store</field>
+        <field name="name">HR User</field>
         <field name="res_model">hrstore.user</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <record id='hrstore_product_action' model='ir.actions.act_window'>
-        <field name="name">HR Store</field>
+        <field name="name">HR Product</field>
         <field name="res_model">hrstore.product</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
@@ -22,10 +22,18 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record id='hrstore_forum_action' model='ir.actions.act_window'>
+        <field name="name">HR Forum</field>
+        <field name="res_model">hrstore.forum</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <menuitem name="HR Store" id="hrstore_base_menu"/>
     <menuitem name="All Users" id="hrstore_user_menu" parent="hrstore_base_menu" action="hrstore_user_action"/>
     <menuitem name="All Products" id="hrstore_product_menu" parent="hrstore_base_menu" action="hrstore_product_action"/>
     <menuitem name="All Ads" id="hrstore_ad_menu" parent="hrstore_base_menu" action="hrstore_ad_action"/>
+    <menuitem name="All Forums" id="hrstore_forum_menu" parent="hrstore_base_menu" action="hrstore_forum_action"/>
 
     <!-- Form View (modified with sheet tag and oe_title) -->
     <record id="hrstore_user_view_form" model="ir.ui.view">
@@ -176,4 +184,53 @@
             </search>
         </field>
     </record>
+
+        <!-- Form View (modified with sheet tag and oe_title) -->
+    <record id="hrstore_forum_view_form" model="ir.ui.view">
+        <field name="name">HRStore Forum Form</field>
+        <field name="model">hrstore.forum</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="title"/>
+                            <field name="content"/>
+                            <field name="username"/>
+                            <field name="label"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree(list) View -->
+    <record id="hrstore_forum_view_tree" model="ir.ui.view">
+        <field name="name">HRStore Forum List</field>
+        <field name="model">hrstore.forum</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title"/>
+                <field name="label"/>
+                <field name="content"/>
+                <field name="username"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="hrstore_forum_view_search" model="ir.ui.view">
+        <field name="name">HRStore Forum Search</field>
+        <field name="model">hrstore.forum</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="title"/>
+                <field name="username"/>
+                <field name="label"/>
+            </search>
+        </field>
+    </record>
+
 </odoo>
